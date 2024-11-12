@@ -45,10 +45,16 @@ public class MainApp {
     private static User login(String hospitalID, String role, String password) {
         for (User user : users) {
             if (user.getHospitalID().equals(hospitalID) && user.getRole().equalsIgnoreCase(role)) {
-                return user;
+                if (user.login(password)) {
+                    return user;
+                } else {
+                    System.out.println("Invalid password.");
+                    return null;
+                }
             }
         }
-        return null; // User not found
+        System.out.println("User not found or role does not match.");
+        return null;
     }
 
     private static void launchUserMenu(User user) {
