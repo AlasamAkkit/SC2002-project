@@ -28,11 +28,13 @@ public class MainApp {
             String hospitalID = scanner.nextLine();
             System.out.print("Enter your role (Patient, Doctor, Pharmacist, Administrator): ");
             String role = scanner.nextLine();
-
-            // Find user by hospital ID and role
-            User user = login(hospitalID, role);
+            System.out.print("Enter your password: ");
+            String password = scanner.nextLine(); // Collect password input
+    
+            User user = login(hospitalID, role, password);
             if (user != null) {
                 System.out.println("Login successful!\n");
+                // Method to launch user-specific menu
                 launchUserMenu(user);
             } else {
                 System.out.println("Invalid login. Please try again.\n");
@@ -40,7 +42,7 @@ public class MainApp {
         }
     }
 
-    private static User login(String hospitalID, String role) {
+    private static User login(String hospitalID, String role, String password) {
         for (User user : users) {
             if (user.getHospitalID().equals(hospitalID) && user.getRole().equalsIgnoreCase(role)) {
                 return user;
