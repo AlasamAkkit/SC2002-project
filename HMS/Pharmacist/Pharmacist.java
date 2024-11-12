@@ -1,7 +1,9 @@
-package HMS;
+package HMS.Pharmacist;
 
 import java.util.List;
 import java.util.Map;
+import HMS.Appointment.*;
+import HMS.User.*;
 
 public class Pharmacist extends User {
     private Map<String, Medication> inventory; // Inventory of medications by name

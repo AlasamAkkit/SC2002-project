@@ -1,8 +1,11 @@
-package HMS;
+package HMS.Doctor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import HMS.Appointment.*;
+import HMS.Patient.*;
+import HMS.User.*;
 
 public class Doctor extends User {
     private List<Appointment> appointments;

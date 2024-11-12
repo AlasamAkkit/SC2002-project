@@ -1,9 +1,11 @@
-package HMS;
+package HMS.Doctor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import HMS.Patient.*;
+import HMS.User.*;
 
 public class DoctorMenu implements UserMenu {
     private Doctor doctor;

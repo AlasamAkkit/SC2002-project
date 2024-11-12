@@ -1,8 +1,11 @@
-package HMS;
+package HMS.Admin;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import HMS.Doctor.*;
+import HMS.Pharmacist.*;
+import HMS.User.*;
 
 public class AdminMenu implements UserMenu {
     private Administrator admin;

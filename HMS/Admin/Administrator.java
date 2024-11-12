@@ -1,8 +1,10 @@
-package HMS;
+package HMS.Admin;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import HMS.Appointment.*;
+import HMS.Pharmacist.*;
+import HMS.User.*;
 
 public class Administrator extends User {
     private List<User> staff;

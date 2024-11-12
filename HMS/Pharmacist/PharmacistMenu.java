@@ -1,7 +1,9 @@
-package HMS;
+package HMS.Pharmacist;
 
 import java.util.List;
 import java.util.Scanner;
+import HMS.Appointment.*;
+import HMS.User.*;
 
 public class PharmacistMenu implements UserMenu {
     private Pharmacist pharmacist;

@@ -1,10 +1,12 @@
-package HMS;
+package HMS.Patient;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import HMS.Appointment.*;
+import HMS.User.*;
 
 public class Patient extends User {
     private String name;

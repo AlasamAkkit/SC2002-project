@@ -1,8 +1,9 @@
-package HMS;
+package HMS.Appointment;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import HMS.Pharmacist.*;
 
 public class Appointment {
     private String appointmentID;

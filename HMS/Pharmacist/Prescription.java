@@ -1,4 +1,4 @@
-package HMS;
+package HMS.Pharmacist;
 
 public class Prescription {
     private String medicationName;

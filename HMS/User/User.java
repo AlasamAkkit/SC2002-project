@@ -1,4 +1,4 @@
-package HMS;
+package HMS.User;
 
 public class User {
     private String hospitalID;

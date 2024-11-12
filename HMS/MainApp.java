@@ -2,6 +2,12 @@ package HMS;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import HMS.Doctor.*;
+import HMS.Admin.*;
+import HMS.Appointment.*;
+import HMS.Patient.*;
+import HMS.Pharmacist.*;
+import HMS.User.*;
 
 public class MainApp {
     private static List<User> users = new ArrayList<>(); // All users in the system
