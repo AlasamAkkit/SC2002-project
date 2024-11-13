@@ -22,8 +22,7 @@ public class Patient extends User {
     // Constructor
     public Patient(String hospitalID, String name, String dateOfBirth, String gender,
                    String contactNumber, String emailAddress, String bloodType) {
-        super(hospitalID, "Patient");
-        this.name = name;
+        super(hospitalID, "Patient", name);
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.contactNumber = contactNumber;
@@ -35,14 +34,37 @@ public class Patient extends User {
     }
 
     // Getters
-    public String getName() { return name; }
-    public String getDateOfBirth() { return dateOfBirth; }
-    public String getGender() { return gender; }
-    public String getContactNumber() { return contactNumber; }
-    public String getEmailAddress() { return emailAddress; }
-    public String getBloodType() { return bloodType; }
-    public List<String> getPastDiagnoses() { return new ArrayList<>(pastDiagnoses); }
-    public List<String> getTreatments() { return new ArrayList<>(treatments); }
+    public String getName(){ 
+        return name; 
+    }
+
+    public String getDateOfBirth() { 
+        return dateOfBirth; 
+    }
+
+    public String getGender() { 
+        return gender; 
+    }
+
+    public String getContactNumber() { 
+        return contactNumber; 
+    }
+
+    public String getEmailAddress() { 
+        return emailAddress; 
+    }
+
+    public String getBloodType() { 
+        return bloodType; 
+    }
+
+    public List<String> getPastDiagnoses() { 
+        return new ArrayList<>(pastDiagnoses); 
+    }
+
+    public List<String> getTreatments() { 
+        return new ArrayList<>(treatments); 
+    }
 
     // Setters for updating personal information
     public void setContactNumber(String contactNumber) {

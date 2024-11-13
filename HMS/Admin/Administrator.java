@@ -11,8 +11,8 @@ public class Administrator extends User {
     private List<Appointment> appointments;
     private Map<String, Medication> inventory;
 
-    public Administrator(String hospitalID, String role, List<User> staff, List<Appointment> appointments, Map<String, Medication> inventory) {
-        super(hospitalID, role);
+    public Administrator(String hospitalID, String role, String name, List<User> staff, List<Appointment> appointments, Map<String, Medication> inventory) {
+        super(hospitalID, role, name);
         this.staff = staff;
         this.appointments = appointments;
         this.inventory = inventory;
@@ -44,7 +44,7 @@ public class Administrator extends User {
         System.out.println("Listing staff with role: " + role);
         staff.stream()
             .filter(user -> user.getRole().equals(role))
-            .forEach(user -> System.out.println(user.getHospitalID() + " - " + user.getRole()));
+            .forEach(user -> System.out.println(user.getHospitalID() + " - " + user.getRole() + " - " + user.getName()));
     }
 
     // Appointment Management Methods

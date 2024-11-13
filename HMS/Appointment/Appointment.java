@@ -24,14 +24,33 @@ public class Appointment {
     }
 
     // Getters and setters
-    public String getAppointmentID() { return appointmentID; }
-    public String getPatientID() { return patientID; }
-    public String getDoctorID() { return doctorID; }
-    public LocalDateTime getAppointmentTime() { return appointmentTime; }
-    public String getStatus() { return status; }
+    public String getAppointmentID() { 
+        return appointmentID; 
+    }
 
-    public void setAppointmentTime(LocalDateTime appointmentTime) { this.appointmentTime = appointmentTime; }
-    public void setStatus(String status) { this.status = status; }
+    public String getPatientID() { 
+        return patientID; 
+    }
+
+    public String getDoctorID() { 
+        return doctorID; 
+    }
+
+    public LocalDateTime getAppointmentTime() { 
+        return appointmentTime; 
+    }
+
+    public String getStatus() { 
+        return status; 
+    }
+
+    public void setAppointmentTime(LocalDateTime appointmentTime) { 
+        this.appointmentTime = appointmentTime; 
+    }
+
+    public void setStatus(String status) { 
+        this.status = status; 
+    }
 
     // Method to add a prescription to the appointment
     public void addPrescription(Prescription prescription) {

@@ -77,21 +77,21 @@ public class MainApp {
         // Add sample patients
         Patient patient1 = new Patient("P001", "Alice", "1990-01-01", "Female", "1234567890", "alice@example.com", "A+");
         Patient patient2 = new Patient("P002", "Bob", "1985-05-05", "Male", "0987654321", "bob@example.com", "O-");
-        patients.add(patient1);
-        patients.add(patient2);
+        users.add(patient1);
+        users.add(patient2);
 
         // Add sample doctors
-        Doctor doctor1 = new Doctor("D001", "Doctor");
-        Doctor doctor2 = new Doctor("D002", "Doctor");
+        Doctor doctor1 = new Doctor("D001", "Doctor", "Dr Tan");
+        Doctor doctor2 = new Doctor("D002", "Doctor", "Dr Tim");
         users.add(doctor1);
         users.add(doctor2);
 
         // Add sample pharmacists
-        Pharmacist pharmacist1 = new Pharmacist("PH001", "Pharmacist", inventory);
+        Pharmacist pharmacist1 = new Pharmacist("PH001", "Pharmacist", "Dr Tom", inventory);
         users.add(pharmacist1);
 
         // Add sample administrator
-        Administrator admin = new Administrator("A001", "Administrator", users, appointments, inventory);
+        Administrator admin = new Administrator("A001", "Administrator", "Mr admin", users, appointments, inventory);
         users.add(admin);
 
         // Add sample medications

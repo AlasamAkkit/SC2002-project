@@ -4,13 +4,15 @@ public class User {
     private String hospitalID;
     private String password;
     private String role; // Roles can be Patient, Doctor, Pharmacist, Administrator
+    private String name;
     private boolean isFirstLogin;
 
     // Constructor
-    public User(String hospitalID, String role) {
+    public User(String hospitalID, String role, String name) {
         this.hospitalID = hospitalID;
         this.password = "password"; // Default password set as per the assignment requirement
         this.role = role;
+        this.name = name;
         this.isFirstLogin = true; // Flag to enforce password change on first login
     }
 
@@ -19,6 +21,10 @@ public class User {
         return hospitalID;
     }
 
+    public String getName(){
+        return name;
+    }
+    
     // Getter for Role
     public String getRole() {
         return role;
