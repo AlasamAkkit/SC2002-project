@@ -3,9 +3,9 @@ package HMS.Pharmacist;
 import java.util.List;
 import java.util.Scanner;
 import HMS.Appointment.*;
-import HMS.User.*;
+import HMS.Staff.StaffMenu;
 
-public class PharmacistMenu implements UserMenu {
+public class PharmacistMenu implements StaffMenu {
     private Pharmacist pharmacist;
     private List<Appointment> appointments; // List of appointments for prescription orders
     private Scanner scanner;

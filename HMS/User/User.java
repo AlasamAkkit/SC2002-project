@@ -4,14 +4,16 @@ public class User {
     private String hospitalID;
     private String password;
     private String role; // Roles can be Patient, Doctor, Pharmacist, Administrator
-    private boolean isFirstLogin;
+    private String name;
+    private boolean isFirstLogin; // Add the first login flag
 
     // Constructor
-    public User(String hospitalID, String role) {
+    public User(String hospitalID, String role, String name) {
         this.hospitalID = hospitalID;
         this.password = "password"; // Default password set as per the assignment requirement
         this.role = role;
-        this.isFirstLogin = true; // Flag to enforce password change on first login
+        this.name = name;
+        this.isFirstLogin = true; // Initially set as true for first-time login
     }
 
     // Getter for Hospital ID
@@ -19,6 +21,10 @@ public class User {
         return hospitalID;
     }
 
+    public String getName() {
+        return name;
+    }
+    
     // Getter for Role
     public String getRole() {
         return role;
@@ -30,18 +36,15 @@ public class User {
         System.out.println("Role updated to " + role + " for user: " + hospitalID);
     }
 
-    public String getPassword() {
-        return password;
-    }
-
+    // Getter for first login status
     public boolean isFirstLogin() {
         return isFirstLogin;
     }
 
     // Login method that checks the password and updates login status
     public boolean login(String inputPassword) {
-        if (this.password.trim().equals(inputPassword.trim())) {
-            if (isFirstLogin) {
+        if (this.password.equals(inputPassword)) {
+            if (isFirstLogin && !this.getRole().equals("Patient")) {
                 System.out.println("First-time login detected - please change your password.");
             }
             return true; // Login successful
@@ -59,7 +62,7 @@ public class User {
             return false;
         } else {
             this.password = newPassword;
-            this.isFirstLogin = false;
+            this.isFirstLogin = false; // After changing the password, mark it as no longer the first login
             System.out.println("Password successfully changed.");
             return true;
         }
@@ -70,4 +73,3 @@ public class User {
         isFirstLogin = true;
     }
 }
-

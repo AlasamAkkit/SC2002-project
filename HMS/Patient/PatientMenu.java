@@ -3,9 +3,9 @@ package HMS.Patient;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import HMS.Appointment.*;
-import HMS.User.*;
+import HMS.Staff.StaffMenu;
 
-public class PatientMenu implements UserMenu {
+public class PatientMenu implements StaffMenu {
     private Patient patient;
     private Scanner scanner;
 

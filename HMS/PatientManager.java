@@ -32,14 +32,10 @@ public class PatientManager {
                     String bloodType = patientData[6];
 
                     // Print out the loaded patient for debugging
-                    System.out.println("Loaded Patient: " + patientID + ", " + name);
-
-                    // Set role as "Patient"
-                    String role = "Patient"; // Assuming all users in the CSV are patients
                     Patient patient = new Patient(patientID, name, dob, gender, contact, email, bloodType);
-                    
                     users.add(patient);
                     patients.add(patient);
+                    System.out.println("Loaded Patient: " + patientID + ", " + name); // Debugging line
                 }
             }
         } catch (IOException e) {
@@ -108,9 +104,10 @@ public class PatientManager {
 
     // Check if the patient is logging in for the first time
     public static boolean isFirstTimeLogin(String patientID) {
-        // Check if the patient exists in the list (which was populated from CSV)
         for (Patient patient : patients) {
+            System.out.println("Checking against patient: " + patient.getPatientID());
             if (patient.getPatientID().equals(patientID)) {
+                System.out.println("Patient found: " + patient.getPatientID());
                 return false; // Patient exists, not first-time login
             }
         }

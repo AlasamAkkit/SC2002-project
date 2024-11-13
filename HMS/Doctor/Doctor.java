@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Optional;
 import HMS.Appointment.*;
 import HMS.Patient.*;
-import HMS.User.*;
+import HMS.Staff.*;
 
-public class Doctor extends User {
+public class Doctor extends Staff {
     private List<Appointment> appointments;
     private List<String> availabilitySlots;
 
     // Constructor
-    public Doctor(String hospitalID, String role) {
-        super(hospitalID, role);
+    public Doctor(String hospitalID, String role, String name, String gender, String age) {
+        super(hospitalID, name, role, gender, age);
         this.appointments = new ArrayList<>();
         this.availabilitySlots = new ArrayList<>();
     }
@@ -90,4 +90,3 @@ public class Doctor extends User {
         return null;
     }
 }
-

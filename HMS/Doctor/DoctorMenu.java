@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import HMS.Patient.*;
-import HMS.User.*;
+import HMS.Staff.*;
 
-public class DoctorMenu implements UserMenu {
+public class DoctorMenu implements StaffMenu {
     private Doctor doctor;
     private List<Patient> patients; // List of patients that doctor can access
     private Scanner scanner;

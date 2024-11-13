@@ -21,11 +21,10 @@ public class Patient extends User {
     private List<Appointment> appointments;
 
     // Constructor
-    public Patient(String patientID, String name, String dateOfBirth, String gender,
+    public Patient(String hospitalID, String name, String dateOfBirth, String gender,
                    String contactNumber, String emailAddress, String bloodType) {
-        super(patientID, "Patient");
-        this.patientID = patientID;
-        this.name = name;
+        super(hospitalID, "Patient", name);
+        this.patientID = hospitalID;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.contactNumber = contactNumber;
@@ -68,9 +67,8 @@ public class Patient extends User {
             treatments.add(treatment);
         }
     }
-    
 
- // Method to display medical record
+    // Method to display medical record
     public void viewMedicalRecord() {
         System.out.println("Medical Record:");
         System.out.println("Patient ID: " + getHospitalID());

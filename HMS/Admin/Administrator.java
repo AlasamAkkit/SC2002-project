@@ -4,22 +4,23 @@ import java.util.List;
 import java.util.Map;
 import HMS.Appointment.*;
 import HMS.Pharmacist.*;
-import HMS.User.*;
+import HMS.Staff.*;
+import HMS.User.User;
 
-public class Administrator extends User {
-    private List<User> staff;
+public class Administrator extends Staff {
+    private List<Staff> staff;
     private List<Appointment> appointments;
     private Map<String, Medication> inventory;
 
-    public Administrator(String hospitalID, String role, List<User> staff, List<Appointment> appointments, Map<String, Medication> inventory) {
-        super(hospitalID, role);
+    public Administrator(String hospitalID, String role, String name, String gender, String age, List<Staff> staff, List<Appointment> appointments, Map<String, Medication> inventory) {
+        super(hospitalID, role, name, gender, age);
         this.staff = staff;
         this.appointments = appointments;
         this.inventory = inventory;
     }
 
     // Staff Management Methods
-    public void addStaff(User user) {
+    public void addStaff(Staff user) {
         staff.add(user);
         System.out.println("Staff member added: " + user.getHospitalID());
     }
@@ -44,7 +45,7 @@ public class Administrator extends User {
         System.out.println("Listing staff with role: " + role);
         staff.stream()
             .filter(user -> user.getRole().equals(role))
-            .forEach(user -> System.out.println(user.getHospitalID() + " - " + user.getRole()));
+            .forEach(user -> System.out.println(user.getHospitalID() + " - " + user.getRole() + " - " + user.getName()));
     }
 
     // Appointment Management Methods
@@ -88,4 +89,3 @@ public class Administrator extends User {
         }
     }
 }
-

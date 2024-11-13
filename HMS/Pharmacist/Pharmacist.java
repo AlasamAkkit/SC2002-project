@@ -3,14 +3,15 @@ package HMS.Pharmacist;
 import java.util.List;
 import java.util.Map;
 import HMS.Appointment.*;
-import HMS.User.*;
 
-public class Pharmacist extends User {
+import HMS.Staff.*;
+
+public class Pharmacist extends Staff {
     private Map<String, Medication> inventory; // Inventory of medications by name
 
     // Constructor
-    public Pharmacist(String hospitalID, String role, Map<String, Medication> inventory) {
-        super(hospitalID, role);
+    public Pharmacist(String hospitalID, String role, String name, String gender, String age, Map<String, Medication> inventory) {
+        super(hospitalID, role, name, gender, age);
         this.inventory = inventory;
     }
 

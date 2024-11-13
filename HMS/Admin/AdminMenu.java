@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Scanner;
 import HMS.Doctor.*;
 import HMS.Pharmacist.*;
-import HMS.User.*;
+import HMS.Staff.*;
 
-public class AdminMenu implements UserMenu {
+public class AdminMenu implements StaffMenu {
     private Administrator admin;
     private Scanner scanner;
 
@@ -16,7 +16,6 @@ public class AdminMenu implements UserMenu {
         this.scanner = new Scanner(System.in);
     }
 
-    @Override
     public void displayMenu() {
         int choice;
         do {
@@ -73,13 +72,19 @@ public class AdminMenu implements UserMenu {
         String staffID = scanner.nextLine();
         System.out.println("Enter role (Doctor, Pharmacist):");
         String role = scanner.nextLine();
+        System.out.println("Enter name:");
+        String name = scanner.nextLine();
+        System.out.println("Enter gender:");
+        String gender = scanner.nextLine();
+        System.out.println("Enter age:");
+        String age = scanner.nextLine();
         if (role.equalsIgnoreCase("Doctor")) {
-            User newUser = new Doctor(staffID, role);
+            Staff newUser = new Doctor(staffID, role, name, gender, age);
             admin.addStaff(newUser);
         } else if (role.equalsIgnoreCase("Pharmacist")) {
             // Pass an empty or initialized inventory map as needed
             Map<String, Medication> inventory = new HashMap<>();
-            User newUser = new Pharmacist(staffID, role, inventory);
+            Staff newUser = new Pharmacist(staffID, role, name, gender, age, inventory);
             admin.addStaff(newUser);
         }
     }
@@ -132,4 +137,3 @@ public class AdminMenu implements UserMenu {
         admin.approveReplenishmentRequest(medicationName, quantity);
     }
 }
-

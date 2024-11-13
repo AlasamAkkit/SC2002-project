@@ -7,7 +7,6 @@ import HMS.Patient.*;
 
 public class LoginHandler {
     private List<User> users; // List of all users in the system
-
     // Constructor to initialize with the list of users
     public LoginHandler(List<User> users) {
         this.users = users;
@@ -29,24 +28,27 @@ public class LoginHandler {
             System.out.println("Login successful!");
 
             // Handle first-time login if the user is a patient
-            if (role.equalsIgnoreCase("Patient") && PatientManager.isFirstTimeLogin(hospitalID)) {
-                handleFirstTimeLogin(hospitalID, scanner);
+            if (role.equalsIgnoreCase("Patient")) {
+                if (PatientManager.isFirstTimeLogin(hospitalID)) {
+                    handleFirstTimeLogin(hospitalID, scanner);
+                } else {
+                    System.out.println("Welcome back, " + hospitalID + "!");
+                }
             } else {
-                System.out.println("Welcome back!");
+                System.out.println("Welcome back!" + role);
             }
         } else {
             System.out.println("Invalid login. Please try again.\n");
         }
-
         return user;
     }
 
     // Method to authenticate user based on ID, role, and password
     private User authenticate(String hospitalID, String role, String password) {
         for (User user : users) {
-            if (user.getHospitalID().equals(hospitalID) && user.getRole().equalsIgnoreCase(role)) {
+            if (user.getHospitalID().equalsIgnoreCase(hospitalID) && user.getRole().equalsIgnoreCase(role)) {
                 if (user.login(password)) {
-                    return user;
+                    return user; // Return the correct user instance
                 } else {
                     System.out.println("Invalid password.");
                     return null;
