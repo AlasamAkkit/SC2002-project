@@ -12,8 +12,8 @@ public class Doctor extends User {
     private List<String> availabilitySlots;
 
     // Constructor
-    public Doctor(String hospitalID, String role, String name) {
-        super(hospitalID, role, name);
+    public Doctor(String hospitalID, String role) {
+        super(hospitalID, role);
         this.appointments = new ArrayList<>();
         this.availabilitySlots = new ArrayList<>();
     }

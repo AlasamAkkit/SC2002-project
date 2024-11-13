@@ -73,15 +73,13 @@ public class AdminMenu implements UserMenu {
         String staffID = scanner.nextLine();
         System.out.println("Enter role (Doctor, Pharmacist):");
         String role = scanner.nextLine();
-        System.out.println("Enter name:");
-        String name = scanner.nextLine();
         if (role.equalsIgnoreCase("Doctor")) {
-            User newUser = new Doctor(staffID, role, name);
+            User newUser = new Doctor(staffID, role);
             admin.addStaff(newUser);
         } else if (role.equalsIgnoreCase("Pharmacist")) {
             // Pass an empty or initialized inventory map as needed
             Map<String, Medication> inventory = new HashMap<>();
-            User newUser = new Pharmacist(staffID, role, name, inventory);
+            User newUser = new Pharmacist(staffID, role, inventory);
             admin.addStaff(newUser);
         }
     }

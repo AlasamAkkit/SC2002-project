@@ -9,6 +9,7 @@ import HMS.Appointment.*;
 import HMS.User.*;
 
 public class Patient extends User {
+    private String patientID;
     private String name;
     private String dateOfBirth; // Format: YYYY-MM-DD
     private String gender; // Options: Male, Female, Other
@@ -20,9 +21,11 @@ public class Patient extends User {
     private List<Appointment> appointments;
 
     // Constructor
-    public Patient(String hospitalID, String name, String dateOfBirth, String gender,
+    public Patient(String patientID, String name, String dateOfBirth, String gender,
                    String contactNumber, String emailAddress, String bloodType) {
-        super(hospitalID, "Patient", name);
+        super(patientID, "Patient");
+        this.patientID = patientID;
+        this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.contactNumber = contactNumber;
@@ -34,37 +37,15 @@ public class Patient extends User {
     }
 
     // Getters
-    public String getName(){ 
-        return name; 
-    }
-
-    public String getDateOfBirth() { 
-        return dateOfBirth; 
-    }
-
-    public String getGender() { 
-        return gender; 
-    }
-
-    public String getContactNumber() { 
-        return contactNumber; 
-    }
-
-    public String getEmailAddress() { 
-        return emailAddress; 
-    }
-
-    public String getBloodType() { 
-        return bloodType; 
-    }
-
-    public List<String> getPastDiagnoses() { 
-        return new ArrayList<>(pastDiagnoses); 
-    }
-
-    public List<String> getTreatments() { 
-        return new ArrayList<>(treatments); 
-    }
+    public String getPatientID() { return patientID; }
+    public String getName() { return name; }
+    public String getDateOfBirth() { return dateOfBirth; }
+    public String getGender() { return gender; }
+    public String getContactNumber() { return contactNumber; }
+    public String getEmailAddress() { return emailAddress; }
+    public String getBloodType() { return bloodType; }
+    public List<String> getPastDiagnoses() { return new ArrayList<>(pastDiagnoses); }
+    public List<String> getTreatments() { return new ArrayList<>(treatments); }
 
     // Setters for updating personal information
     public void setContactNumber(String contactNumber) {

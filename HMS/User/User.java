@@ -4,15 +4,13 @@ public class User {
     private String hospitalID;
     private String password;
     private String role; // Roles can be Patient, Doctor, Pharmacist, Administrator
-    private String name;
     private boolean isFirstLogin;
 
     // Constructor
-    public User(String hospitalID, String role, String name) {
+    public User(String hospitalID, String role) {
         this.hospitalID = hospitalID;
         this.password = "password"; // Default password set as per the assignment requirement
         this.role = role;
-        this.name = name;
         this.isFirstLogin = true; // Flag to enforce password change on first login
     }
 
@@ -21,10 +19,6 @@ public class User {
         return hospitalID;
     }
 
-    public String getName(){
-        return name;
-    }
-    
     // Getter for Role
     public String getRole() {
         return role;
@@ -36,9 +30,17 @@ public class User {
         System.out.println("Role updated to " + role + " for user: " + hospitalID);
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isFirstLogin() {
+        return isFirstLogin;
+    }
+
     // Login method that checks the password and updates login status
     public boolean login(String inputPassword) {
-        if (this.password.equals(inputPassword)) {
+        if (this.password.trim().equals(inputPassword.trim())) {
             if (isFirstLogin) {
                 System.out.println("First-time login detected - please change your password.");
             }

@@ -9,8 +9,8 @@ public class Pharmacist extends User {
     private Map<String, Medication> inventory; // Inventory of medications by name
 
     // Constructor
-    public Pharmacist(String hospitalID, String role, String name, Map<String, Medication> inventory) {
-        super(hospitalID, role, name);
+    public Pharmacist(String hospitalID, String role, Map<String, Medication> inventory) {
+        super(hospitalID, role);
         this.inventory = inventory;
     }
 
