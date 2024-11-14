@@ -125,4 +125,13 @@ public class PatientManager {
         }
         return true;
     }
+
+    public static Patient findPatientById(String patientId) {
+        for (Patient patient : patients) {
+            if (patient.getPatientID().equals(patientId)) {
+                return patient;
+            }
+        }
+        return null; // Return null if no patient found
+    }
 }

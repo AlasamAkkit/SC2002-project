@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import HMS.StaffManager;
+import HMS.Manager.*;
 import HMS.Appointment.*;
 import HMS.Doctor.*;
 import HMS.Pharmacist.*;

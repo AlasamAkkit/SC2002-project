@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import HMS.Appointment.*;
+import HMS.Manager.PatientManager;
 import HMS.Patient.*;
 import HMS.Staff.*;
 
@@ -37,12 +38,7 @@ public class Doctor extends Staff {
     }
 
     public Patient findPatientById(String patientId) {
-        for (Patient patient : patients) {
-            if (patient.getPatientID().equals(patientId)) {
-                return patient;
-            }
-        }
-        return null;
+        return PatientManager.findPatientById(patientId); // Assumes PatientManager has a static method to find patients
     }
 
     // Method to view medical records of a patient
@@ -51,11 +47,15 @@ public class Doctor extends Staff {
     }
 
     // Method to update patient medical record
-    public void updatePatientMedicalRecord(Patient patient, String diagnosis, String treatment, String medication) {
-        patient.addDiagnosis(diagnosis);
-        patient.addTreatment(treatment);
-        // Assume medications are handled elsewhere
-        System.out.println("Medical records updated for patient ID: " + patient.getHospitalID());
+    public void updatePatientMedicalRecord(String patientId, String diagnosis, String treatment, String medication) {
+        Patient patient = PatientManager.findPatientById(patientId);
+        if (patient != null) {
+            patient.addDiagnosis(diagnosis);
+            patient.addTreatment(treatment);
+            System.out.println("Updated medical records for Patient ID: " + patientId);
+        } else {
+            System.out.println("Patient not found.");
+        }
     }
 
     // Set availability slots

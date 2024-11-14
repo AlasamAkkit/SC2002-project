@@ -9,12 +9,10 @@ import HMS.Staff.StaffMenu;
 
 public class DoctorMenu implements StaffMenu{
     private Doctor doctor;
-    private List<Patient> patients; // List of patients that doctor can access
     private Scanner scanner;
 
     public DoctorMenu(Doctor doctor, List<Patient> patients) {
         this.doctor = doctor;
-        this.patients = patients;
         this.scanner = new Scanner(System.in);
     }
 
@@ -69,25 +67,24 @@ public class DoctorMenu implements StaffMenu{
     private void viewPatientMedicalRecords() {
         System.out.println("Enter patient ID:");
         String patientId = scanner.next();
-        Patient patient = doctor.findPatientById(patientId, patients);
+        Patient patient = doctor.findPatientById(patientId);
         if (patient != null) {
             doctor.viewPatientMedicalRecord(patient);
+        } else {
+            System.out.println("Patient not found.");
         }
     }
 
     private void updatePatientMedicalRecords() {
         System.out.println("Enter patient ID:");
         String patientId = scanner.next();
-        Patient patient = doctor.findPatientById(patientId, patients);
-        if (patient != null) {
-            System.out.println("Enter diagnosis:");
-            String diagnosis = scanner.next();
-            System.out.println("Enter treatment:");
-            String treatment = scanner.next();
-            System.out.println("Enter medication:");
-            String medication = scanner.next();
-            doctor.updatePatientMedicalRecord(patient, diagnosis, treatment, medication);
-        }
+        System.out.println("Enter diagnosis:");
+        String diagnosis = scanner.next();
+        System.out.println("Enter treatment:");
+        String treatment = scanner.next();
+        System.out.println("Enter medication:");
+        String medication = scanner.next();
+        doctor.updatePatientMedicalRecord(patientId, diagnosis, treatment, medication);
     }
 
     private void setAvailability() {

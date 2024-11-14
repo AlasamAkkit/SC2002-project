@@ -2,8 +2,7 @@ package HMS.Admin;
 
 import java.util.List;
 import java.util.Map;
-
-import HMS.StaffManager;
+import HMS.Manager.*;
 import HMS.Appointment.*;
 import HMS.Pharmacist.*;
 import HMS.Staff.*;

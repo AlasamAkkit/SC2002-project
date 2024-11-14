@@ -5,6 +5,7 @@ import java.util.Scanner;
 import HMS.User.*;
 import HMS.Patient.*;
 import HMS.Staff.Staff;
+import HMS.Manager.*;
 
 public class LoginHandler {
     private List<User> users; // List of all users in the system

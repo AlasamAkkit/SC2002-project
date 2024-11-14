@@ -9,6 +9,7 @@ import HMS.Patient.*;
 import HMS.Pharmacist.*;
 import HMS.Staff.*;
 import HMS.User.*;
+import HMS.Manager.*;
 
 public class MainApp {
     private static List<User> users = new ArrayList<>(); // All users in the system
