@@ -1,7 +1,0 @@
-HospitalID,Name,Role,Gender,Age,Password,loginCount
-D001,John Smith,Doctor,Male,45,qwer,1
-D002,Emily Clarke,Doctor,Female,38,123,2
-P001,Mark Lee,Pharmacist,Male,29,123,3
-A001,Sarah Lee,Administrator,Female,40,123,4
-D005,eerty,Doctor,Male,63,123,1
-D006,Dr tan,Doctor,male,36,password,0
