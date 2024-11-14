@@ -2,6 +2,8 @@ package HMS.Pharmacist;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+
 import HMS.Appointment.*;
 
 import HMS.Staff.*;
@@ -24,11 +26,40 @@ public class Pharmacist extends Staff {
     }
 
     // Update prescription status
-    public void updatePrescriptionStatus(String medicationName) {
+    public void updatePrescriptionStatus(List<Appointment> appointments) {
+        // Get input of appointment ID 
+        // Dispense medicine and update inventory
+        // Mark prescription as dispensed
+
+        // get list of all appointments/prescriptions
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Appointment ID for dispensing medicine : ");
+        String appointment_ID = sc.nextLine();
+        Appointment tempApt = null;
+        
+        for (Appointment appointment : appointments){
+            //System.out.println(appointment.getAppointmentID()); //debug
+            if (appointment.getAppointmentID().equals(appointment_ID)){
+                tempApt = appointment;
+            }
+            }
+        if (tempApt == null)
+        {
+            System.out.println("Appointment not found");
+            return;
+        }
+
+        String medicationName = tempApt.getMedicationName();
+        System.out.println(medicationName);
         Medication medication = inventory.get(medicationName);
         if (medication != null && medication.getStockLevel() > 0) {
-            medication.dispense(); // Assume this method reduces stock and marks as dispensed
+            medication.dispense(); // This method reduces stock of medicine by 1
             System.out.println("Prescription for " + medicationName + " dispensed.");
+            for (Appointment appointment : appointments){
+                if (appointment.getAppointmentID().equals(appointment_ID)){
+                    appointment.setStatus("Dispensed");
+                }
+                }
         } else {
             System.out.println("Insufficient stock or medication not found.");
         }

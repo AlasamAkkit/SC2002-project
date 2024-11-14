@@ -91,6 +91,12 @@ public class MainApp {
         appointments.add(new Appointment("A001", "P001", "D001", LocalDateTime.now().plusDays(1)));
         appointments.add(new Appointment("A002", "P002", "D002", LocalDateTime.now().plusDays(2)));
 
+        // Add sample appointments for Pharmacist test case
+        Appointment apt3 = new Appointment("A003", "P002", "D002", LocalDateTime.now().plusDays(3));
+        apt3.setStatus("Completed");
+        apt3.addPrescription(new Prescription("Aspirin"));
+        appointments.add(apt3);
+
         System.out.println("Sample data initialized.");
     }
 }

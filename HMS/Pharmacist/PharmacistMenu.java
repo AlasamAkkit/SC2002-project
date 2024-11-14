@@ -1,9 +1,9 @@
 package HMS.Pharmacist;
 
-import java.util.List;
-import java.util.Scanner;
 import HMS.Appointment.*;
 import HMS.Staff.StaffMenu;
+import java.util.List;
+import java.util.Scanner;
 
 public class PharmacistMenu implements StaffMenu {
     private Pharmacist pharmacist;
@@ -35,7 +35,7 @@ public class PharmacistMenu implements StaffMenu {
                     pharmacist.viewPrescriptionOrders(appointments);
                     break;
                 case 2:
-                    updatePrescriptionStatus();
+                    pharmacist.updatePrescriptionStatus(appointments);
                     break;
                 case 3:
                     pharmacist.viewInventory();
@@ -52,10 +52,13 @@ public class PharmacistMenu implements StaffMenu {
         } while (choice != 5);
     }
 
+    /* 
     private void updatePrescriptionStatus() {
         System.out.println("Enter medication name to update prescription status:");
         String medicationName = scanner.nextLine();
         pharmacist.updatePrescriptionStatus(medicationName);
     }
+    */
+
 }
 

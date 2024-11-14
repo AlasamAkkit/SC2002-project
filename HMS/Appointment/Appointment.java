@@ -1,10 +1,10 @@
 package HMS.Appointment;
 
+import HMS.Pharmacist.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import HMS.Pharmacist.*;
 
 public class Appointment {
     private String appointmentID;
@@ -55,6 +55,16 @@ public class Appointment {
         for (Prescription prescription : prescriptions) {
             details.append("Medication: ").append(prescription.getMedicationName())
                    .append(", Status: ").append(prescription.getStatus()).append("\n");
+        }
+        return details.toString();
+    }
+
+    public String getMedicationName() {
+        
+        StringBuilder details = new StringBuilder();
+        for (Prescription prescription : prescriptions) {
+            details.append(prescription.getMedicationName())
+                   ;
         }
         return details.toString();
     }
