@@ -22,9 +22,10 @@ public class Patient extends User {
 
     // Constructor
     public Patient(String hospitalID, String name, String dateOfBirth, String gender,
-                   String contactNumber, String emailAddress, String bloodType) {
-        super(hospitalID, "Patient", name);
+                   String contactNumber, String emailAddress, String bloodType, String password, int loginCount) {
+        super(hospitalID, "Patient", name, password, loginCount);
         this.patientID = hospitalID;
+        this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.contactNumber = contactNumber;
@@ -53,6 +54,10 @@ public class Patient extends User {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String toString() {
+        return "Staff [ID=" + getPatientID() + ", Name=" + getName() + ", Role=" + getRole() + ", Gender=" + gender + "]";
     }
 
     // Functionality to add medical records (Diagnoses and Treatments)

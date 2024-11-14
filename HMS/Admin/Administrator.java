@@ -2,6 +2,8 @@ package HMS.Admin;
 
 import java.util.List;
 import java.util.Map;
+
+import HMS.StaffManager;
 import HMS.Appointment.*;
 import HMS.Pharmacist.*;
 import HMS.Staff.*;
@@ -12,11 +14,15 @@ public class Administrator extends Staff {
     private List<Appointment> appointments;
     private Map<String, Medication> inventory;
 
-    public Administrator(String hospitalID, String role, String name, String gender, String age, List<Staff> staff, List<Appointment> appointments, Map<String, Medication> inventory) {
-        super(hospitalID, role, name, gender, age);
+    public Administrator(String hospitalID, String role, String name, String gender, String age, List<Staff> staff, List<Appointment> appointments, Map<String, Medication> inventory, String password, int loginCount) {
+        super(hospitalID, role, name, gender, age, password, loginCount);
         this.staff = staff;
         this.appointments = appointments;
         this.inventory = inventory;
+    }
+
+    public List<Staff> getStaff() {
+        return staff; // Returns the list of staff
     }
 
     // Staff Management Methods
@@ -27,6 +33,11 @@ public class Administrator extends Staff {
 
     public void removeStaff(String hospitalID) {
         staff.removeIf(user -> user.getHospitalID().equals(hospitalID));
+
+        // Also remove from the main staff list in StaffManager
+        List<Staff> mainStaffList = StaffManager.getStaffList();
+        mainStaffList.removeIf(user -> user.getHospitalID().equals(hospitalID));
+
         System.out.println("Staff member removed: " + hospitalID);
     }
 
@@ -50,12 +61,12 @@ public class Administrator extends Staff {
 
     // Appointment Management Methods
     public void viewAppointments() {
-        System.out.println("Appointments:");
-        appointments.forEach(appointment -> System.out.println("Appointment ID: " + appointment.getAppointmentID() +
-                                                               ", Patient ID: " + appointment.getPatientID() +
-                                                               ", Doctor ID: " + appointment.getDoctorID() +
-                                                               ", Status: " + appointment.getStatus() +
-                                                               ", Time: " + appointment.getAppointmentTime()));
+        if (appointments == null || appointments.isEmpty()) {
+            System.out.println("No appointments to display.");
+        } else {
+            System.out.println("Appointments:");
+            appointments.forEach(System.out::println); // Print each appointment
+        }
     }
 
     // Inventory Management Methods

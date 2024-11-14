@@ -10,8 +10,8 @@ public class Pharmacist extends Staff {
     private Map<String, Medication> inventory; // Inventory of medications by name
 
     // Constructor
-    public Pharmacist(String hospitalID, String role, String name, String gender, String age, Map<String, Medication> inventory) {
-        super(hospitalID, role, name, gender, age);
+    public Pharmacist(String hospitalID, String role, String name, String gender, String age, Map<String, Medication> inventory, String password, int loginCount) {
+        super(hospitalID, role, name, gender, age, password, loginCount);
         this.inventory = inventory;
     }
 
@@ -46,5 +46,9 @@ public class Pharmacist extends Staff {
         inventory.values().stream()
             .filter(Medication::isBelowThreshold)
             .forEach(med -> System.out.println("Replenishment request submitted for " + med.getMedicationName()));
+    }
+
+    public Map<String, Medication> getInventory() {
+        return inventory;
     }
 }

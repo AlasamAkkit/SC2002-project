@@ -1,6 +1,7 @@
 package HMS.Appointment;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import HMS.Pharmacist.*;
@@ -32,6 +33,11 @@ public class Appointment {
 
     public void setAppointmentTime(LocalDateTime appointmentTime) { this.appointmentTime = appointmentTime; }
     public void setStatus(String status) { this.status = status; }
+
+    public String getAppointmentDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return appointmentTime.format(formatter);
+    }
 
     // Method to add a prescription to the appointment
     public void addPrescription(Prescription prescription) {

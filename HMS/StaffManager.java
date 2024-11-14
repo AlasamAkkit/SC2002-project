@@ -2,15 +2,20 @@ package HMS;
 
 import java.io.*;
 import java.util.*;
+
+import HMS.Admin.Administrator;
+import HMS.Doctor.Doctor;
+import HMS.Pharmacist.*;
 import HMS.Staff.*;
 import HMS.User.*;
+import HMS.Appointment.*;
 
 public class StaffManager {
     private static final String CSV_FILE = "Staff_List.csv"; // Path to the CSV file for staff data
     private static List<Staff> staffList = new ArrayList<>(); // List to store staff data
 
     // Load staff data from CSV file
-    public static void loadStaff(List<User> users) {
+    public static void loadStaff(List<User> users, List<Appointment> appointments, Map<String, Medication> inventory) {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
             System.err.println("CSV file does not exist at path: " + file.getAbsolutePath());
@@ -22,15 +27,33 @@ public class StaffManager {
             br.readLine(); // Skip the header line
             while ((line = br.readLine()) != null) {
                 String[] staffData = line.split(",");
-                if (staffData.length == 5) { // Assuming 5 columns: staffID, name, role, contact, email
+                if (staffData.length == 7) { // Assuming 5 columns: staffID, name, role, contact, email
                     String staffID = staffData[0];
                     String name = staffData[1];
                     String role = staffData[2];
                     String gender = staffData[3];
                     String age = staffData[4];
+                    String password = staffData[5];
+                    int loginCount = Integer.parseInt(staffData[6]);
 
-                    // Print out the loaded staff for debugging
-                    Staff staff = new Staff(staffID, name, role, gender, age);
+                    Staff staff = null;
+                    char firstLetter = staffID.charAt(0); // Get the first letter of the staffID
+                    
+                    switch (Character.toUpperCase(firstLetter)) {
+                        case 'D': // If the staffID starts with "D", it's a Doctor
+                            staff = new Doctor(staffID, name, role, gender, age, password, loginCount);
+                            break;
+                        case 'P': // If the staffID starts with "P", it's a Pharmacist
+                            staff = new Pharmacist(staffID, name, role, gender, age, inventory, password, loginCount);
+                            break;
+                        case 'A': // If the staffID starts with "A", it's an Administrator
+                            staff = new Administrator(staffID, name, role, gender, age, staffList, appointments, inventory, password, loginCount);
+                            break;
+                        default:
+                            staff = new Staff(staffID, name, role, gender, age, password, loginCount); // Default to generic Staff if unknown
+                            break;
+                    }
+
                     users.add(staff);
                     staffList.add(staff);
                     System.out.println("Loaded Staff: " + staffID + ", " + name + ", Role: " + role); // Debugging line
@@ -83,12 +106,16 @@ public class StaffManager {
     // Save the staff data back to the CSV file
     public static void saveStaff() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
+            bw.write("HospitalID,Name,Role,Gender,Age,Password,loginCount");
+            bw.newLine();
             for (Staff staff : staffList) {
                 String staffData = staff.getHospitalID() + "," +
                         staff.getName() + "," +
                         staff.getRole() + "," +
                         staff.getGender() + "," +
-                        staff.getAge();
+                        staff.getAge() + "," +
+                        staff.getPassword() + "," +  // Make sure to include password
+                        staff.getLoginCount();
                 bw.write(staffData);
                 bw.newLine();
             }
@@ -100,14 +127,16 @@ public class StaffManager {
     // Check if the staff is logging in for the first time
     public static boolean isFirstTimeLogin(String staffID) {
         // Check if the staff exists in the list
-        System.out.println("Checking first-time login for staffID: " + staffID);
         for (Staff staff : staffList) {
-            System.out.println("Checking against staff: " + staff.getStaffID());
             if (staff.getStaffID().equals(staffID)) {
-                System.out.println("Staff found: " + staff.getStaffID());
                 return false; // Staff exists, not first-time login
             }
         }
         return true; // Staff doesn't exist, first-time login
     }
+
+    public static List<Staff> getStaffList() {
+        return staffList;  // Return the list of staff
+    }
+    
 }

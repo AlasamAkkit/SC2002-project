@@ -2,6 +2,7 @@ package HMS;
 
 import java.io.*;
 import java.util.*;
+//import HMS.Doctor.Doctor;
 import HMS.Patient.*;
 import HMS.User.*;
 
@@ -22,17 +23,19 @@ public class PatientManager {
             br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] patientData = line.split(",");
-                if (patientData.length == 7) {
+                if (patientData.length == 9) {
                     String patientID = patientData[0];
                     String name = patientData[1];
-                    String dob = patientData[2];
+                    String dob = patientData[2];    
                     String gender = patientData[3];
                     String contact = patientData[4];
                     String email = patientData[5];
                     String bloodType = patientData[6];
+                    String password = patientData[7];
+                    int loginCount = Integer.parseInt(patientData[8]);  // Assuming loginCount is the last field
 
                     // Print out the loaded patient for debugging
-                    Patient patient = new Patient(patientID, name, dob, gender, contact, email, bloodType);
+                    Patient patient = new Patient(patientID, name, dob, gender, contact, email, bloodType, password, loginCount);
                     users.add(patient);
                     patients.add(patient);
                     System.out.println("Loaded Patient: " + patientID + ", " + name); // Debugging line
@@ -47,7 +50,7 @@ public class PatientManager {
     public static boolean isValidLogin(String hospitalID, String role, String inputPassword) {
         // Check if the patient exists and role matches
         for (Patient patient : patients) {
-            if (patient.getHospitalID().trim().equals(hospitalID.trim())) {
+            if (patient.getHospitalID().equals(hospitalID)) {
                 // Check if the role matches the provided role
                 if (patient.getRole().equals(role)) {
                     if (patient.login(inputPassword)) {
@@ -86,6 +89,8 @@ public class PatientManager {
     // Save the patients' data back to the CSV file
     public static void savePatients() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
+            bw.write("Patient ID,Name,Date of Birth,Gender,Contact Information,Email,Blood Type,Password,loginCount");
+            bw.newLine();
             for (Patient patient : patients) {
                 String patientData = patient.getPatientID() + "," +
                         patient.getName() + "," +
@@ -93,7 +98,9 @@ public class PatientManager {
                         patient.getGender() + "," +
                         patient.getContactNumber() + "," +
                         patient.getEmailAddress() + "," +
-                        patient.getBloodType();
+                        patient.getBloodType() + "," +
+                        patient.getPassword() + "," +  // Make sure to include password
+                        patient.getLoginCount(); // Assuming loginCount is a field
                 bw.write(patientData);
                 bw.newLine();
             }
@@ -103,14 +110,19 @@ public class PatientManager {
     }
 
     // Check if the patient is logging in for the first time
-    public static boolean isFirstTimeLogin(String patientID) {
+    public static boolean isFirstTimeLogin(String hospitalID) {
         for (Patient patient : patients) {
             System.out.println("Checking against patient: " + patient.getPatientID());
-            if (patient.getPatientID().equals(patientID)) {
+            if (patient.getPatientID().equals(hospitalID)) {
                 System.out.println("Patient found: " + patient.getPatientID());
-                return false; // Patient exists, not first-time login
+                
+                // If loginCount is greater than 0, don't prompt for password change
+                if (patient.getLoginCount() > 0) {
+                    return false; // Not first-time login
+                }
+                return true; // First-time login
             }
         }
-        return true; // Patient doesn't exist, first-time login
+        return true;
     }
 }

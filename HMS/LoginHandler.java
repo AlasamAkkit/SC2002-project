@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Scanner;
 import HMS.User.*;
 import HMS.Patient.*;
+import HMS.Staff.Staff;
 
 public class LoginHandler {
     private List<User> users; // List of all users in the system
+
     // Constructor to initialize with the list of users
     public LoginHandler(List<User> users) {
         this.users = users;
@@ -27,6 +29,22 @@ public class LoginHandler {
         if (user != null) {
             System.out.println("Login successful!");
 
+            if (user.getLoginCount() == 0) {
+                handleChangePassword(hospitalID, scanner);
+            }
+
+            if (user instanceof Patient) {
+                // Handle login count and password change for patients
+                Patient patient = (Patient) user;
+                patient.setLoginCount(patient.getLoginCount() + 1);  // Increment loginCount for patients
+                PatientManager.savePatients();  // Save updated data to CSV
+            } else if (user instanceof Staff) {
+                // Handle login count and password change for staff members
+                Staff staff = (Staff) user;
+                staff.setLoginCount(staff.getLoginCount() + 1);  // Increment loginCount for staff
+                StaffManager.saveStaff();  // Save updated data for staff in the system
+            }
+            
             // Handle first-time login if the user is a patient
             if (role.equalsIgnoreCase("Patient")) {
                 if (PatientManager.isFirstTimeLogin(hospitalID)) {
@@ -73,10 +91,37 @@ public class LoginHandler {
         String email = scanner.nextLine();
         System.out.print("Enter your Blood Type: ");
         String bloodType = scanner.nextLine();
+        System.out.print("Enter your password: ");
+        String password = scanner.nextLine();
 
         // Create and save the new patient information
-        Patient newPatient = new Patient(hospitalID, name, dob, gender, contact, email, bloodType);
+        Patient newPatient = new Patient(hospitalID, name, dob, gender, contact, email, bloodType, password, 0);
         PatientManager.addOrUpdatePatient(newPatient,users);
-        System.out.println("Patient information saved. You are now logged in.");
+        System.out.println("Patient information saved.");
+    }
+
+    private void handleChangePassword(String hospitalID, Scanner scanner) {
+        System.out.println("It is your first time logging in. Please change your password.");
+        System.out.print("Enter a new password: ");
+        String newPassword = scanner.nextLine();
+
+        // Find the user and update their password
+        for (User user : users) {
+            if (user.getHospitalID().equalsIgnoreCase(hospitalID)) {
+                user.setPassword(newPassword); // Assuming `setPassword` method exists in User class
+                System.out.println("Password updated successfully.");
+
+                if (user instanceof Patient) {
+                    Patient patient = (Patient) user;
+                    patient.setPassword(newPassword);  // Update password
+                    PatientManager.savePatients();     // Save changes to CSV
+                } else if (user instanceof Staff) {
+                    Staff staff = (Staff) user;
+                    staff.setPassword(newPassword);  // Update password
+                    StaffManager.saveStaff();        // Save changes to CSV
+                }
+                break;
+            }
+        }
     }
 }

@@ -5,9 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import HMS.Patient.*;
-import HMS.Staff.*;
 
-public class DoctorMenu implements StaffMenu {
+public class DoctorMenu {
     private Doctor doctor;
     private List<Patient> patients; // List of patients that doctor can access
     private Scanner scanner;
@@ -18,7 +17,6 @@ public class DoctorMenu implements StaffMenu {
         this.scanner = new Scanner(System.in);
     }
 
-    @Override
     public void displayMenu() {
         int choice;
         do {
@@ -43,7 +41,7 @@ public class DoctorMenu implements StaffMenu {
                     updatePatientMedicalRecords();
                     break;
                 case 3:
-                    doctor.viewUpcomingAppointments(); // Modified to directly call the method handling schedule display
+                    doctor.viewUpcomingAppointments();
                     break;
                 case 4:
                     setAvailability();
@@ -52,7 +50,7 @@ public class DoctorMenu implements StaffMenu {
                     acceptOrDeclineAppointments();
                     break;
                 case 6:
-                    doctor.viewConfirmedAppointments(); // This method should show only confirmed upcoming appointments
+                    doctor.viewUpcomingAppointments();
                     break;
                 case 7:
                     recordAppointmentOutcome();
@@ -118,3 +116,6 @@ public class DoctorMenu implements StaffMenu {
         doctor.recordAppointmentOutcome(appointmentID, serviceType, medication, consultationNotes);
     }
 }
+
+
+
