@@ -43,7 +43,7 @@ public class DoctorMenu implements StaffMenu {
                     updatePatientMedicalRecords();
                     break;
                 case 3:
-                    doctor.viewUpcomingAppointments();
+                    doctor.viewUpcomingAppointments(); // Modified to directly call the method handling schedule display
                     break;
                 case 4:
                     setAvailability();
@@ -52,7 +52,7 @@ public class DoctorMenu implements StaffMenu {
                     acceptOrDeclineAppointments();
                     break;
                 case 6:
-                    doctor.viewUpcomingAppointments();
+                    doctor.viewConfirmedAppointments(); // This method should show only confirmed upcoming appointments
                     break;
                 case 7:
                     recordAppointmentOutcome();
@@ -118,6 +118,3 @@ public class DoctorMenu implements StaffMenu {
         doctor.recordAppointmentOutcome(appointmentID, serviceType, medication, consultationNotes);
     }
 }
-
-
-

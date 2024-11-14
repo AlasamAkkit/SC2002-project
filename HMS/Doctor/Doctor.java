@@ -43,10 +43,14 @@ public class Doctor extends Staff {
         Optional<Appointment> appointment = appointments.stream()
             .filter(a -> a.getAppointmentID().equals(appointmentID))
             .findFirst();
-
+    
         if (appointment.isPresent()) {
-            appointment.get().setStatus(isAccepted ? "Confirmed" : "Declined");
-            System.out.println("Appointment " + (isAccepted ? "confirmed" : "declined") + ".");
+            if (isAccepted) {
+                appointment.get().setStatus("Confirmed");
+            } else {
+                appointment.get().setStatus("Cancelled");
+            }
+            System.out.println("Appointment " + (isAccepted ? "confirmed" : "cancelled") + ".");
         } else {
             System.out.println("Appointment not found.");
         }
@@ -76,6 +80,18 @@ public class Doctor extends Staff {
             System.out.println("Consultation Notes: " + consultationNotes);
         } else {
             System.out.println("Appointment not found.");
+        }
+    }
+
+    public void viewConfirmedAppointments() {
+        System.out.println("Confirmed Appointments:");
+        for (Appointment appointment : appointments) {
+            if ("Confirmed".equals(appointment.getStatus())) {
+                System.out.println("Appointment ID: " + appointment.getAppointmentID() +
+                                   ", Patient ID: " + appointment.getPatientID() +
+                                   ", Date: " + appointment.getAppointmentTime() +
+                                   ", Status: " + appointment.getStatus());
+            }
         }
     }
 

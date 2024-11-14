@@ -7,7 +7,7 @@ import HMS.Admin.*;
 import HMS.Appointment.*;
 import HMS.Patient.*;
 import HMS.Pharmacist.*;
-import HMS.Staff.Staff;
+import HMS.Staff.*;
 import HMS.User.*;
 //import HMS.Staff.*;
 
