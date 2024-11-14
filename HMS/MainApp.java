@@ -3,6 +3,7 @@ package HMS;
 import java.time.LocalDateTime;
 import java.util.*;
 import HMS.Doctor.*;
+import HMS.Manager.*;
 import HMS.Admin.*;
 import HMS.Appointment.*;
 import HMS.Patient.*;
@@ -21,6 +22,7 @@ public class MainApp {
     public static void main(String[] args) {
         // Initialize sample data and load patient data from CSV
         PatientManager.loadPatients(users);
+        MedicineManager.loadMedicines();
         initializeData();
         StaffManager.loadStaff(users, appointments, inventory);
 
@@ -84,19 +86,9 @@ public class MainApp {
     }
 
     private static void initializeData() {
-        // Add sample medications
-        inventory.put("Aspirin", new Medication("Aspirin", 100, 10));
-        inventory.put("Ibuprofen", new Medication("Ibuprofen", 200, 20));
-
         // Add sample appointments
         appointments.add(new Appointment("A001", "P001", "D001", LocalDateTime.now().plusDays(1)));
         appointments.add(new Appointment("A002", "P002", "D002", LocalDateTime.now().plusDays(2)));
-
-        // Add sample appointments for Pharmacist test case
-        Appointment apt3 = new Appointment("A003", "P002", "D002", LocalDateTime.now().plusDays(3));
-        apt3.setStatus("Completed");
-        apt3.addPrescription(new Prescription("Aspirin"));
-        appointments.add(apt3);
 
         System.out.println("Sample data initialized.");
     }
