@@ -23,7 +23,8 @@ public class MainApp {
         // Initialize sample data and load patient data from CSV
         PatientManager.loadPatients(users);
         MedicineManager.loadMedicines();
-        initializeData();
+        AppointmentManager.loadAppointments();
+        List<Appointment> appointments = AppointmentManager.getAppointments();
         StaffManager.loadStaff(users, appointments, inventory);
 
         // Get the staff list from StaffManager
