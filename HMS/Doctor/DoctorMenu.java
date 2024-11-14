@@ -5,8 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import HMS.Patient.*;
+import HMS.Staff.StaffMenu;
 
-public class DoctorMenu {
+public class DoctorMenu implements StaffMenu{
     private Doctor doctor;
     private List<Patient> patients; // List of patients that doctor can access
     private Scanner scanner;
@@ -17,6 +18,7 @@ public class DoctorMenu {
         this.scanner = new Scanner(System.in);
     }
 
+    @Override
     public void displayMenu() {
         int choice;
         do {
