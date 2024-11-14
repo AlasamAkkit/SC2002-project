@@ -50,7 +50,7 @@ public class DoctorMenu {
                     acceptOrDeclineAppointments();
                     break;
                 case 6:
-                    doctor.viewUpcomingAppointments();
+                    doctor.viewConfirmedAppointments(); 
                     break;
                 case 7:
                     recordAppointmentOutcome();
