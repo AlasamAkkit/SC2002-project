@@ -1,0 +1,5 @@
+﻿Appointment ID,Patient ID,Doctor ID,appointmentTime,status
+A0001,P1001,D001,2024-10-01T17:30:00,Completed
+A0002,P1002,D002,2024-10-01T18:30:01,Canceled
+A0003,P1003,D005,2024-10-01T19:30:02,Scheduled
+A0004,P1008,D001,2024-10-01T20:30:03,Scheduled
