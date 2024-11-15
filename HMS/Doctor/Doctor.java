@@ -64,19 +64,34 @@ public class Doctor extends Staff {
         }
     }
 
-    // Method to view personal schedule (Test Case 11)
+    // View personal schedule including available slots and scheduled appointments
     public void viewPersonalSchedule() {
-        System.out.println("Personal Schedule for Doctor ID: " + getHospitalID());
-        for (String slot : availabilitySlots) {
-            System.out.println("Available Slot: " + slot);
+        // Displaying available slots
+        System.out.println("Available Slots:");
+        if (availabilitySlots.isEmpty()) {
+            System.out.println("No available slots.");
+        } else {
+            availabilitySlots.forEach(slot -> System.out.println(slot));
         }
-        System.out.println("Upcoming Appointments:");
-        appointments.stream()
-            .filter(a -> a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed"))
-            .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() +
-                                             ", Patient ID: " + a.getPatientID() +
-                                             ", Time: " + a.getAppointmentTime() +
-                                             ", Status: " + a.getStatus()));
+
+        // Displaying appointments specifically for this doctor
+        List<Appointment> allAppointments = AppointmentManager.getAppointments(); // Retrieves all appointments
+        List<Appointment> filteredAppointments = allAppointments.stream()
+            .filter(a -> a.getDoctorID().equals(this.getHospitalID()) &&
+                        (a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed")))
+            .collect(Collectors.toList());
+
+        System.out.println("\nScheduled Appointments:");
+        if (filteredAppointments.isEmpty()) {
+            System.out.println("No scheduled appointments found.");
+        } else {
+            for (Appointment a : filteredAppointments) {
+                System.out.println("Appointment ID: " + a.getAppointmentID() + 
+                                ", Patient ID: " + a.getPatientID() +
+                                ", Time: " + a.getAppointmentTime() +
+                                ", Status: " + a.getStatus());
+            }
+        }
     }
 
     // Method to set availability (Test Case 12)
@@ -103,31 +118,12 @@ public class Doctor extends Staff {
         }
     }
 
-    // View upcoming appointments
-    public void viewUpcomingAppointments() {
-        this.refreshAppointments(); // Ensure we're working with the latest data
-        System.out.println("Doctor ID for filtering: " + this.getHospitalID());
-        List<Appointment> filteredAppointments = this.appointments.stream()
-            .filter(a -> a.getDoctorID().equals(this.getHospitalID()) &&
-                         (a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed")))
-            .collect(Collectors.toList());
-    
-        if (filteredAppointments.isEmpty()) {
-            System.out.println("No upcoming appointments found.");
-        } else {
-            for (Appointment a : filteredAppointments) {
-                System.out.println("Appointment ID: " + a.getAppointmentID() + ", Patient ID: " + a.getPatientID() +
-                                    ", Time: " + a.getAppointmentTime() + ", Status: " + a.getStatus());
-            }
-        }
-    }
-
     // Record outcome of an appointment
     public void recordAppointmentOutcome(String appointmentID, String serviceType, String medication, String consultationNotes) {
     Appointment appointment = AppointmentManager.findAppointmentById(appointmentID);
     if (appointment != null && appointment.getDoctorID().equals(this.getHospitalID())) {
         appointment.setStatus("Completed");
-        appointment.addPrescription(new Prescription(medication, "Pending"));  // Assuming Prescription class exists
+        appointment.addPrescription(new Prescription(appointmentID, medication, "Pending"));  // Assuming Prescription class exists
         appointment.setConsultationNotes(consultationNotes);  // Assuming this setter exists
         AppointmentManager.updateAppointmentStatus(appointmentID, "Completed");
         System.out.println("Appointment completed on: " + appointment.getAppointmentTime());

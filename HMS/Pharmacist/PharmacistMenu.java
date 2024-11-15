@@ -8,11 +8,13 @@ public class PharmacistMenu implements StaffMenu {
     private Pharmacist pharmacist;
     //private List<Appointment> appointments; // List of appointments for prescription orders
     private List<Prescription> prescriptions;
+    List<ReplenishmentRequest> replenishmentRequests;
     private Scanner scanner;
 
-    public PharmacistMenu(Pharmacist pharmacist, List<Prescription> prescriptions) {
+    public PharmacistMenu(Pharmacist pharmacist, List<Prescription> prescriptions, List<ReplenishmentRequest> replenishmentRequests) {
         this.pharmacist = pharmacist;
         this.prescriptions = prescriptions;
+        this.replenishmentRequests = replenishmentRequests;
         this.scanner = new Scanner(System.in);
     }
 
@@ -24,8 +26,9 @@ public class PharmacistMenu implements StaffMenu {
             System.out.println("1. View Prescription Orders");
             System.out.println("2. Update Prescription Status");
             System.out.println("3. View Medication Inventory");
-            System.out.println("4. Submit Replenishment Requests");
-            System.out.println("5. Logout");
+            System.out.println("4. View Replenishment Requests");
+            System.out.println("5. Submit Replenishment Requests");
+            System.out.println("6. Logout");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline left-over
@@ -41,15 +44,18 @@ public class PharmacistMenu implements StaffMenu {
                     pharmacist.viewInventory();
                     break;
                 case 4:
-                    pharmacist.submitReplenishmentRequests();
+                    pharmacist.viewReplenishmentRequests(replenishmentRequests);
                     break;
                 case 5:
+                    pharmacist.submitReplenishmentRequests(replenishmentRequests);
+                    break;
+                case 6:
                     System.out.println("Logging out...");
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-        } while (choice != 5);
+        } while (choice != 6);
     }
 
     /* 
