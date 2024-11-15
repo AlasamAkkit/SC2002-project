@@ -32,6 +32,9 @@ public class Appointment {
     public LocalDateTime getAppointmentTime() { return appointmentTime; }
     public String getStatus() { return status; }
 
+
+    public void setPatientID(String patientID) { this.patientID = patientID; }
+    public void setDoctorID(String doctorID) { this.doctorID = doctorID; }
     public void setAppointmentTime(LocalDateTime appointmentTime) { this.appointmentTime = appointmentTime; }
     public void setStatus(String status) { this.status = status; }
 

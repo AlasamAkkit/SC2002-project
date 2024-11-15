@@ -1,10 +1,10 @@
 package HMS.Manager;
 
+import HMS.Appointment.Appointment;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import HMS.Appointment.Appointment;
 
 public class AppointmentManager {
     private static final String CSV_FILE = "HMS/Data/Appointment_List.csv"; // Path to the CSV file
@@ -17,7 +17,9 @@ public class AppointmentManager {
             System.err.println("CSV file does not exist at path: " + file.getAbsolutePath());
             return;
         }
-        
+
+        appointments.clear();
+
         try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
             String line;
             br.readLine(); // Skip header
@@ -32,7 +34,8 @@ public class AppointmentManager {
                     // Create and add Appointment instance
                     Appointment appointment = new Appointment(appointmentID, patientID, doctorID, appointmentTime);
                     appointments.add(appointment);
-                    System.out.println("Loaded Appointment: " + appointmentID + ", Patient: " + patientID + ", Doctor: " + doctorID);
+                    
+                    //System.out.println("Loaded Appointment: " + appointmentID + ", Patient: " + patientID + ", Doctor: " + doctorID);
                 }
             }
         } catch (IOException e) {
