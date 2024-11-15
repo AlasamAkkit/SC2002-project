@@ -1,18 +1,18 @@
 package HMS.Pharmacist;
 
-import HMS.Appointment.*;
 import HMS.Staff.StaffMenu;
 import java.util.List;
 import java.util.Scanner;
 
 public class PharmacistMenu implements StaffMenu {
     private Pharmacist pharmacist;
-    private List<Appointment> appointments; // List of appointments for prescription orders
+    //private List<Appointment> appointments; // List of appointments for prescription orders
+    private List<Prescription> prescriptions;
     private Scanner scanner;
 
-    public PharmacistMenu(Pharmacist pharmacist, List<Appointment> appointments) {
+    public PharmacistMenu(Pharmacist pharmacist, List<Prescription> prescriptions) {
         this.pharmacist = pharmacist;
-        this.appointments = appointments;
+        this.prescriptions = prescriptions;
         this.scanner = new Scanner(System.in);
     }
 
@@ -32,10 +32,10 @@ public class PharmacistMenu implements StaffMenu {
 
             switch (choice) {
                 case 1:
-                    pharmacist.viewPrescriptionOrders(appointments);
+                    pharmacist.viewPrescriptionOrders(prescriptions);
                     break;
                 case 2:
-                    pharmacist.updatePrescriptionStatus(appointments);
+                    pharmacist.updatePrescriptionStatus(prescriptions);
                     break;
                 case 3:
                     pharmacist.viewInventory();

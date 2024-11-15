@@ -19,8 +19,11 @@ public class MainApp {
         // Initialize sample data and load patient data from CSV
         PatientManager.loadPatients(users);
         MedicineManager.loadMedicines();
+        PrescriptionManager.loadPrescriptions();
         AppointmentManager.loadAppointments();
         List<Appointment> appointments = AppointmentManager.getAppointments();
+        List<Prescription> prescriptions = PrescriptionManager.getPrescriptions();
+        inventory = MedicineManager.getInventory();
         StaffManager.loadStaff(users, appointments, inventory);
 
         LoginHandler loginHandler = new LoginHandler(users);
@@ -37,7 +40,7 @@ public class MainApp {
                 patientMenu.displayMenu();
             } else if (user instanceof Staff) {
                 Staff staffMember = (Staff) user;
-                chooseMenu(staffMember, patients, appointments);
+                chooseMenu(staffMember, patients, appointments, prescriptions);
             } else {
                 System.out.println("Role does not have a display menu.");
             }
@@ -46,7 +49,7 @@ public class MainApp {
         }
     }
 
-    public static void chooseMenu(Staff staff, List<Patient> patients, List<Appointment> appointments) {
+    public static void chooseMenu(Staff staff, List<Patient> patients, List<Appointment> appointments, List<Prescription> prescriptions) {
         // Get the role of the staff from getRole()
         String role = staff.getRole();
 
@@ -63,7 +66,7 @@ public class MainApp {
     
             case "pharmacist":
                 System.out.println("Launching Pharmacist Menu...");
-                PharmacistMenu pharmacistMenu = new PharmacistMenu((Pharmacist) staff, appointments);
+                PharmacistMenu pharmacistMenu = new PharmacistMenu((Pharmacist) staff, prescriptions );
                 pharmacistMenu.displayMenu();
                 break;
     

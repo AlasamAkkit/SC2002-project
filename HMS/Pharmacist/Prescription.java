@@ -1,16 +1,23 @@
 package HMS.Pharmacist;
 
 public class Prescription {
+    private String appointmentID;
     private String medicationName;
     private String status; // e.g., "Pending", "Dispensed"
 
     // Constructor
-    public Prescription(String medicationName, String status) {
+    public Prescription(String appointmentID, String medicationName, String status) {
+        this.appointmentID = appointmentID;
         this.medicationName = medicationName;
         this.status = "Pending"; // Default status
     }
 
     // Getters and setters
+
+    public String getAppointmentID() { 
+        return appointmentID; 
+    }
+
     public String getMedicationName() { 
         return medicationName; 
     }
@@ -23,4 +30,5 @@ public class Prescription {
 
     public void setStatus(String status) { this.status = status; }
 }
+
 

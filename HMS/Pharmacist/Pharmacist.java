@@ -1,12 +1,7 @@
 package HMS.Pharmacist;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-
-import HMS.Appointment.*;
-import HMS.Manager.AppointmentManager;
 import HMS.Staff.*;
+import java.util.*;
 
 public class Pharmacist extends Staff {
     private Map<String, Medication> inventory; // Inventory of medications by name
@@ -18,16 +13,28 @@ public class Pharmacist extends Staff {
     }
 
     // View prescription orders (from completed appointments with pending prescriptions)
+    /* 
     public void viewPrescriptionOrders() {
         List<Appointment> appointments = AppointmentManager.getAppointments();
         appointments.stream()
             .filter(a -> a.getStatus().equals("Completed") && a.hasPendingPrescriptions())
             .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() + 
                                             ", Prescription: " + a.getPrescriptionDetails()));
+    } */
+
+     
+    public void viewPrescriptionOrders(List<Prescription> prescriptions) {
+        //List<Prescription> prescriptions = PrescriptionManager.getPrescriptions();
+        prescriptions.stream()
+            //.filter(a -> a.getStatus().equals("Pending"))
+            .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() + 
+                                            ", Prescription: " + a.getMedicationName() +
+                                            ", Status: "+ a.getStatus()));
     }
 
+
     // Update prescription status
-    public void updatePrescriptionStatus(List<Appointment> appointments) {
+    public void updatePrescriptionStatus(List<Prescription> prescriptions) {
         // Get input of appointment ID 
         // Dispense medicine and update inventory
         // Mark prescription as dispensed
@@ -36,29 +43,29 @@ public class Pharmacist extends Staff {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Appointment ID for dispensing medicine : ");
         String appointment_ID = sc.nextLine();
-        Appointment tempApt = null;
+        Prescription tempP = null;
         
-        for (Appointment appointment : appointments){
+        for (Prescription prescription : prescriptions){
             //System.out.println(appointment.getAppointmentID()); //debug
-            if (appointment.getAppointmentID().equals(appointment_ID)){
-                tempApt = appointment;
+            if (prescription.getAppointmentID().equals(appointment_ID)){
+                tempP = prescription;
             }
             }
-        if (tempApt == null)
+        if (tempP == null)
         {
-            System.out.println("Appointment not found");
+            System.out.println("Prescription not found");
             return;
         }
 
-        String medicationName = tempApt.getMedicationName();
+        String medicationName = tempP.getMedicationName();
         System.out.println(medicationName);
         Medication medication = inventory.get(medicationName);
         if (medication != null && medication.getStockLevel() > 0) {
             medication.dispense(); // This method reduces stock of medicine by 1
-            System.out.println("Prescription for " + medicationName + " dispensed.");
-            for (Appointment appointment : appointments){
-                if (appointment.getAppointmentID().equals(appointment_ID)){
-                    appointment.setStatus("Dispensed");
+            System.out.println("Prescription for " + appointment_ID + " dispensed - " + medicationName);
+            for (Prescription prescription : prescriptions){
+                if (prescription.getAppointmentID().equals(appointment_ID)){
+                    prescription.setStatus("Dispensed");
                 }
                 }
         } else {
@@ -66,11 +73,17 @@ public class Pharmacist extends Staff {
         }
     }
 
+
+
+
     // View current inventory
     public void viewInventory() {
-        System.out.println("Medication Inventory:");
-        inventory.values().forEach(med -> System.out.println(med.getMedicationName() + 
-                                                             ", Stock Level: " + med.getStockLevel()));
+        //System.out.println("Medication Inventory:");
+        //inventory.values().forEach(med -> System.out.println(med.getMedicationName() + 
+        //                                                     ", Stock Level: " + med.getStockLevel()));
+        inventory.values().stream()
+        .forEach(a -> System.out.println("Medication: " + a.getMedicationName() + 
+        ", Stock: " + a.getStockLevel()));
     }
 
     // Submit replenishment request for low-stock medications

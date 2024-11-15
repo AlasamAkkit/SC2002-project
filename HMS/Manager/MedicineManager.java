@@ -1,9 +1,9 @@
 package HMS.Manager;
 
+import HMS.Pharmacist.Medication;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import HMS.Pharmacist.Medication;
 
 public class MedicineManager {
     private static final String CSV_FILE = "HMS/Data/Medicine_List.csv"; // Path to the CSV file
@@ -88,4 +88,9 @@ public class MedicineManager {
             System.out.println(medicine);
         }
     }
+
+    public static Map<String, Medication> getInventory() {
+        return inventory;
+    }
+
 }
