@@ -54,6 +54,17 @@ public class MedicineManager {
         }
     }
 
+    public static void updateLowStockThreshold(String medicationName, int newThreshold) {
+        Medication medicine = inventory.get(medicationName);
+        if (medicine != null) {
+            medicine.setLowStockThreshold(newThreshold); // Update the low stock threshold
+            System.out.println("Updated low stock threshold for " + medicationName + " to " + newThreshold);
+            saveMedicines(); // Save changes back to the CSV
+        } else {
+            System.out.println("Medicine not found: " + medicationName);
+        }
+    }
+
     // Save the medicines data back to the CSV file
     public static void saveMedicines() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
