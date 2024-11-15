@@ -1,5 +1,7 @@
 package HMS.Pharmacist;
 
+import HMS.Manager.PrescriptionManager;
+import HMS.Manager.ReplenishManager;
 import HMS.Staff.*;
 import java.util.*;
 
@@ -70,10 +72,11 @@ public class Pharmacist extends Staff {
                 }
         } else {
             System.out.println("Insufficient stock or medication not found.");
+            return;
         }
+        PrescriptionManager.addOrUpdatePrescription(tempP);
+
     }
-
-
 
 
     // View current inventory
@@ -87,11 +90,34 @@ public class Pharmacist extends Staff {
     }
 
     // Submit replenishment request for low-stock medications
-    public void submitReplenishmentRequests() {
-        inventory.values().stream()
-            .filter(Medication::isBelowThreshold)
-            .forEach(med -> System.out.println("Replenishment request submitted for " + med.getMedicationName()));
+    public void submitReplenishmentRequests(List<ReplenishmentRequest> replenishmentRequests) {
+        //inventory.values().stream()
+        //    .filter(Medication::isBelowThreshold)
+        //   .forEach(med -> System.out.println("Replenishment request submitted for " + med.getMedicationName()));
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Medication Name to submit Replenishment Request : ");
+        String medication_name = sc.nextLine();
+        System.out.println("Enter Request ID: ");
+        String ID = sc.nextLine();
+
+        ReplenishmentRequest repReq = new ReplenishmentRequest(ID, medication_name, "Pending");
+        
+        ReplenishManager.addOrUpdateReplenishment(repReq);
+        System.out.println("Replenishment Request submitted for "+ medication_name);
+
     }
+
+    public void viewReplenishmentRequests(List<ReplenishmentRequest> replenishmentRequests) {
+        replenishmentRequests.stream()
+        
+        .forEach(a -> System.out.println("Request ID: " + a.getID() + 
+                                        ", Medication: " + a.getMedicationName() +
+                                        ", Status: "+ a.getStatus()));
+
+    }
+
+
+
 
     public Map<String, Medication> getInventory() {
         return inventory;
