@@ -65,34 +65,34 @@ public class Doctor extends Staff {
     }
 
     // View personal schedule including available slots and scheduled appointments
-public void viewPersonalSchedule() {
-    // Displaying available slots
-    System.out.println("Available Slots:");
-    if (availabilitySlots.isEmpty()) {
-        System.out.println("No available slots.");
-    } else {
-        availabilitySlots.forEach(slot -> System.out.println(slot));
-    }
+    public void viewPersonalSchedule() {
+        // Displaying available slots
+        System.out.println("Available Slots:");
+        if (availabilitySlots.isEmpty()) {
+            System.out.println("No available slots.");
+        } else {
+            availabilitySlots.forEach(slot -> System.out.println(slot));
+        }
 
-    // Displaying appointments specifically for this doctor
-    List<Appointment> allAppointments = AppointmentManager.getAppointments(); // Retrieves all appointments
-    List<Appointment> filteredAppointments = allAppointments.stream()
-        .filter(a -> a.getDoctorID().equals(this.getHospitalID()) &&
-                     (a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed")))
-        .collect(Collectors.toList());
+        // Displaying appointments specifically for this doctor
+        List<Appointment> allAppointments = AppointmentManager.getAppointments(); // Retrieves all appointments
+        List<Appointment> filteredAppointments = allAppointments.stream()
+            .filter(a -> a.getDoctorID().equals(this.getHospitalID()) &&
+                        (a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed")))
+            .collect(Collectors.toList());
 
-    System.out.println("\nScheduled Appointments:");
-    if (filteredAppointments.isEmpty()) {
-        System.out.println("No scheduled appointments found.");
-    } else {
-        for (Appointment a : filteredAppointments) {
-            System.out.println("Appointment ID: " + a.getAppointmentID() + 
-                               ", Patient ID: " + a.getPatientID() +
-                               ", Time: " + a.getAppointmentTime() +
-                               ", Status: " + a.getStatus());
+        System.out.println("\nScheduled Appointments:");
+        if (filteredAppointments.isEmpty()) {
+            System.out.println("No scheduled appointments found.");
+        } else {
+            for (Appointment a : filteredAppointments) {
+                System.out.println("Appointment ID: " + a.getAppointmentID() + 
+                                ", Patient ID: " + a.getPatientID() +
+                                ", Time: " + a.getAppointmentTime() +
+                                ", Status: " + a.getStatus());
+            }
         }
     }
-}
 
     // Method to set availability (Test Case 12)
     public void setAvailability(List<String> slots) {
@@ -117,24 +117,6 @@ public void viewPersonalSchedule() {
             System.out.println("Appointment not found or does not belong to this doctor.");
         }
     }
-
-    // View upcoming appointments
-    // public void viewUpcomingAppointments() {
-    //     List<Appointment> allAppointments = AppointmentManager.getAppointments(); // Retrieves all appointments from the Appointment Manager
-    //     List<Appointment> filteredAppointments = allAppointments.stream()
-    //         .filter(a -> a.getDoctorID().equals(this.getHospitalID()) &&  // Filter by doctorID
-    //                     (a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed")))
-    //         .collect(Collectors.toList());
-
-    //     if (filteredAppointments.isEmpty()) {
-    //         System.out.println("No upcoming appointments found.");
-    //     } else {
-    //         for (Appointment a : filteredAppointments) {
-    //             System.out.println("Appointment ID: " + a.getAppointmentID() + ", Patient ID: " + a.getPatientID() +
-    //                             ", Time: " + a.getAppointmentTime() + ", Status: " + a.getStatus());
-    //         }
-    //     }
-    // }
 
     // Record outcome of an appointment
     public void recordAppointmentOutcome(String appointmentID, String serviceType, String medication, String consultationNotes) {
