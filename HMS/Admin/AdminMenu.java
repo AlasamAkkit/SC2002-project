@@ -210,7 +210,7 @@ public class AdminMenu implements StaffMenu {
         System.out.println("Enter new stock level:");
         int newStockLevel = scanner.nextInt();
         scanner.nextLine(); // Consume newline
-        admin.updateMedicationStock(medicationName, newStockLevel);
+        MedicineManager.updateMedicationStock(medicationName, newStockLevel);
     }
 
     private void updateLowStockThreshold() {
