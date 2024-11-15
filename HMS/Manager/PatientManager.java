@@ -1,10 +1,9 @@
 package HMS.Manager;
 
-import java.io.*;
-import java.util.*;
-//import HMS.Doctor.Doctor;
 import HMS.Patient.*;
 import HMS.User.*;
+import java.io.*;
+import java.util.*;
 
 public class PatientManager {
     private static final String CSV_FILE = "HMS/Data/Patient_List.csv"; // Path to the CSV file

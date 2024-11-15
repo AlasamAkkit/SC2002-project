@@ -2,7 +2,10 @@ package HMS.Patient;
 
 import HMS.Appointment.*;
 import HMS.Manager.AppointmentManager;
+import HMS.Manager.PatientManager;
 import HMS.Staff.StaffMenu;
+import HMS.User.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -77,6 +80,8 @@ public class PatientMenu implements StaffMenu {
         patient.setContactNumber(newContact);
         patient.setEmailAddress(newEmail);
         System.out.println("Personal information updated.");
+        List<User> all_users = new ArrayList<>();
+        PatientManager.addOrUpdatePatient(patient, all_users);
     }
 
     public void viewAvailableAppointmentSlots(){
