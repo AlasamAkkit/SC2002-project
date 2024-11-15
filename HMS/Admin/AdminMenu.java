@@ -219,7 +219,7 @@ public class AdminMenu implements StaffMenu {
         System.out.println("Enter new low stock threshold:");
         int newThreshold = scanner.nextInt();
         scanner.nextLine(); // Consume newline
-        admin.updateLowStockThreshold(medicationName, newThreshold);
+        MedicineManager.updateLowStockThreshold(medicationName, newThreshold);
     }
 
     private void approveReplenishmentRequest() {
