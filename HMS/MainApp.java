@@ -21,8 +21,11 @@ public class MainApp {
         MedicineManager.loadMedicines();
         PrescriptionManager.loadPrescriptions();
         AppointmentManager.loadAppointments();
+        ReplenishManager.loadReplenishments();
         List<Appointment> appointments = AppointmentManager.getAppointments();
         List<Prescription> prescriptions = PrescriptionManager.getPrescriptions();
+        List<ReplenishmentRequest> replenishmentRequests = ReplenishManager.getReplenishmentRequests();
+
         inventory = MedicineManager.getInventory();
         StaffManager.loadStaff(users, appointments, inventory);
 
@@ -40,7 +43,7 @@ public class MainApp {
                 patientMenu.displayMenu();
             } else if (user instanceof Staff) {
                 Staff staffMember = (Staff) user;
-                chooseMenu(staffMember, patients, appointments, prescriptions);
+                chooseMenu(staffMember, patients, appointments, prescriptions,replenishmentRequests);
             } else {
                 System.out.println("Role does not have a display menu.");
             }
@@ -49,7 +52,7 @@ public class MainApp {
         }
     }
 
-    public static void chooseMenu(Staff staff, List<Patient> patients, List<Appointment> appointments, List<Prescription> prescriptions) {
+    public static void chooseMenu(Staff staff, List<Patient> patients, List<Appointment> appointments, List<Prescription> prescriptions, List<ReplenishmentRequest> replenishmentRequests) {
         // Get the role of the staff from getRole()
         String role = staff.getRole();
 
@@ -66,7 +69,7 @@ public class MainApp {
     
             case "pharmacist":
                 System.out.println("Launching Pharmacist Menu...");
-                PharmacistMenu pharmacistMenu = new PharmacistMenu((Pharmacist) staff, prescriptions );
+                PharmacistMenu pharmacistMenu = new PharmacistMenu((Pharmacist) staff, prescriptions, replenishmentRequests );
                 pharmacistMenu.displayMenu();
                 break;
     
