@@ -97,8 +97,22 @@ public class Pharmacist extends Staff {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Medication Name to submit Replenishment Request : ");
         String medication_name = sc.nextLine();
-        System.out.println("Enter Request ID: ");
-        String ID = sc.nextLine();
+        String ID;
+        Boolean exist = false;
+        do{
+            System.out.println("Enter Request ID: ");
+            ID = sc.nextLine();
+            exist = false;
+            for (ReplenishmentRequest replenishmentRequest: replenishmentRequests)
+            {
+                if (replenishmentRequest.getID().equals(ID)){
+                    System.out.println("ID already exists");
+                    exist = true;
+                    break;
+                }
+                    
+            }
+        }while (exist);
 
         ReplenishmentRequest repReq = new ReplenishmentRequest(ID, medication_name, "Pending");
         
