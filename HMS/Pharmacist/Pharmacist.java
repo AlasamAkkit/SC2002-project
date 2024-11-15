@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import HMS.Appointment.*;
-
+import HMS.Manager.AppointmentManager;
 import HMS.Staff.*;
 
 public class Pharmacist extends Staff {
@@ -18,11 +18,12 @@ public class Pharmacist extends Staff {
     }
 
     // View prescription orders (from completed appointments with pending prescriptions)
-    public void viewPrescriptionOrders(List<Appointment> appointments) {
+    public void viewPrescriptionOrders() {
+        List<Appointment> appointments = AppointmentManager.getAppointments();
         appointments.stream()
             .filter(a -> a.getStatus().equals("Completed") && a.hasPendingPrescriptions())
             .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() + 
-                                             ", Prescription: " + a.getPrescriptionDetails()));
+                                            ", Prescription: " + a.getPrescriptionDetails()));
     }
 
     // Update prescription status

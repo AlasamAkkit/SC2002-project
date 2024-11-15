@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import HMS.Appointment.*;
+import HMS.Manager.AppointmentManager;
 import HMS.User.*;
 
 public class Patient extends User {
@@ -113,8 +114,8 @@ public class Patient extends User {
 
     // Method to view and manage past appointment outcome records
     public void viewAppointmentOutcomes() {
-        List<Appointment> completedAppointments = appointments.stream()
-            .filter(a -> a.getStatus().equals("Completed"))
+        List<Appointment> completedAppointments = AppointmentManager.getAppointments().stream()
+            .filter(a -> a.getPatientID().equals(this.getHospitalID()) && a.getStatus().equals("Completed"))
             .collect(Collectors.toList());
 
         if (completedAppointments.isEmpty()) {

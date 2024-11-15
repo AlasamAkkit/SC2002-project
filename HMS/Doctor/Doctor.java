@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import HMS.Appointment.*;
 import HMS.Manager.*;
 import HMS.Patient.*;
+import HMS.Pharmacist.Prescription;
 import HMS.Staff.*;
 
 public class Doctor extends Staff {
@@ -106,20 +107,21 @@ public class Doctor extends Staff {
 
     // Record outcome of an appointment
     public void recordAppointmentOutcome(String appointmentID, String serviceType, String medication, String consultationNotes) {
-        Optional<Appointment> appointment = appointments.stream()
-            .filter(a -> a.getAppointmentID().equals(appointmentID))
-            .findFirst();
-
-        if (appointment.isPresent()) {
-            appointment.get().setStatus("Completed");
-            System.out.println("Appointment completed on: " + appointment.get().getAppointmentTime());
-            System.out.println("Type of Service: " + serviceType);
-            System.out.println("Medication Prescribed: " + medication);
-            System.out.println("Consultation Notes: " + consultationNotes);
-        } else {
-            System.out.println("Appointment not found.");
-        }
+    Appointment appointment = AppointmentManager.findAppointmentById(appointmentID);
+    if (appointment != null && appointment.getDoctorID().equals(this.getHospitalID())) {
+        appointment.setStatus("Completed");
+        appointment.addPrescription(new Prescription(medication, "Pending"));  // Assuming Prescription class exists
+        appointment.setConsultationNotes(consultationNotes);  // Assuming this setter exists
+        AppointmentManager.updateAppointmentStatus(appointmentID, "Completed");
+        System.out.println("Appointment completed on: " + appointment.getAppointmentTime());
+        System.out.println("Type of Service: " + serviceType);
+        System.out.println("Medication Prescribed: " + medication);
+        System.out.println("Consultation Notes: " + consultationNotes);
+        AppointmentManager.saveAppointments();  // Ensure all changes are written back to CSV
+    } else {
+        System.out.println("Appointment not found or does not belong to this doctor.");
     }
+}
 
     public void viewConfirmedAppointments() {
         System.out.println("Confirmed Appointments:");

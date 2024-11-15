@@ -13,6 +13,7 @@ public class Appointment {
     private LocalDateTime appointmentTime;
     private String status; // e.g., "Scheduled", "Completed", "Canceled"
     private List<Prescription> prescriptions; // List of prescriptions related to this appointment
+    private String consultationNotes;
 
     // Constructor
     public Appointment(String appointmentID, String patientID, String doctorID, LocalDateTime appointmentTime) {
@@ -37,6 +38,14 @@ public class Appointment {
     public String getAppointmentDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return appointmentTime.format(formatter);
+    }
+
+    public String getConsultationNotes() {
+        return consultationNotes;
+    }
+
+    public void setConsultationNotes(String consultationNotes) {
+        this.consultationNotes = consultationNotes;
     }
 
     // Method to add a prescription to the appointment
