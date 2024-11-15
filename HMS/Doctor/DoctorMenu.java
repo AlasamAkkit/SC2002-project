@@ -41,7 +41,7 @@ public class DoctorMenu implements StaffMenu{
                     updatePatientMedicalRecords();
                     break;
                 case 3:
-                    doctor.viewUpcomingAppointments();
+                    doctor.viewPersonalSchedule();
                     break;
                 case 4:
                     setAvailability();
@@ -88,10 +88,10 @@ public class DoctorMenu implements StaffMenu{
     }
 
     private void setAvailability() {
-        System.out.println("Enter available slots (comma-separated):");
-        String slots = scanner.nextLine();
-        List<String> availabilitySlots = new ArrayList<>(Arrays.asList(slots.split(",")));
-        doctor.setAvailability(availabilitySlots);
+        System.out.println("Enter available slots (comma-separated, format 'YYYY-MM-DD HH:MM'): ");
+        String slotsInput = scanner.nextLine();
+        List<String> slots = Arrays.asList(slotsInput.split(","));
+        doctor.setAvailability(slots);
     }
 
     private void acceptOrDeclineAppointments() {

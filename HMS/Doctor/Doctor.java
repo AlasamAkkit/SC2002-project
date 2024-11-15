@@ -2,7 +2,6 @@ package HMS.Doctor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import HMS.Appointment.*;
@@ -65,11 +64,29 @@ public class Doctor extends Staff {
         }
     }
 
-    // Set availability slots
+    // Method to view personal schedule (Test Case 11)
+    public void viewPersonalSchedule() {
+        System.out.println("Personal Schedule for Doctor ID: " + getHospitalID());
+        for (String slot : availabilitySlots) {
+            System.out.println("Available Slot: " + slot);
+        }
+        System.out.println("Upcoming Appointments:");
+        appointments.stream()
+            .filter(a -> a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed"))
+            .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() +
+                                             ", Patient ID: " + a.getPatientID() +
+                                             ", Time: " + a.getAppointmentTime() +
+                                             ", Status: " + a.getStatus()));
+    }
+
+    // Method to set availability (Test Case 12)
     public void setAvailability(List<String> slots) {
-        availabilitySlots.clear();
-        availabilitySlots.addAll(slots);
-        System.out.println("Availability updated.");
+        this.availabilitySlots = new ArrayList<>(slots);
+        System.out.println("Availability updated for Doctor ID: " + getHospitalID());
+    }
+
+    public List<String> getAvailability() {
+        return new ArrayList<>(availabilitySlots);  // Return a copy to prevent external modifications
     }
 
     // Respond to appointment requests
