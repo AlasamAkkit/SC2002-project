@@ -1,7 +1,11 @@
 package HMS.Doctor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import HMS.Appointment.*;
@@ -66,30 +70,53 @@ public class Doctor extends Staff {
 
     // View personal schedule including available slots and scheduled appointments
     public void viewPersonalSchedule() {
-        refreshAppointments();  // Ensure the list is up-to-date
+        List<Appointment> allAppointments = AppointmentManager.getAppointments();
     
+        // Filter appointments for this doctor
+        List<Appointment> filteredAppointments = allAppointments.stream()
+            .filter(a -> a.getDoctorID().equals(this.getHospitalID()))
+            .collect(Collectors.toList());
+    
+        System.out.println("Personal Schedule for Doctor ID: " + this.getHospitalID());
         System.out.println("Available Slots:");
-        availabilitySlots.forEach(slot -> System.out.println(slot));
+        filteredAppointments.stream()
+            .filter(a -> a.getStatus() == Appointment.Status.EMPTY)
+            .forEach(a -> System.out.println(a.getAppointmentTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)));
     
         System.out.println("\nScheduled Appointments:");
-        if (appointments.isEmpty()) {
-            System.out.println("No scheduled appointments found.");
-        } else {
-            appointments.stream()
-                .filter(a -> a.getStatus() == Appointment.Status.SCHEDULED || a.getStatus() == Appointment.Status.CONFIRMED)
-                .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() + ", Patient ID: " + a.getPatientID() +
-                                                ", Time: " + a.getAppointmentTime() + ", Status: " + a.getStatus()));
-        }
+        filteredAppointments.stream()
+            .filter(a -> a.getStatus() != Appointment.Status.EMPTY)
+            .forEach(a -> {
+                System.out.println("Appointment ID: " + a.getAppointmentID() + 
+                                   ", Patient ID: " + a.getPatientID() +
+                                   ", Time: " + a.getAppointmentTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) +
+                                   ", Status: " + a.getStatus());
+            });
     }
 
     // Method to set availability (Test Case 12)
     public void setAvailability(List<String> slots) {
-        this.availabilitySlots = new ArrayList<>(slots);
+        this.availabilitySlots.clear();
+        for (String slot : slots) {
+            LocalDateTime dateTime = LocalDateTime.parse(slot, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            String appointmentId = AppointmentManager.generateNextAppointmentId(); // Ensure this method exists to generate unique IDs
+            Appointment newAppointment = new Appointment(appointmentId, "NA", getHospitalID(), dateTime, Appointment.Status.EMPTY);
+            
+            appointments.add(newAppointment);
+            this.availabilitySlots.add(dateTime.toString());
+            
+            AppointmentManager.addOrUpdateAppointment(newAppointment);
+        }
+        AppointmentManager.saveAppointments(); // Save all changes after processing all slots
         System.out.println("Availability updated for Doctor ID: " + getHospitalID());
     }
 
     public List<String> getAvailability() {
-        return new ArrayList<>(availabilitySlots);  // Return a copy to prevent external modifications
+        // Retrieve only those appointments that are EMPTY and belong to this doctor
+        return AppointmentManager.getAppointments().stream()
+            .filter(a -> a.getDoctorID().equals(this.getHospitalID()) && a.getStatus() == Appointment.Status.EMPTY)
+            .map(a -> a.getAppointmentTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+            .collect(Collectors.toList());
     }
 
     // Respond to appointment requests

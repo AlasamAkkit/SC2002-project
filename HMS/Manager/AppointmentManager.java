@@ -66,17 +66,35 @@ public class AppointmentManager {
 
     // Add or update an appointment
     public static void addOrUpdateAppointment(Appointment appointment) {
+        boolean found = false;
         for (int i = 0; i < appointments.size(); i++) {
             if (appointments.get(i).getAppointmentID().equals(appointment.getAppointmentID())) {
-                appointments.set(i, appointment);  // Update existing appointment
-                saveAppointments();  // Save updated data to CSV
-                return;
+                appointments.set(i, appointment); // Update existing appointment
+                found = true;
+                break;
             }
         }
+        if (!found) {
+            appointments.add(appointment); // Add new appointment if not found
+        }
+        saveAppointments(); // Save changes to the CSV file
+    }
 
-        // If appointment does not exist, add a new one
-        appointments.add(appointment);
-        saveAppointments();  // Save new data to CSV
+    // Generate a new appointment ID
+    public static String generateNextAppointmentId() {
+        int maxId = 0;
+        for (Appointment appointment : appointments) {
+            String id = appointment.getAppointmentID().substring(1); // Skip the 'A'
+            try {
+                int num = Integer.parseInt(id);
+                if (num > maxId) {
+                    maxId = num;
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Error parsing appointment ID: " + id);
+            }
+        }
+        return "A" + String.format("%04d", maxId + 1);
     }
 
     // Find appointment by ID
