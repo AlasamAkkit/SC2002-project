@@ -45,8 +45,8 @@ public class Patient extends User {
     public String getContactNumber() { return contactNumber; }
     public String getEmailAddress() { return emailAddress; }
     public String getBloodType() { return bloodType; }
-    public List<String> getPastDiagnoses() { return new ArrayList<>(pastDiagnoses); }
-    public List<String> getTreatments() { return new ArrayList<>(treatments); }
+    public List<String> getPastDiagnoses() {return new ArrayList<>(pastDiagnoses);}
+    public List<String> getTreatments() {return new ArrayList<>(treatments);}
 
     // Setters for updating personal information
     public void setContactNumber(String contactNumber) {
