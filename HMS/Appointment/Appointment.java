@@ -9,7 +9,7 @@ import java.util.List;
 public class Appointment {
 
     public enum Status{
-        SCHEDULED, CANCELLED, PENDING, EMPTY, COMPLETED
+        SCHEDULED, CANCELLED, PENDING, EMPTY, COMPLETED, CONFIRMED
     }
     
 
