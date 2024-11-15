@@ -54,7 +54,7 @@ public class PatientMenu implements StaffMenu {
                     appointmentCancel();
                     break;
                 case 7:
-                    patient.viewAppointments();
+                    appointmentView();
                     break;
                 case 8:
                     patient.viewAppointmentOutcomes();
@@ -85,7 +85,7 @@ public class PatientMenu implements StaffMenu {
         all_appointments = AppointmentManager.getAppointments();
         for (Appointment appointment: all_appointments){
             if (appointment.getPatientID().equals("NA")){
-                appointment.setStatus("EMPTY");
+                appointment.setStatus(Appointment.Status.EMPTY);
                 AppointmentManager.addOrUpdateAppointment(appointment);
             }
         }
@@ -93,7 +93,7 @@ public class PatientMenu implements StaffMenu {
 
         System.out.println("Available Appointment Slots: ");
         for (Appointment appointment: all_appointments){
-            if (appointment.getStatus().equals("EMPTY") && appointment.getPatientID().equals("NA")){
+            if (appointment.getStatus().equals(Appointment.Status.EMPTY) && appointment.getPatientID().equals("NA")){
                 printAppointment(appointment);
             }
         }
@@ -105,9 +105,9 @@ public class PatientMenu implements StaffMenu {
         String appID = scanner.next();
         for (Appointment appointment : all_appointments){
             if (appointment.getAppointmentID().equals(appID)){
-                if (appointment.getPatientID().equals("NA") && appointment.getStatus().equals("EMPTY")){
+                if (appointment.getPatientID().equals("NA") && appointment.getStatus().equals(Appointment.Status.EMPTY)){
                     appointment.setPatientID(patient.getHospitalID());
-                    appointment.setStatus("Scheduled");
+                    appointment.setStatus(Appointment.Status.SCHEDULED);
                     AppointmentManager.addOrUpdateAppointment(appointment);
                     System.out.println("Appointment slot successfully booked");
                 }
@@ -131,7 +131,7 @@ public class PatientMenu implements StaffMenu {
             if (appointment.getAppointmentID().equals(appCancel)){
                 if (appointment.getPatientID().equals(patient.getHospitalID())){
                     appointment.setPatientID("NA");
-                    appointment.setStatus("Cancelled");
+                    appointment.setStatus(Appointment.Status.CANCELLED);
                     AppointmentManager.addOrUpdateAppointment(appointment);
                 }
                 else{
@@ -154,7 +154,7 @@ public class PatientMenu implements StaffMenu {
             if (appointment.getAppointmentID().equals(appIdReschedule)){
                 if (appointment.getPatientID().equals(patient.getHospitalID())){
                     appointment.setPatientID(patient.getHospitalID());
-                    appointment.setStatus("Rescheduled");
+                    appointment.setStatus(Appointment.Status.CANCELLED);
                     AppointmentManager.addOrUpdateAppointment(appointment);
                     break;
                 }
@@ -173,9 +173,9 @@ public class PatientMenu implements StaffMenu {
         for (Appointment appointment : all_appointments){
             if (appointment.getAppointmentID().equals(newAppID)){
                 printAppointment(appointment);
-                if (appointment.getPatientID().equals("NA") && appointment.getStatus().equals("EMPTY")){
+                if (appointment.getPatientID().equals("NA") && appointment.getStatus().equals(Appointment.Status.EMPTY)){
                     appointment.setPatientID(patient.getHospitalID());
-                    appointment.setStatus("Scheduled");
+                    appointment.setStatus(Appointment.Status.SCHEDULED);
                     AppointmentManager.addOrUpdateAppointment(appointment);
                     System.out.println("Appointment successfully rescheduled");
                 }
@@ -196,13 +196,13 @@ public class PatientMenu implements StaffMenu {
         //Initialising some dummy variables. Remove after implementing doctor available slots
         for (Appointment appointment: all_appointments){
             if (appointment.getPatientID().equals("NA")){
-                appointment.setStatus("EMPTY");
+                appointment.setStatus(Appointment.Status.EMPTY);
             }
         }
         // End of dummy variable code
     
         for (Appointment appointment : all_appointments){
-            if (appointment.getStatus().equals("Scheduled") && appointment.getPatientID().equals(patient.getHospitalID())){
+            if (appointment.getStatus().equals(Appointment.Status.SCHEDULED) && appointment.getPatientID().equals(patient.getHospitalID())){
                 printAppointment(appointment);
             }
         }

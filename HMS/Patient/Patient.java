@@ -1,13 +1,13 @@
 package HMS.Patient;
 
+import HMS.Appointment.*;
+import HMS.Manager.AppointmentManager;
+import HMS.User.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import HMS.Appointment.*;
-import HMS.Manager.AppointmentManager;
-import HMS.User.*;
 
 public class Patient extends User {
     private String patientID;
@@ -136,7 +136,7 @@ public class Patient extends User {
             .findFirst();
 
         if (appointmentToCancel.isPresent()) {
-            appointmentToCancel.get().setStatus("Canceled");
+            appointmentToCancel.get().setStatus(Appointment.Status.CANCELLED);
             System.out.println("Appointment canceled.");
         } else {
             System.out.println("Appointment not found.");
@@ -150,7 +150,7 @@ public class Patient extends User {
 
         if (appointmentToReschedule.isPresent()) {
             appointmentToReschedule.get().setAppointmentTime(newTime);
-            appointmentToReschedule.get().setStatus("Rescheduled");
+            appointmentToReschedule.get().setStatus(Appointment.Status.CANCELLED);
             System.out.println("Appointment rescheduled to " + newTime);
         } else {
             System.out.println("Appointment not found.");

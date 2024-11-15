@@ -7,21 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Appointment {
+
+    public enum Status{
+        SCHEDULED, CANCELLED, PENDING, EMPTY, COMPLETED
+    }
+    
+
     private String appointmentID;
     private String patientID;
     private String doctorID;
     private LocalDateTime appointmentTime;
-    private String status; // e.g., "Scheduled", "Completed", "Canceled"
+    private Status status; // e.g., "Scheduled", "Completed", "Canceled"
     private List<Prescription> prescriptions; // List of prescriptions related to this appointment
     private String consultationNotes;
 
     // Constructor
-    public Appointment(String appointmentID, String patientID, String doctorID, LocalDateTime appointmentTime) {
+    public Appointment(String appointmentID, String patientID, String doctorID, LocalDateTime appointmentTime, Status status) {
         this.appointmentID = appointmentID;
         this.patientID = patientID;
         this.doctorID = doctorID;
         this.appointmentTime = appointmentTime;
-        this.status = "Scheduled"; // Default status
+        this.status = status; // Default status
         this.prescriptions = new ArrayList<>(); // Initialize prescriptions list
     }
 
@@ -30,13 +36,13 @@ public class Appointment {
     public String getPatientID() { return patientID; }
     public String getDoctorID() { return doctorID; }
     public LocalDateTime getAppointmentTime() { return appointmentTime; }
-    public String getStatus() { return status; }
+    public Status getStatus() { return status; }
 
 
     public void setPatientID(String patientID) { this.patientID = patientID; }
     public void setDoctorID(String doctorID) { this.doctorID = doctorID; }
     public void setAppointmentTime(LocalDateTime appointmentTime) { this.appointmentTime = appointmentTime; }
-    public void setStatus(String status) { this.status = status; }
+    public void setStatus(Status status) { this.status = status; }
 
     public String getAppointmentDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

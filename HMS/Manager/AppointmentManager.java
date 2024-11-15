@@ -30,9 +30,11 @@ public class AppointmentManager {
                     String patientID = appointmentData[1];
                     String doctorID = appointmentData[2];
                     LocalDateTime appointmentTime = LocalDateTime.parse(appointmentData[3], DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                    String status = appointmentData[4];
+                    Appointment.Status s = Appointment.Status.valueOf(status);
 
                     // Create and add Appointment instance
-                    Appointment appointment = new Appointment(appointmentID, patientID, doctorID, appointmentTime);
+                    Appointment appointment = new Appointment(appointmentID, patientID, doctorID, appointmentTime, s);
                     appointments.add(appointment);
                     
                     //System.out.println("Loaded Appointment: " + appointmentID + ", Patient: " + patientID + ", Doctor: " + doctorID);
@@ -99,7 +101,7 @@ public class AppointmentManager {
     }
 
     // Update appointment status
-    public static void updateAppointmentStatus(String appointmentID, String status) {
+    public static void updateAppointmentStatus(String appointmentID, Appointment.Status status) {
         Appointment appointment = findAppointmentById(appointmentID);
         if (appointment != null) {
             appointment.setStatus(status);
