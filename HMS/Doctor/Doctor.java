@@ -3,8 +3,10 @@ package HMS.Doctor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import HMS.Appointment.*;
-import HMS.Manager.PatientManager;
+import HMS.Manager.*;
 import HMS.Patient.*;
 import HMS.Staff.*;
 
@@ -41,6 +43,10 @@ public class Doctor extends Staff {
         return PatientManager.findPatientById(patientId); // Assumes PatientManager has a static method to find patients
     }
 
+    public void refreshAppointments() {
+        this.appointments = AppointmentManager.getAppointments();
+    }
+
     // Method to view medical records of a patient
     public void viewPatientMedicalRecord(Patient patient) {
         patient.viewMedicalRecord();
@@ -67,30 +73,35 @@ public class Doctor extends Staff {
 
     // Respond to appointment requests
     public void respondToAppointmentRequest(String appointmentID, boolean isAccepted) {
-        Optional<Appointment> appointment = appointments.stream()
-            .filter(a -> a.getAppointmentID().equals(appointmentID))
-            .findFirst();
-    
-        if (appointment.isPresent()) {
-            if (isAccepted) {
-                appointment.get().setStatus("Confirmed");
-            } else {
-                appointment.get().setStatus("Cancelled");
-            }
+        Appointment appointment = AppointmentManager.findAppointmentById(appointmentID);
+        if (appointment != null && appointment.getDoctorID().equals(this.getHospitalID())) {
+            String newStatus = isAccepted ? "Confirmed" : "Cancelled";
+            appointment.setStatus(newStatus);
+            AppointmentManager.updateAppointmentStatus(appointmentID, newStatus);
+            this.refreshAppointments();  // Refresh appointments after update
             System.out.println("Appointment " + (isAccepted ? "confirmed" : "cancelled") + ".");
         } else {
-            System.out.println("Appointment not found.");
+            System.out.println("Appointment not found or does not belong to this doctor.");
         }
     }
 
     // View upcoming appointments
     public void viewUpcomingAppointments() {
-        System.out.println("Upcoming Appointments:");
-        appointments.stream()
-            .filter(a -> a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed"))
-            .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() +
-                                             ", Patient ID: " + a.getPatientID() +
-                                             ", Time: " + a.getAppointmentTime()));
+        this.refreshAppointments(); // Ensure we're working with the latest data
+        System.out.println("Doctor ID for filtering: " + this.getHospitalID());
+        List<Appointment> filteredAppointments = this.appointments.stream()
+            .filter(a -> a.getDoctorID().equals(this.getHospitalID()) &&
+                         (a.getStatus().equals("Scheduled") || a.getStatus().equals("Confirmed")))
+            .collect(Collectors.toList());
+    
+        if (filteredAppointments.isEmpty()) {
+            System.out.println("No upcoming appointments found.");
+        } else {
+            for (Appointment a : filteredAppointments) {
+                System.out.println("Appointment ID: " + a.getAppointmentID() + ", Patient ID: " + a.getPatientID() +
+                                    ", Time: " + a.getAppointmentTime() + ", Status: " + a.getStatus());
+            }
+        }
     }
 
     // Record outcome of an appointment

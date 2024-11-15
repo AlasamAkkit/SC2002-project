@@ -1,6 +1,5 @@
 package HMS;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import HMS.Doctor.*;
 import HMS.Manager.*;
@@ -10,13 +9,10 @@ import HMS.Patient.*;
 import HMS.Pharmacist.*;
 import HMS.Staff.*;
 import HMS.User.*;
-import HMS.Manager.*;
 
 public class MainApp {
     private static List<User> users = new ArrayList<>(); // All users in the system
     private static List<Patient> patients = new ArrayList<>(); // All patients
-    private static List<Staff> staff = new ArrayList<>(); // All patients
-    private static List<Appointment> appointments = new ArrayList<>(); // All appointments
     private static Map<String, Medication> inventory = new HashMap<>(); // Medication inventory
 
     public static void main(String[] args) {
@@ -26,9 +22,6 @@ public class MainApp {
         AppointmentManager.loadAppointments();
         List<Appointment> appointments = AppointmentManager.getAppointments();
         StaffManager.loadStaff(users, appointments, inventory);
-
-        // Get the staff list from StaffManager
-        staff = StaffManager.getStaffList();
 
         LoginHandler loginHandler = new LoginHandler(users);
         Scanner scanner = new Scanner(System.in);
@@ -86,11 +79,11 @@ public class MainApp {
         }
     }
 
-    private static void initializeData() {
-        // Add sample appointments
-        appointments.add(new Appointment("A001", "P001", "D001", LocalDateTime.now().plusDays(1)));
-        appointments.add(new Appointment("A002", "P002", "D002", LocalDateTime.now().plusDays(2)));
+    // private static void initializeData() {
+    //     // Add sample appointments
+    //     appointments.add(new Appointment("A001", "P001", "D001", LocalDateTime.now().plusDays(1)));
+    //     appointments.add(new Appointment("A002", "P002", "D002", LocalDateTime.now().plusDays(2)));
 
-        System.out.println("Sample data initialized.");
-    }
+    //     System.out.println("Sample data initialized.");
+    // }
 }
