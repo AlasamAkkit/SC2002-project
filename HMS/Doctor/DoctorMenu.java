@@ -93,13 +93,28 @@ public class DoctorMenu implements StaffMenu{
     }
 
     private void recordAppointmentOutcome() {
-        System.out.println("Enter the appointment ID:");
-        String appointmentID = scanner.nextLine();
-        System.out.println("Enter consultation notes:");
-        String consultationNotes = scanner.nextLine();
+        System.out.println("Enter appointment ID:");
+        String appointmentID = scanner.next();
+        scanner.nextLine();  // Consume the lingering newline.
     
-        doctor.recordAppointmentOutcome(appointmentID, consultationNotes);
-    }
+        System.out.println("Enter diagnosis:");
+        String diagnosis = scanner.nextLine();  // Ensuring full line input for potentially multi-word input
+    
+        System.out.println("Enter type of service provided:");
+        String serviceType = scanner.nextLine();  // As above
+    
+        System.out.println("Enter treatment:");
+        String treatment = scanner.nextLine();  // As above
+    
+        System.out.println("Enter medication prescribed:");
+        String medication = scanner.nextLine();  // As above
+    
+        System.out.println("Enter consultation notes:");
+        String consultationNotes = scanner.nextLine();  // As above
+    
+        // Passing all collected data to the doctor's method
+        doctor.recordAppointmentOutcome(appointmentID, diagnosis, serviceType, treatment, medication, consultationNotes);
+    }    
 }
 
 

@@ -65,8 +65,8 @@ public class Doctor extends Staff {
             if (records.isEmpty()) {
                 System.out.println("No medical records found for this patient with this doctor.");
             } else {
+                System.out.println("\nMedical Records:");
                 for (MedicalRecord record : records) {
-                    System.out.println("\nMedical Records:");
                     System.out.println("Appointment ID: " + record.getAppointmentID());
                     System.out.println("Appointment Time: " + record.getAppointmentTime());
                     System.out.println("Diagnosis: " + record.getDiagnosis());
@@ -177,18 +177,38 @@ public class Doctor extends Staff {
     }
 
     // Record outcome of an appointment
-    public void recordAppointmentOutcome(String appointmentID, String consultationNotes) {
-        MedicalRecord record = MedicalRecordManager.findRecordByAppointmentId(appointmentID);
-    
-        if (record != null && record.getDoctorID().equals(this.getHospitalID())) {
-            // Update the consultation notes
-            record.setConsultationNotes(consultationNotes);
-    
-            // Save the updated record
-            MedicalRecordManager.addOrUpdateRecord(record);
-            System.out.println("Appointment outcome recorded successfully.");
+    public void recordAppointmentOutcome(String appointmentID, String serviceType, String medication,
+                                         String diagnosis, String treatment, String consultationNotes) {
+        Appointment appointment = AppointmentManager.findAppointmentById(appointmentID);
+        if (appointment != null && appointment.getDoctorID().equals(this.getHospitalID()) && appointment.getStatus() == Appointment.Status.SCHEDULED) {
+            // Update appointment status
+            appointment.setStatus(Appointment.Status.COMPLETED);
+            AppointmentManager.updateAppointmentStatus(appointmentID, Appointment.Status.COMPLETED);
+            
+            // Update or create a medical record
+            MedicalRecord record = MedicalRecordManager.findRecordByAppointmentId(appointmentID);
+            if (record != null) {
+                // Update existing record
+                record.setDiagnosis(diagnosis);
+                record.setServicesProvided(serviceType);
+                record.setTreatment(treatment);
+                record.setPrescription(medication);
+                record.setConsultationNotes(consultationNotes);
+            } else {
+                // Create new record
+                record = new MedicalRecord(appointmentID, appointment.getPatientID(), this.getHospitalID(),
+                                           appointment.getAppointmentTime(), "COMPLETED", diagnosis, serviceType, 
+                                           treatment, medication, consultationNotes);
+                MedicalRecordManager.addOrUpdateRecord(record);
+            }
+
+            // Save changes
+            AppointmentManager.saveAppointments();
+            MedicalRecordManager.saveMedicalRecords();
+            
+            System.out.println("Appointment outcome recorded and updated successfully.");
         } else {
-            System.out.println("No record found for this appointment ID or you are not authorized to update it.");
+            System.out.println("Appointment not found, not scheduled, or does not belong to this doctor.");
         }
     }
 
