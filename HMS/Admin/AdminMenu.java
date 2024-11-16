@@ -116,48 +116,28 @@ public class AdminMenu implements StaffMenu {
         System.out.println("Enter staff ID to update:");
         String staffID = scanner.nextLine();
 
-        Staff staffToUpdate = null;
+        Staff updatedStaff = null;
         for (Staff staff : admin.getStaff()) {
             if (staff.getHospitalID().equals(staffID)) {
-                staffToUpdate = staff;
+                updatedStaff = staff;
                 break;
             }
         }
 
-        // If staff member is not found
-        if (staffToUpdate == null) {
-            System.out.println("Staff member not found.");
-            return;
-        }
-
         // Update staff details
-        System.out.println("Enter new name (current: " + staffToUpdate.getName() + "):");
-        String newName = scanner.nextLine();
-        if (!newName.isEmpty()) {
-            staffToUpdate.setName(newName);
-        }
+        updatedStaff.setName(updatePrompt("name", updatedStaff.getName()));
+        updatedStaff.setGender(updatePrompt("gender", updatedStaff.getGender()));
+        updatedStaff.setAge(updatePrompt("age", updatedStaff.getAge()));
 
-        System.out.println("Enter new role (current: " + staffToUpdate.getRole() + "):");
-        String newRole = scanner.nextLine();
-        if (!newRole.isEmpty()) {
-            staffToUpdate.setRole(newRole);
-        }
-
-        System.out.println("Enter new gender (current: " + staffToUpdate.getGender() + "):");
-        String newGender = scanner.nextLine();
-        if (!newGender.isEmpty()) {
-            staffToUpdate.setGender(newGender);
-        }
-
-        System.out.println("Enter new age (current: " + staffToUpdate.getAge() + "):");
-        String newAge = scanner.nextLine();
-        if (!newAge.isEmpty()) {
-            staffToUpdate.setAge(newAge);
-        }
-
-        // Save the updated staff list to the CSV file
+        // Save changes
         StaffManager.saveStaff();
         System.out.println("Staff member updated successfully.");
+    }
+
+    private String updatePrompt(String field, String currentValue) {
+        System.out.println("Enter new " + field + " (current: " + currentValue + "):");
+        String newValue = scanner.nextLine();
+        return newValue.isEmpty() ? currentValue : newValue;
     }
 
     private void listStaffByRole() {
@@ -184,23 +164,17 @@ public class AdminMenu implements StaffMenu {
     
     private void displayMedications() {
         System.out.println("\n--- Medications List ---");
-        // Iterate over staff members to find pharmacists
-        for (Staff staff : admin.getStaff()) {
-            if (staff instanceof Pharmacist) {
-                Pharmacist pharmacist = (Pharmacist) staff;
-                Map<String, Medication> inventory = pharmacist.getInventory();
 
-                if (inventory.isEmpty()) {
-                    System.out.println("No medications available in the inventory.");
-                } else {
-                    for (Map.Entry<String, Medication> entry : inventory.entrySet()) {
-                        String medicationName = entry.getKey();
-                        Medication medication = entry.getValue();
-                        System.out.println("Medication Name: " + medicationName);
-                        System.out.println("Stock Level: " + medication.getStockLevel());
-                        System.out.println("-------------------------");
-                    }
-                }
+        Map<String, Medication> inventory =  MedicineManager.getInventory();
+    
+        if (inventory.isEmpty()) {
+            System.out.println("No medications available in the inventory.");
+        } else {
+            for (Map.Entry<String, Medication> entry : inventory.entrySet()) {
+                Medication medication = entry.getValue();
+                System.out.println("Medication Name: " + entry.getKey());
+                System.out.println("Stock Level: " + medication.getStockLevel());
+                System.out.println("-------------------------");
             }
         }
     }
@@ -227,18 +201,13 @@ public class AdminMenu implements StaffMenu {
         System.out.println("Enter replenishment request ID:");
         String requestID = scanner.nextLine();
         
-        // Find the replenishment request by ID
-        ReplenishmentRequest request = ReplenishManager.findRequestById(requestID);
-        
-        if (request == null) {
-            System.out.println("Replenishment request not found.");
-            return;
-        }
+        // Find replenishment request
+        ReplenishmentRequest request = ReplenishManager.findRequestById(requestID); 
     
         System.out.println("Approve or Reject Request:");
         String status = scanner.nextLine();
         
-        // Update the replenishment request status
+        // Update replenishment request status
         ReplenishManager.updateReplenishmentStatus(requestID, request.getMedicationName(), status);
         
         if ("Approve".equalsIgnoreCase(status)) {
@@ -246,30 +215,13 @@ public class AdminMenu implements StaffMenu {
             int replenishQuantity = scanner.nextInt();
             scanner.nextLine(); 
 
-            // Find the pharmacist and retrieve their inventory
-            for (Staff staff : admin.getStaff()) {
-                if (staff instanceof Pharmacist) {
-                    Pharmacist pharmacist = (Pharmacist) staff;
-                    Map<String, Medication> inventory = pharmacist.getInventory();
-
-                    // Get the medication from the inventory
-                    Medication medication = inventory.get(request.getMedicationName());
-                    
-                    if (medication != null) {
-                        // Replenish the stock
-                        int newStockLevel = medication.getStockLevel() + replenishQuantity;
-                        medication.replenish(newStockLevel);
-                        MedicineManager.updateMedicationStock(request.getMedicationName(), newStockLevel);
-                        System.out.println("Replenished " + newStockLevel + " units of " + request.getMedicationName());
-                    } else {
-                        System.out.println("Medication not found.");
-                    }
-                    return;
-                }
+            if (ReplenishManager.replenishMedicationStock(request.getMedicationName(), replenishQuantity, admin.getStaff())) {
+                System.out.println("Replenished " + replenishQuantity + " units of " + request.getMedicationName());
+            } else {
+                System.out.println("Medication not found or inventory issue.");
             }
-            System.out.println("No pharmacist found with the requested medication.");
         } else {
-            System.out.println("Replenishment request rejected.");
+            System.out.println("Request rejected.");
         }
     }
 }
