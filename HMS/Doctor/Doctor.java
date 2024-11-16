@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import HMS.Appointment.*;
 import HMS.Manager.*;
 import HMS.Patient.*;
-import HMS.Pharmacist.Prescription;
+// import HMS.Pharmacist.Prescription;
 import HMS.Staff.*;
 
 public class Doctor extends Staff {
@@ -108,6 +108,7 @@ public class Doctor extends Staff {
         } else {
             System.out.println("No record found for this appointment ID or not authorized to modify it.");
         }
+        inputScanner.close();
     }
 
     // View personal schedule including available slots and scheduled appointments
