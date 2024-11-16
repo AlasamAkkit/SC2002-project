@@ -70,9 +70,7 @@ public class Doctor extends Staff {
                     System.out.println("Appointment ID: " + record.getAppointmentID());
                     System.out.println("Appointment Time: " + record.getAppointmentTime());
                     System.out.println("Diagnosis: " + record.getDiagnosis());
-                    System.out.println("Services Provided: " + record.getServicesProvided());
                     System.out.println("Treatment: " + record.getTreatment());
-                    System.out.println("Prescription: " + record.getPrescription());
                 }
             }
         }
@@ -89,18 +87,12 @@ public class Doctor extends Staff {
         if (record != null && record.getDoctorID().equals(this.getHospitalID())) {
             System.out.println("Enter new diagnosis:");
             String diagnosis = inputScanner.nextLine();
-            System.out.println("Enter new service:");
-            String service = inputScanner.nextLine();
             System.out.println("Enter new treatment:");
             String treatment = inputScanner.nextLine();
-            System.out.println("Enter new prescription:");
-            String prescription = inputScanner.nextLine();
 
             // Update the record
             record.setDiagnosis(diagnosis);
-            record.setServicesProvided(service);
             record.setTreatment(treatment);
-            record.setPrescription(prescription);
 
             // Save the updated record
             MedicalRecordManager.addOrUpdateRecord(record);
