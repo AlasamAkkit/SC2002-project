@@ -223,11 +223,52 @@ public class AdminMenu implements StaffMenu {
     }
 
     private void approveReplenishmentRequest() {
-        System.out.println("Enter medication name:");
-        String medicationName = scanner.nextLine();
-        System.out.println("Enter quantity to replenish:");
-        int quantity = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-        admin.approveReplenishmentRequest(medicationName, quantity);
+        System.out.println("Enter replenishment request ID:");
+        String requestID = scanner.nextLine();
+        
+        // Find the replenishment request by ID
+        ReplenishmentRequest request = ReplenishManager.findRequestById(requestID);
+        
+        if (request == null) {
+            System.out.println("Replenishment request not found.");
+            return;
+        }
+    
+        System.out.println("Approve or Reject Request:");
+        String status = scanner.nextLine();
+        
+        // Update the replenishment request status
+        ReplenishManager.updateReplenishmentStatus(requestID, request.getMedicationName(), status);
+        
+        if ("Approve".equalsIgnoreCase(status)) {
+            System.out.println("Enter quantity to replenish:");
+            int replenishQuantity = scanner.nextInt();
+            scanner.nextLine(); 
+
+            // Find the pharmacist and retrieve their inventory
+            for (Staff staff : admin.getStaff()) {
+                if (staff instanceof Pharmacist) {
+                    Pharmacist pharmacist = (Pharmacist) staff;
+                    Map<String, Medication> inventory = pharmacist.getInventory();
+
+                    // Get the medication from the inventory
+                    Medication medication = inventory.get(request.getMedicationName());
+                    
+                    if (medication != null) {
+                        // Replenish the stock
+                        int newStockLevel = medication.getStockLevel() + replenishQuantity;
+                        medication.replenish(newStockLevel);
+                        MedicineManager.updateMedicationStock(request.getMedicationName(), newStockLevel);
+                        System.out.println("Replenished " + newStockLevel + " units of " + request.getMedicationName());
+                    } else {
+                        System.out.println("Medication not found.");
+                    }
+                    return;
+                }
+            }
+            System.out.println("No pharmacist found with the requested medication.");
+        } else {
+            System.out.println("Replenishment request rejected.");
+        }
     }
 }
