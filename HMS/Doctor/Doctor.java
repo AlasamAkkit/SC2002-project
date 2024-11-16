@@ -1,17 +1,16 @@
 package HMS.Doctor;
 
+import HMS.Appointment.*;
+import HMS.Manager.*;
+import HMS.Patient.*;
+import HMS.Pharmacist.Prescription;
+import HMS.Staff.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
-import HMS.Appointment.*;
-import HMS.Manager.*;
-import HMS.Patient.*;
-// import HMS.Pharmacist.Prescription;
-import HMS.Staff.*;
 
 public class Doctor extends Staff {
     private List<Appointment> appointments;
@@ -193,10 +192,14 @@ public class Doctor extends Staff {
                                            treatment, medication, consultationNotes);
                 MedicalRecordManager.addOrUpdateRecord(record);
             }
+            // Update prescription status to pending
+            Prescription prescription = new Prescription(appointmentID, treatment, "Pending");
+            PrescriptionManager.addOrUpdatePrescription(prescription); 
 
             // Save changes
             AppointmentManager.saveAppointments();
             MedicalRecordManager.saveMedicalRecords();
+            PrescriptionManager.savePrescriptions();
             
             System.out.println("Appointment outcome recorded and updated successfully.");
         } else {
