@@ -16,10 +16,6 @@ public class MainApp {
     public static void main(String[] args) {
         DataInitializer.initialize(users, patients, inventory, medicalRecords); 
 
-        System.out.println("Completed Medical Records: ");
-        for (MedicalRecord record : medicalRecords) {
-            System.out.println(record);
-        }
         List<Appointment> appointments = AppointmentManager.getAppointments();
         List<Prescription> prescriptions = PrescriptionManager.getPrescriptions();
         List<ReplenishmentRequest> replenishmentRequests = ReplenishManager.getReplenishmentRequests();
