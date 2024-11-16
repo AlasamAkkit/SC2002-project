@@ -1,10 +1,10 @@
 package HMS.Manager;
 
+import HMS.Appointment.MedicalRecord;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import HMS.Appointment.MedicalRecord;
 
 public class MedicalRecordManager {
     private static final String CSV_FILE = "HMS/Data/Medical_Records.csv"; // Path to the CSV file

@@ -2,6 +2,7 @@ package HMS.Patient;
 
 import HMS.Appointment.*;
 import HMS.Manager.AppointmentManager;
+import HMS.Manager.MedicalRecordManager;
 import HMS.Manager.PatientManager;
 import HMS.Staff.StaffMenu;
 import HMS.User.User;
@@ -13,6 +14,7 @@ public class PatientMenu implements StaffMenu {
     private Patient patient;
     private Scanner scanner;
     private List<Appointment> all_appointments;
+    private List<MedicalRecord> patientRecords;
 
     public PatientMenu(Patient patient) {
         this.patient = patient;
@@ -39,7 +41,7 @@ public class PatientMenu implements StaffMenu {
 
             switch (choice) {
                 case 1:
-                    patient.viewMedicalRecord();
+                    viewMedicalRecord();
                     break;
                 case 2:
                     updatePersonalInformation();
@@ -60,7 +62,7 @@ public class PatientMenu implements StaffMenu {
                     appointmentView();
                     break;
                 case 8:
-                    patient.viewAppointmentOutcomes();
+                    pastAppointments();
                     break;
                 case 9:
                     System.out.println("Logging out...");
@@ -69,6 +71,23 @@ public class PatientMenu implements StaffMenu {
                     System.out.println("Invalid option. Please try again.");
             }
         } while (choice != 9);
+    }
+
+    private void viewMedicalRecord(){
+        System.out.printf("patientID: %s\nName: %s\nDOB: %s\nGender: %s\nContact_Information: %s\nBlood_Type:%s\n",
+        patient.getPatientID(), patient.getName(), patient.getDateOfBirth(), patient.getGender(), patient.getContactNumber(), patient.getBloodType());
+        patientRecords = MedicalRecordManager.findRecordsByPatientId(patient.getPatientID());
+        if (patientRecords.isEmpty())
+        {
+            System.out.println("No previous visits found");
+        }
+        else{
+            System.out.printf("\nPrevious Visits\n");
+            for (MedicalRecord records : patientRecords){
+                System.out.printf("%s, Diagnosis: %s, Treatment: %s\n", 
+                records.getAppointmentTime(), records.getDiagnosis(), records.getTreatment());
+            }
+        }
     }
 
     private void updatePersonalInformation() {
@@ -84,7 +103,7 @@ public class PatientMenu implements StaffMenu {
         PatientManager.addOrUpdatePatient(patient, all_users);
     }
 
-    public void viewAvailableAppointmentSlots(){
+    private void viewAvailableAppointmentSlots(){
 
         //Initialising some dummy variables. Remove after implementing doctor available slots
         all_appointments = AppointmentManager.getAppointments();
@@ -104,7 +123,7 @@ public class PatientMenu implements StaffMenu {
         }
     }
 
-    public void appointmentSchedule(){
+    private void appointmentSchedule(){
         viewAvailableAppointmentSlots();
         System.out.println("Select an appointmentID to schedule an appointment: ");
         String appID = scanner.next();
@@ -125,7 +144,7 @@ public class PatientMenu implements StaffMenu {
         }
     }
 
-    public void appointmentCancel(){
+    private void appointmentCancel(){
         
         appointmentView();
 
@@ -148,7 +167,7 @@ public class PatientMenu implements StaffMenu {
         }
     }
 
-    public void appointmentReschedule(){
+    private void appointmentReschedule(){
 
         appointmentView();
 
@@ -193,7 +212,7 @@ public class PatientMenu implements StaffMenu {
         }
     }
 
-    public void appointmentView(){
+    private void appointmentView(){
         System.out.println("All currently scheduled appointments:");
         all_appointments = AppointmentManager.getAppointments();
 
@@ -210,6 +229,15 @@ public class PatientMenu implements StaffMenu {
             if (appointment.getStatus().equals(Appointment.Status.SCHEDULED) && appointment.getPatientID().equals(patient.getHospitalID())){
                 printAppointment(appointment);
             }
+        }
+    }
+
+    private void pastAppointments(){
+        patientRecords = MedicalRecordManager.findRecordsByPatientId(patient.getPatientID());
+        for (MedicalRecord records : patientRecords){
+            System.out.printf("Appointment ID: %s\nDate: %s\nDoctor: %s\nDiagnosis: %s\nServices Provided: %s\nPrescriptions: %s\nDoctor Notes: %s\n\n", 
+                                records.getAppointmentID(),records.getAppointmentTime(), records.getDoctorID(), records.getDiagnosis(), 
+                                records.getServicesProvided() ,records.getPrescription() ,records.getConsultationNotes());
         }
     }
 

@@ -1,10 +1,9 @@
 package HMS.Patient;
 
-import java.util.List;
-import java.util.Scanner;
-
 import HMS.Manager.PatientManager;
 import HMS.User.User;
+import java.util.List;
+import java.util.Scanner;
 
 public class PatientCreator {
         public static void createPatientAccount(List<User> users, List<Patient> patients) {

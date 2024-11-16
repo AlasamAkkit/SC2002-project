@@ -1,10 +1,10 @@
 package HMS.User;
 
-import java.util.List;
-import java.util.Scanner;
+import HMS.Manager.*;
 import HMS.Patient.*;
 import HMS.Staff.Staff;
-import HMS.Manager.*;
+import java.util.List;
+import java.util.Scanner;
 
 public class LoginHandler {
     private List<User> users; // List of all users in the system

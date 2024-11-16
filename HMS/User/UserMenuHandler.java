@@ -1,13 +1,12 @@
 package HMS.User;
 
-import java.util.List;
-
 import HMS.Admin.*;
 import HMS.Appointment.Appointment;
 import HMS.Doctor.*;
 import HMS.Patient.*;
 import HMS.Pharmacist.*;
 import HMS.Staff.Staff;
+import java.util.List;
 
 public class UserMenuHandler {
     public void handleUserMenu(User loggedInUser, List<Patient> patients, List<Appointment> appointments,

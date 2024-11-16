@@ -1,11 +1,11 @@
 package HMS.App;
 
-import java.util.*;
-import HMS.Manager.*;
 import HMS.Appointment.*;
+import HMS.Manager.*;
 import HMS.Patient.*;
 import HMS.Pharmacist.*;
 import HMS.User.*;
+import java.util.*;
 
 public class MainApp {
     private static List<User> users = new ArrayList<>(); // All users in the system

@@ -1,9 +1,8 @@
 package HMS.User;
 
+import HMS.Patient.*;
 import java.util.List;
 import java.util.Scanner;
-
-import HMS.Patient.*;
 
 public class SelectionMenu {
         public static User display(List<User> users, List<Patient> patients) {
