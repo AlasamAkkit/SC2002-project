@@ -1,5 +1,5 @@
 Appointment ID,Patient ID,Doctor ID,appointmentTime,status,Diagnosis,ServicesProvided,Treatment,Prescription,ConsultationNotes
-A0010,P1001,D001,2024-10-01T17:30:00,COMPLETED,strep throat,NA,1 day mc,Medicine 1,patient is going to be ok
+A0010,P1001,D001,2024-10-01T17:30:00,COMPLETED,test,NA,test,test,test
 A0011,P1002,D002,2024-10-01T18:30:01,COMPLETED,diabetes,NA,insulin,Medicine 2,NA
 A0012,P1003,D005,2024-10-01T19:30:02,COMPLETED,arthritis,NA,3 day mc,Medicine 3,NA
 A0013,P1008,D001,2024-10-01T20:30:03,COMPLETED,alzheimers,NA,family time idk,Medicine 4,NA

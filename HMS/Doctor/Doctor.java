@@ -58,19 +58,23 @@ public class Doctor extends Staff {
             patient.viewMedicalRecord(); // Shows personal info from Patient List
     
             // Then, retrieve the medical records
-            List<MedicalRecord> records = MedicalRecordManager.findRecordsByPatientId(patientId);
-            if (!records.isEmpty()) {
-                System.out.println("Medical History:");
-                for (MedicalRecord record : records) {
-                    System.out.println("Diagnosis: " + record.getDiagnosis() +
-                                       "\nTreatment: " + record.getTreatment() +
-                                       "\nPrescription: " + record.getPrescription());
-                }
+            List<MedicalRecord> records = MedicalRecordManager.findRecordsByPatientId(patient.getHospitalID()).stream()
+            .filter(record -> record.getDoctorID().equals(this.getHospitalID()))  // Filter records by doctor ID
+            .collect(Collectors.toList());
+
+            if (records.isEmpty()) {
+                System.out.println("No medical records found for this patient with this doctor.");
             } else {
-                System.out.println("No medical history available.");
+                for (MedicalRecord record : records) {
+                    System.out.println("\nMedical Records:");
+                    System.out.println("Appointment ID: " + record.getAppointmentID());
+                    System.out.println("Appointment Time: " + record.getAppointmentTime());
+                    System.out.println("Diagnosis: " + record.getDiagnosis());
+                    System.out.println("Services Provided: " + record.getServicesProvided());
+                    System.out.println("Treatment: " + record.getTreatment());
+                    System.out.println("Prescription: " + record.getPrescription());
+                }
             }
-        } else {
-            System.out.println("Patient not found.");
         }
     }
 
@@ -85,6 +89,8 @@ public class Doctor extends Staff {
         if (record != null && record.getDoctorID().equals(this.getHospitalID())) {
             System.out.println("Enter new diagnosis:");
             String diagnosis = inputScanner.nextLine();
+            System.out.println("Enter new service:");
+            String service = inputScanner.nextLine();
             System.out.println("Enter new treatment:");
             String treatment = inputScanner.nextLine();
             System.out.println("Enter new prescription:");
@@ -92,6 +98,7 @@ public class Doctor extends Staff {
 
             // Update the record
             record.setDiagnosis(diagnosis);
+            record.setServicesProvided(service);
             record.setTreatment(treatment);
             record.setPrescription(prescription);
 
