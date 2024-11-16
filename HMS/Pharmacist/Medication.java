@@ -57,6 +57,10 @@ public class Medication {
     public void dispense() {
         consumeStock(1);
     }
+
+    public void replenish(int quantity) {
+        this.stockLevel += quantity;
+    }
 }
 
 
