@@ -215,15 +215,6 @@ public class PatientMenu implements StaffMenu {
     private void appointmentView(){
         System.out.println("All currently scheduled appointments:");
         all_appointments = AppointmentManager.getAppointments();
-
-
-        //Initialising some dummy variables. Remove after implementing doctor available slots
-        for (Appointment appointment: all_appointments){
-            if (appointment.getPatientID().equals("NA")){
-                appointment.setStatus(Appointment.Status.EMPTY);
-            }
-        }
-        // End of dummy variable code
     
         for (Appointment appointment : all_appointments){
             if (appointment.getStatus().equals(Appointment.Status.SCHEDULED) && appointment.getPatientID().equals(patient.getHospitalID())){
@@ -263,7 +254,5 @@ public class PatientMenu implements StaffMenu {
         System.out.println("Appointment ID: " + appointment.getAppointmentID() +
                            ", Date: " + appointment.getAppointmentTime() +
                            ", Status: " + appointment.getStatus());
-    }
-          
+    } 
 }
-
