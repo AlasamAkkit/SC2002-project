@@ -168,8 +168,7 @@ public class Doctor extends Staff {
     }
 
     // Record outcome of an appointment
-    public void recordAppointmentOutcome(String appointmentID, String serviceType, String medication,
-                                         String diagnosis, String treatment, String consultationNotes) {
+    public void recordAppointmentOutcome(String appointmentID, String diagnosis, String serviceType, String treatment, String medication, String consultationNotes) {
         Appointment appointment = AppointmentManager.findAppointmentById(appointmentID);
         if (appointment != null && appointment.getDoctorID().equals(this.getHospitalID()) && appointment.getStatus() == Appointment.Status.SCHEDULED) {
             // Update appointment status
@@ -185,6 +184,7 @@ public class Doctor extends Staff {
                 record.setTreatment(treatment);
                 record.setPrescription(medication);
                 record.setConsultationNotes(consultationNotes);
+                MedicalRecordManager.addOrUpdateRecord(record);
             } else {
                 // Create new record
                 record = new MedicalRecord(appointmentID, appointment.getPatientID(), this.getHospitalID(),
