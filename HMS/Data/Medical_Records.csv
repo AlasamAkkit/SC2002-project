@@ -1,5 +1,5 @@
 Appointment ID,Patient ID,Doctor ID,appointmentTime,status,Diagnosis,ServicesProvided,Treatment,Prescription,ConsultationNotes
-A0010,P1001,D001,2024-10-01T17:30:00,COMPLETED,test,Physical examination,Observation,Paracetamol,Follow-up recommended
+A0010,P1001,D001,2024-10-01T17:30:00,COMPLETED,Fever,Physical examination,Observation,Paracetamol,Follow-up recommended
 A0011,P1002,D002,2024-10-01T18:30:01,COMPLETED,diabetes,Blood sugar monitoring,Insulin therapy,Insulin,Maintain balanced diet and exercise
 A0012,P1003,D005,2024-10-01T19:30:02,COMPLETED,arthritis,Joint assessment,Pain management exercises,Ibuprofen,Avoid heavy lifting
 A0013,P1008,D001,2024-10-01T20:30:03,COMPLETED,alzheimers,Mental status evaluation,Cognitive therapy,Amoxicillin,Family support advised
