@@ -99,4 +99,20 @@ public class ReplenishManager {
     public static List<ReplenishmentRequest> getReplenishmentRequests() {
         return replenishmentRequests;
     }
+
+    public static boolean replenishMedicationStock(String medicationName, int quantity, List<Staff> staffList) {
+        for (Staff staff : staffList) {
+            if (staff instanceof Pharmacist) {
+                Pharmacist pharmacist = (Pharmacist) staff;
+                Medication medication = pharmacist.getInventory().get(medicationName);
+                if (medication != null) {
+                    int newStockLevel = medication.getStockLevel() + quantity;
+                    medication.replenish(newStockLevel);
+                    MedicineManager.updateMedicationStock(medicationName, newStockLevel);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
