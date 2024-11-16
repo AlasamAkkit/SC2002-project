@@ -84,8 +84,8 @@ public class Patient extends User {
         System.out.println("Contact Number: " + contactNumber);
         System.out.println("Email Address: " + emailAddress);
         System.out.println("Blood Type: " + bloodType);
-        System.out.println("Past Diagnoses: " + String.join(", ", pastDiagnoses));
-        System.out.println("Treatments: " + String.join(", ", treatments));
+        // System.out.println("Past Diagnoses: " + String.join(", ", pastDiagnoses));
+        // System.out.println("Treatments: " + String.join(", ", treatments));
     }
 
     // Overriding methods to manage appointments

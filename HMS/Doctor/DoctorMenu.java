@@ -66,24 +66,14 @@ public class DoctorMenu implements StaffMenu{
     private void viewPatientMedicalRecords() {
         System.out.println("Enter patient ID:");
         String patientId = scanner.next();
-        Patient patient = doctor.findPatientById(patientId);
-        if (patient != null) {
-            doctor.viewPatientMedicalRecord(patient);
-        } else {
-            System.out.println("Patient not found.");
-        }
+        // Instead of passing the Patient object, pass the patientId directly to the method
+        doctor.viewPatientMedicalRecord(patientId);
     }
 
     private void updatePatientMedicalRecords() {
-        System.out.println("Enter patient ID:");
+        System.out.println("Enter patient ID to update medical records:");
         String patientId = scanner.next();
-        System.out.println("Enter diagnosis:");
-        String diagnosis = scanner.next();
-        System.out.println("Enter treatment:");
-        String treatment = scanner.next();
-        System.out.println("Enter medication:");
-        String medication = scanner.next();
-        doctor.updatePatientMedicalRecord(patientId, diagnosis, treatment, medication);
+        doctor.updatePatientMedicalRecord(patientId);
     }
 
     private void setAvailability() {
@@ -103,15 +93,12 @@ public class DoctorMenu implements StaffMenu{
     }
 
     private void recordAppointmentOutcome() {
-        System.out.println("Enter appointment ID:");
-        String appointmentID = scanner.next();
-        System.out.println("Enter type of service provided:");
-        String serviceType = scanner.next();
-        System.out.println("Enter medication prescribed:");
-        String medication = scanner.next();
+        System.out.println("Enter the appointment ID:");
+        String appointmentID = scanner.nextLine();
         System.out.println("Enter consultation notes:");
-        String consultationNotes = scanner.next();
-        doctor.recordAppointmentOutcome(appointmentID, serviceType, medication, consultationNotes);
+        String consultationNotes = scanner.nextLine();
+    
+        doctor.recordAppointmentOutcome(appointmentID, consultationNotes);
     }
 }
 
