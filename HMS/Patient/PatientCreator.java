@@ -40,5 +40,6 @@ public class PatientCreator {
         PatientManager.addOrUpdatePatient(newPatient, users);
 
         System.out.println("Account created successfully!");
+        scanner.close();
     }
 }

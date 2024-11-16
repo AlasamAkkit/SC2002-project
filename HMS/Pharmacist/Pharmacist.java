@@ -56,6 +56,7 @@ public class Pharmacist extends Staff {
         if (tempP == null)
         {
             System.out.println("Prescription not found");
+            sc.close();
             return;
         }
 
@@ -72,9 +73,11 @@ public class Pharmacist extends Staff {
                 }
         } else {
             System.out.println("Insufficient stock or medication not found.");
+            sc.close();
             return;
         }
         PrescriptionManager.addOrUpdatePrescription(tempP);
+        sc.close();
     }
 
 
@@ -117,7 +120,7 @@ public class Pharmacist extends Staff {
         
         ReplenishManager.addOrUpdateReplenishment(repReq);
         System.out.println("Replenishment Request submitted for "+ medication_name);
-
+        sc.close();
     }
 
     public void viewReplenishmentRequests(List<ReplenishmentRequest> replenishmentRequests) {
