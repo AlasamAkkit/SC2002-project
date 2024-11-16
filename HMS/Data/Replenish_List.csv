@@ -1,5 +1,5 @@
 ID,MedicationName,Status
-R001,Paracetamol,Pending
-R002,Ibuprofen,Pending
+R001,Paracetamol,Approve
+R002,Ibuprofen,Approve
 R003,Aspirin,Pending
 R004,Insulin,Pending

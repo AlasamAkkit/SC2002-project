@@ -75,7 +75,6 @@ public class Pharmacist extends Staff {
             return;
         }
         PrescriptionManager.addOrUpdatePrescription(tempP);
-
     }
 
 
