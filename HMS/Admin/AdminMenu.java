@@ -176,6 +176,7 @@ public class AdminMenu implements StaffMenu {
                 System.out.println("Patient ID: " + appointment.getPatientID());
                 System.out.println("Doctor ID: " + appointment.getDoctorID());
                 System.out.println("Date and Time: " + appointment.getAppointmentDateTime());
+                System.out.println("Status: " + appointment.getStatus());
                 System.out.println("-------------------------");
             }
         }
