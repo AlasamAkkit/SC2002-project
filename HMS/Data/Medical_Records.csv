@@ -1,8 +1,9 @@
 Appointment ID,Patient ID,Doctor ID,appointmentTime,status,Diagnosis,ServicesProvided,Treatment,Prescription,ConsultationNotes
-A0010,P1001,D001,2024-10-01T17:30:00,COMPLETED,Fever,Physical examination,Observation,Paracetamol,Follow-up recommended
+A0010,P1001,D001,2024-10-01T17:30:00,COMPLETED,fever,Physical examination,take medicine and rest,Paracetamol,Follow-up recommended
 A0011,P1002,D002,2024-10-01T18:30:01,COMPLETED,diabetes,Blood sugar monitoring,Insulin therapy,Insulin,Maintain balanced diet and exercise
 A0012,P1003,D005,2024-10-01T19:30:02,COMPLETED,arthritis,Joint assessment,Pain management exercises,Ibuprofen,Avoid heavy lifting
 A0013,P1008,D001,2024-10-01T20:30:03,COMPLETED,alzheimers,Mental status evaluation,Cognitive therapy,Amoxicillin,Family support advised
 A0014,P1001,D001,2024-10-01T20:40:03,COMPLETED,back pain,Posture assessment,Bed rest and physiotherapy,Aspirin,Use ergonomic furniture
 A0015,P1001,D001,2024-10-01T20:50:03,COMPLETED,cough,Lung function test,Hydration and rest,Amoxicillin,Monitor for worsening symptoms
 A0016,P1008,D001,2024-10-01T21:30:03,COMPLETED,fever,Temperature check,Antipyretic medication,Paracetamol,Stay hydrated and rest
+A0001,P1001,D001,2024-10-01T17:30:00,COMPLETED,cancer,consultation,chemo therapy,drugs,chances of making it is slim
