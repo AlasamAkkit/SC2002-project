@@ -42,6 +42,19 @@ public class Patient extends User {
         this.emailAddress = emailAddress;
     }
 
+    public void viewMedicalRecord() {
+        System.out.println("Medical Record:");
+        System.out.println("Patient ID: " + getHospitalID());
+        System.out.println("Name: " + name);
+        System.out.println("Date of Birth: " + dateOfBirth);
+        System.out.println("Gender: " + gender);
+        System.out.println("Contact Number: " + contactNumber);
+        System.out.println("Email Address: " + emailAddress);
+        System.out.println("Blood Type: " + bloodType);
+        // System.out.println("Past Diagnoses: " + String.join(", ", pastDiagnoses));
+        // System.out.println("Treatments: " + String.join(", ", treatments));
+    }
+
     public String toString() {
         return "Staff [ID=" + getPatientID() + ", Name=" + getName() + ", Role=" + getRole() + ", Gender=" + gender + "]";
     }

@@ -77,8 +77,7 @@ public class PatientMenu implements StaffMenu {
     }
 
     private void viewMedicalRecord(){
-        System.out.printf("patientID: %s\nName: %s\nDOB: %s\nGender: %s\nContact_Information: %s\nBlood_Type:%s\n",
-        patient.getPatientID(), patient.getName(), patient.getDateOfBirth(), patient.getGender(), patient.getContactNumber(), patient.getBloodType());
+        patient.viewMedicalRecord();
         patientRecords = MedicalRecordManager.findRecordsByPatientId(patient.getPatientID());
         if (patientRecords.isEmpty())
         {
