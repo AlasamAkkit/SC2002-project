@@ -6,14 +6,11 @@ import java.util.Scanner;
 
 public class PharmacistMenu implements StaffMenu {
     private Pharmacist pharmacist;
-    //private List<Appointment> appointments; // List of appointments for prescription orders
-    private List<Prescription> prescriptions;
     List<ReplenishmentRequest> replenishmentRequests;
     private Scanner scanner;
 
-    public PharmacistMenu(Pharmacist pharmacist, List<Prescription> prescriptions, List<ReplenishmentRequest> replenishmentRequests) {
+    public PharmacistMenu(Pharmacist pharmacist, List<ReplenishmentRequest> replenishmentRequests) {
         this.pharmacist = pharmacist;
-        this.prescriptions = prescriptions;
         this.replenishmentRequests = replenishmentRequests;
         this.scanner = new Scanner(System.in);
     }

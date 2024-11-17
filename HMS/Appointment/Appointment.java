@@ -15,12 +15,13 @@ public class Appointment {
     public enum Status{
         SCHEDULED, CANCELLED, PENDING, EMPTY, COMPLETED
     }
-    
+    @SuppressWarnings("FieldMayBeFinal")
     private String appointmentID;
     private String patientID;
     private String doctorID;
     private LocalDateTime appointmentTime;
     private Status status;
+    @SuppressWarnings("FieldMayBeFinal")
     private List<Prescription> prescriptions;
     private String consultationNotes;
 
