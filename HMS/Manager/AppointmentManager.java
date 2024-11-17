@@ -180,6 +180,9 @@ public class AppointmentManager {
         return appointments;
     }
 
+    /**
+     * Deletes appointment by using their appointmentID
+     */
     public static void deleteAppointmentById(String appointmentID) {
         appointments.removeIf(appointment -> appointment.getAppointmentID().equals(appointmentID));
     }
