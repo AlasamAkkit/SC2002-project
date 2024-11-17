@@ -12,11 +12,27 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a Doctor within the hospital management system, extending the Staff class.
+ * This class manages doctor-specific functionalities such as handling appointments,
+ * medical records, and availability scheduling.
+ */
 public class Doctor extends Staff {
     private List<Appointment> appointments;
     private List<String> availabilitySlots;
     private List<Patient> patients;
 
+    /**
+     * Constructs a Doctor with specified details.
+     *
+     * @param hospitalID Unique identifier for the hospital where the doctor is employed.
+     * @param name       Doctor's full name.
+     * @param role       Doctor's role within the hospital.
+     * @param gender     Doctor's gender.
+     * @param age        Doctor's age.
+     * @param password   Password for system access.
+     * @param loginCount Number of times the doctor has logged into the system.
+     */
     // Constructor
     public Doctor(String hospitalID, String name, String role, String gender, String age, String password, int loginCount) {
         super(hospitalID, name, role, gender, age, password, loginCount);
@@ -25,38 +41,69 @@ public class Doctor extends Staff {
         this.patients = new ArrayList<>();
     }
 
+    /**
+     * Adds a patient to the doctor's patient list.
+     *
+     * @param patient The patient to add.
+     */
     public void addPatient(Patient patient) {
         patients.add(patient);
     }
 
+    /**
+     * Returns a list of the doctor's patients.
+     *
+     * @return A list of patients.
+     */
     public List<Patient> getPatients() {
         return patients;
     }
 
+    /**
+     * Adds an appointment to the doctor's schedule.
+     *
+     * @param appointment The appointment to add.
+     */
     public void addAppointment(Appointment appointment) {
         appointments.add(appointment);
     }
 
+    /**
+     * Returns a list of the doctor's appointments.
+     *
+     * @return A list of appointments.
+     */
     public List<Appointment> getAppointment() {
         return appointments;
     }
 
+    /**
+     * Finds a patient by their ID.
+     *
+     * @param patientId The ID of the patient to find.
+     * @return The found patient, or null if no patient is found.
+     */
     public Patient findPatientById(String patientId) {
         return PatientManager.findPatientById(patientId); // Assumes PatientManager has a static method to find patients
     }
 
+    /**
+     * Refreshes the doctor's list of appointments from the central appointment manager.
+     */
     public void refreshAppointments() {
         this.appointments = AppointmentManager.getAppointments();
     }
 
-    // Method to view medical records of a patient
+    /**
+     * Displays medical records for a specific patient.
+     *
+     * @param patientId The ID of the patient whose records to view.
+     */
     public void viewPatientMedicalRecord(String patientId) {
-        // First, retrieve the patient's details
         Patient patient = PatientManager.findPatientById(patientId);
         if (patient != null) {
-            patient.viewMedicalRecord(); // Shows personal info from Patient List
+            patient.viewMedicalRecord(); 
     
-            // Then, retrieve the medical records
             List<MedicalRecord> records = MedicalRecordManager.findRecordsByPatientId(patient.getHospitalID()).stream()
             .filter(record -> record.getDoctorID().equals(this.getHospitalID()))  // Filter records by doctor ID
             .collect(Collectors.toList());
@@ -75,7 +122,11 @@ public class Doctor extends Staff {
         }
     }
 
-    // Method to update patient medical record
+    /**
+     * Updates patient medical records by setting new diagnosis and treatment.
+     *
+     * @param patientId The ID of the patient whose record is to be updated.
+     */
     public void updatePatientMedicalRecord(String patientId) {
         Scanner inputScanner = new Scanner(System.in);
 
@@ -89,11 +140,9 @@ public class Doctor extends Staff {
             System.out.println("Enter new treatment:");
             String treatment = inputScanner.nextLine();
 
-            // Update the record
             record.setDiagnosis(diagnosis);
             record.setTreatment(treatment);
 
-            // Save the updated record
             MedicalRecordManager.addOrUpdateRecord(record);
             System.out.println("Medical record updated successfully.");
         } else {
@@ -101,7 +150,9 @@ public class Doctor extends Staff {
         }
     }
 
-    // View personal schedule including available slots and scheduled appointments
+    /**
+     * Views the personal schedule of the doctor, including available slots and pending appointments.
+     */
     public void viewPersonalSchedule() {
         List<Appointment> allAppointments = AppointmentManager.getAppointments();
     
@@ -127,8 +178,11 @@ public class Doctor extends Staff {
             });
     }
     
-
-    // Method to set availability
+    /**
+     * Sets availability for the doctor by creating open appointment slots.
+     *
+     * @param slots A list of time slots in "yyyy-MM-dd HH:mm" format.
+     */
     public void setAvailability(List<String> slots) {
         this.availabilitySlots.clear();
         for (String slot : slots) {
@@ -153,7 +207,12 @@ public class Doctor extends Staff {
             .collect(Collectors.toList());
     }
 
-    // Respond to appointment requests
+    /**
+     * Responds to appointment requests by either scheduling or cancelling them.
+     *
+     * @param appointmentID The ID of the appointment to respond to.
+     * @param isAccepted Whether the appointment is accepted (true) or not (false).
+     */
     public void respondToAppointmentRequest(String appointmentID, boolean isAccepted) {
         Appointment appointment = AppointmentManager.findAppointmentById(appointmentID);
         if (appointment != null && appointment.getDoctorID().equals(this.getHospitalID())) {
@@ -166,7 +225,16 @@ public class Doctor extends Staff {
         }
     }
 
-    // Record outcome of an appointment
+    /**
+     * Records the outcome of an appointment, marking it as completed and updating the medical record.
+     *
+     * @param appointmentID The ID of the appointment to record the outcome for.
+     * @param diagnosis The diagnosis given during the appointment.
+     * @param serviceType The type of service provided.
+     * @param treatment The treatment administered.
+     * @param medication Any medications prescribed.
+     * @param consultationNotes Notes from the consultation.
+     */
     public void recordAppointmentOutcome(String appointmentID, String diagnosis, String serviceType, String treatment, String medication, String consultationNotes) {
         Appointment appointment = AppointmentManager.findAppointmentById(appointmentID);
         if (appointment != null && appointment.getDoctorID().equals(this.getHospitalID()) && appointment.getStatus() == Appointment.Status.SCHEDULED) {
@@ -206,6 +274,9 @@ public class Doctor extends Staff {
         }
     }
 
+    /**
+     * Views the confirmed appointments scheduled to the doctor.
+     */
     public void viewConfirmedAppointments() {
         refreshAppointments();  // Make sure the appointment list is up-to-date
     
@@ -218,7 +289,13 @@ public class Doctor extends Staff {
                                              ", Status: " + a.getStatus()));
     }
 
-    // Helper method to retrieve a Patient object by ID
+    /**
+     * Retrieves a patient by their unique ID.
+     *
+     * @param patientId The unique ID of the patient to find.
+     * @param patients List of patients to search from.
+     * @return The found patient or null if no patient matches the ID.
+     */
     public Patient findPatientById(String patientId, List<Patient> patients) {
         for (Patient patient : patients) {
             if (patient.getHospitalID().equals(patientId)) {

@@ -11,17 +11,30 @@ import HMS.Doctor.*;
 import HMS.Pharmacist.*;
 import HMS.Staff.*;
 
+/**
+ * AdminMenu provides an interactive menu for administrators to manage staff, appointments, and inventory.
+ * It handles user input through a console interface, offering a variety of administrative functions.
+ */
 public class AdminMenu implements StaffMenu {
     private Administrator admin;
     private List<Appointment> appointments;
     private Scanner scanner;
 
+    /**
+     * Constructs an AdminMenu with the specified administrator and list of appointments.
+     *
+     * @param admin the administrator interacting with this menu
+     * @param appointments the list of appointments to be managed
+     */
     public AdminMenu(Administrator admin, List<Appointment> appointments) {
         this.admin = admin;
         this.scanner = new Scanner(System.in);
         this.appointments = appointments;
     }
 
+    /**
+     * Displays the administrative menu and handles user input to perform various administrative tasks.
+     */
     public void displayMenu() {
         int choice;
         do {
@@ -77,6 +90,11 @@ public class AdminMenu implements StaffMenu {
         } while (choice != 10);
     }
 
+    /**
+     * Adds a new staff member to the system by collecting necessary information
+     * through user input. The staff member is created based on their role, which can
+     * be either 'Doctor' or 'Pharmacist'.
+     */
     private void addStaffMember() {
         System.out.println("Enter staff ID:");
         String staffID = scanner.nextLine();
@@ -105,6 +123,9 @@ public class AdminMenu implements StaffMenu {
         }
     }
 
+    /**
+     * Removes a staff member from the system based on the provided staff ID.
+     */
     private void removeStaffMember() {
         System.out.println("Enter staff ID to remove:");
         String staffID = scanner.nextLine();
@@ -112,6 +133,9 @@ public class AdminMenu implements StaffMenu {
         StaffManager.saveStaff();
     }
 
+    /**
+     * Updates the role of a staff member. The new role details are collected through user input.
+     */
     private void updateStaffRole() {
         System.out.println("Enter staff ID to update:");
         String staffID = scanner.nextLine();
@@ -140,12 +164,18 @@ public class AdminMenu implements StaffMenu {
         return newValue.isEmpty() ? currentValue : newValue;
     }
 
+    /**
+     * Displays a list of staff by a specified role.
+     */
     private void listStaffByRole() {
         System.out.println("Enter role to filter (Doctor, Pharmacist):");
         String role = scanner.nextLine();
         admin.listStaffByRole(role);
     }
 
+    /**
+     * Displays all scheduled appointments in the system.
+     */
     private void displayAppointments() {
         System.out.println("\n--- Appointments List ---");
         if (appointments.isEmpty()) {
@@ -162,6 +192,9 @@ public class AdminMenu implements StaffMenu {
         }
     }
     
+    /**
+     * Displays all medications in the inventory along with their current stock levels.
+     */
     private void displayMedications() {
         System.out.println("\n--- Medications List ---");
 
@@ -179,6 +212,9 @@ public class AdminMenu implements StaffMenu {
         }
     }
 
+    /**
+     * Updates the stock level of a specific medication.
+     */
     private void updateMedicationStock() {
         System.out.println("Enter medication name:");
         String medicationName = scanner.nextLine();
@@ -188,6 +224,9 @@ public class AdminMenu implements StaffMenu {
         MedicineManager.updateMedicationStock(medicationName, newStockLevel);
     }
 
+    /**
+     * Updates the low stock threshold for a specific medication.
+     */
     private void updateLowStockThreshold() {
         System.out.println("Enter medication name:");
         String medicationName = scanner.nextLine();
@@ -197,6 +236,9 @@ public class AdminMenu implements StaffMenu {
         MedicineManager.updateLowStockThreshold(medicationName, newThreshold);
     }
 
+    /**
+     * Handles the approval or rejection of a medication replenishment request.
+     */
     private void approveReplenishmentRequest() {
         System.out.println("Enter replenishment request ID:");
         String requestID = scanner.nextLine();
