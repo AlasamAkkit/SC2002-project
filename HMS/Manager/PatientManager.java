@@ -5,11 +5,17 @@ import HMS.User.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Manages patient data, including loading from and saving to a CSV file, and validating patient login details.
+ */
 public class PatientManager {
     private static final String CSV_FILE = "HMS/Data/Patient_List.csv"; // Path to the CSV file
     private static List<Patient> patients = new ArrayList<>(); // List to store patient data
 
-    // Load patient data from CSV file
+    /**
+     * Loads patient data from a CSV file into the provided user list.
+     * @param users the list of users where loaded patients will be added
+     */
     public static void loadPatients(List<User> users) {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
@@ -45,7 +51,13 @@ public class PatientManager {
         }
     }
 
-    // Check if the patient's login is valid by checking hospitalID, role, and password
+    /**
+     * Validates the login credentials of a patient.
+     * @param hospitalID the hospital ID of the patient
+     * @param role the role of the user attempting to log in
+     * @param inputPassword the password provided by the user
+     * @return true if the login credentials are valid, false otherwise
+     */
     public static boolean isValidLogin(String hospitalID, String role, String inputPassword) {
         // Check if the patient exists and role matches
         for (Patient patient : patients) {
@@ -68,7 +80,11 @@ public class PatientManager {
         return false; // Patient not found
     }
 
-    // Add or update a patient
+    /**
+     * Adds or updates a patient in the system.
+     * @param patient the patient to add or update
+     * @param users the list of all users to which the patient may be added
+     */
     public static void addOrUpdatePatient(Patient patient, List<User> users) {
         // Check if the patient exists
         for (int i = 0; i < patients.size(); i++) {
@@ -85,7 +101,9 @@ public class PatientManager {
         savePatients();  // Save new data to CSV
     }
 
-    // Save the patients' data back to the CSV file
+    /**
+     * Saves all patient data back to the CSV file.
+     */
     public static void savePatients() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
             bw.write("Patient ID,Name,Date of Birth,Gender,Contact Information,Email,Blood Type,Password,loginCount");
@@ -108,7 +126,11 @@ public class PatientManager {
         }
     }
 
-    // Check if the patient is logging in for the first time
+    /**
+     * Determines if a patient is logging in for the first time.
+     * @param hospitalID the hospital ID of the patient
+     * @return true if it's the first login, false otherwise
+     */
     public static boolean isFirstTimeLogin(String hospitalID) {
         for (Patient patient : patients) {
             System.out.println("Checking against patient: " + patient.getPatientID());
@@ -125,6 +147,11 @@ public class PatientManager {
         return true;
     }
 
+    /**
+     * Finds a patient by their ID.
+     * @param patientId the ID of the patient to find
+     * @return the found Patient object, or null if no patient is found
+     */
     public static Patient findPatientById(String patientId) {
         for (Patient patient : patients) {
             if (patient.getPatientID().equals(patientId)) {
