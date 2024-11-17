@@ -1,6 +1,7 @@
 package HMS.Pharmacist;
 
-import HMS.Manager.PrescriptionManager;
+import HMS.Appointment.MedicalRecord;
+import HMS.Manager.MedicalRecordManager;
 import HMS.Manager.ReplenishManager;
 import HMS.Staff.*;
 import java.util.*;
@@ -17,18 +18,26 @@ public class Pharmacist extends Staff {
     
     
     // Test Case 16
-    public void viewPrescriptionOrders(List<Prescription> prescriptions) {
-        prescriptions.stream()
-            //.filter(a -> a.getStatus().equals("Pending"))
-            .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() + 
-                                            ", Prescription: " + a.getMedicationName() +
-                                            ", Status: "+ a.getStatus()));
+    public void viewPrescriptionOrders() {
+        //Retrieve the medical records
+        List<MedicalRecord> pendingPrescription = MedicalRecordManager.getAllCompletedRecords();
+        
+        // Display Appointment Outcomes & Prescription 
+        pendingPrescription.stream().forEach(p -> {
+        // "COMPLETED" status means completed appointment so display as "PENDING" for medicine prescription
+        String status = p.getStatus().equals("COMPLETED") ? "PENDING" : p.getStatus();
+        System.out.printf("Appointment ID: %s | Diagnosis: %s | Prescription: %s | Status: %s |\nTreatment: %s|\n",
+            p.getAppointmentID(),
+            p.getDiagnosis(),
+            p.getPrescription(),
+            status, 
+            p.getTreatment());});
     }
 
 
     // Test Case 17
     // Update prescription status
-    public void updatePrescriptionStatus(List<Prescription> prescriptions) {
+    public void updatePrescriptionStatus() {
         // Get input of appointment ID 
         // Dispense medicine and update inventory
         // Mark prescription as dispensed
@@ -37,39 +46,27 @@ public class Pharmacist extends Staff {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Appointment ID for dispensing medicine : ");
         String appointment_ID = sc.nextLine();
-        Prescription tempP = null;
         
-        for (Prescription prescription : prescriptions){
-            //System.out.println(appointment.getAppointmentID()); //debug
-            if (prescription.getAppointmentID().equals(appointment_ID)){
-                tempP = prescription;
-            }
-            }
-        if (tempP == null)
-        {
-            System.out.println("Prescription not found");
-            //sc.close();
+        //List<MedicalRecord> pendingPrescription = MedicalRecordManager.getAllCompletedRecords();
+
+        MedicalRecord record = MedicalRecordManager.findRecordByAppointmentId(appointment_ID);
+        if (record.getStatus().equalsIgnoreCase("DISPENSED")){
+            System.out.println("Prescription already dispensed!");
             return;
         }
 
-        String medicationName = tempP.getMedicationName();
-        System.out.println(medicationName);
+        // Update the MEDICATION INVENTORY & dispense medicine
+        String medicationName = record.getPrescription();
         Medication medication = inventory.get(medicationName);
         if (medication != null && medication.getStockLevel() > 0) {
             medication.dispense(); // This method reduces stock of medicine by 1
             System.out.println("Prescription for " + appointment_ID + " dispensed - " + medicationName);
-            for (Prescription prescription : prescriptions){
-                if (prescription.getAppointmentID().equals(appointment_ID)){
-                    prescription.setStatus("Dispensed");
-                }
-                }
+            record.setStatus("DISPENSED");
         } else {
-            System.out.println("Insufficient stock or medication not found.");
-            //sc.close();
-            return;
+            System.out.println("Insufficient stock or medication not found.");   
         }
-        PrescriptionManager.addOrUpdatePrescription(tempP);
-        //sc.close();
+
+        MedicalRecordManager.saveMedicalRecords();
     }
 
     // Test Case 18
@@ -92,7 +89,7 @@ public class Pharmacist extends Staff {
         String ID;
         
         // Check that duplicate ID is not sent
-        Boolean exist = false;
+        Boolean exist;
         do{
             System.out.println("Enter Request ID: ");
             ID = sc.nextLine();
