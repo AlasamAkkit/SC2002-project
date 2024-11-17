@@ -2,6 +2,10 @@ package HMS.Appointment;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a medical record associated with an appointment within the healthcare management system.
+ * It holds comprehensive details about the patient's medical encounter including diagnosis and treatment.
+ */
 public class MedicalRecord {
     private String appointmentID;
     private String patientID;
@@ -14,6 +18,20 @@ public class MedicalRecord {
     private String prescription;
     private String consultationNotes;
 
+    /**
+     * Constructs a MedicalRecord with detailed information about a medical appointment.
+     *
+     * @param appointmentID      Unique identifier for the appointment.
+     * @param patientID          Identifier of the patient.
+     * @param doctorID           Identifier of the doctor.
+     * @param appointmentTime    Time of the appointment.
+     * @param status             Current status of the medical record.
+     * @param diagnosis          Diagnosis made during the appointment.
+     * @param servicesProvided   Services provided during the appointment.
+     * @param treatment          Treatment prescribed.
+     * @param prescription       Prescription details.
+     * @param consultationNotes  Notes from the consultation.
+     */
     // Constructor
     public MedicalRecord(String appointmentID, String patientID, String doctorID, LocalDateTime appointmentTime,
                          String status, String diagnosis, String servicesProvided, String treatment,
@@ -112,6 +130,12 @@ public class MedicalRecord {
     }
 
     // Override toString() for better debugging and display
+    /**
+     * Provides a string representation of the medical record.
+     * Useful for logging and displaying the record.
+     *
+     * @return String that represents the medical record.
+     */
     @Override
     public String toString() {
         return "MedicalRecord{" +
