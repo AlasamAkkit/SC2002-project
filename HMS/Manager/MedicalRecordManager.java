@@ -8,6 +8,7 @@ import java.util.*;
 
 public class MedicalRecordManager {
     private static final String CSV_FILE = "HMS/Data/Medical_Records.csv"; // Path to the CSV file
+    
     private static List<MedicalRecord> medicalRecords = new ArrayList<>(); // List to store medical records
 
     // Load medical records from the CSV file

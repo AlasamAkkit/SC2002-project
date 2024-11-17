@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UserMenuHandler {
     public void handleUserMenu(User loggedInUser, List<Patient> patients, List<Appointment> appointments,
-            List<Prescription> prescriptions, List<ReplenishmentRequest> replenishmentRequests) {
+        List<ReplenishmentRequest> replenishmentRequests) {
         if (loggedInUser instanceof Patient) {
             Patient patient = (Patient) loggedInUser;
             PatientMenu patientMenu = new PatientMenu(patient);

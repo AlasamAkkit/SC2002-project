@@ -17,14 +17,13 @@ public class MainApp {
         DataInitializer.initialize(users, patients, inventory, medicalRecords); 
 
         List<Appointment> appointments = AppointmentManager.getAppointments();
-        List<Prescription> prescriptions = PrescriptionManager.getPrescriptions();
         List<ReplenishmentRequest> replenishmentRequests = ReplenishManager.getReplenishmentRequests();
 
         User loggedInUser = SelectionMenu.display(users, patients);
 
         if (loggedInUser != null) {
             System.out.println("Login successful! User: " + loggedInUser.getClass().getSimpleName());
-            new UserMenuHandler().handleUserMenu(loggedInUser, patients, appointments, prescriptions, replenishmentRequests);
+            new UserMenuHandler().handleUserMenu(loggedInUser, patients, appointments, replenishmentRequests);
         } else {
             System.out.println("Login failed.");
         }
