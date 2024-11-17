@@ -35,10 +35,10 @@ public class PharmacistMenu implements StaffMenu {
 
             switch (choice) {
                 case 1:
-                    pharmacist.viewPrescriptionOrders(prescriptions);
+                    pharmacist.viewPrescriptionOrders();
                     break;
                 case 2:
-                    pharmacist.updatePrescriptionStatus(prescriptions);
+                    pharmacist.updatePrescriptionStatus();
                     break;
                 case 3:
                     pharmacist.viewInventory();

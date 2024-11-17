@@ -113,7 +113,7 @@ public class MedicalRecordManager {
     public static List<MedicalRecord> getAllCompletedRecords() {
         List<MedicalRecord> completedRecords = new ArrayList<>();
         for (MedicalRecord record : medicalRecords) {
-            if ("COMPLETED".equalsIgnoreCase(record.getStatus())) {
+            if ("COMPLETED".equalsIgnoreCase(record.getStatus()) || "DISPENSED".equalsIgnoreCase(record.getStatus())) {
                 completedRecords.add(record);
             }
         }
