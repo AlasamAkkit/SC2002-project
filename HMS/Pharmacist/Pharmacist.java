@@ -14,19 +14,10 @@ public class Pharmacist extends Staff {
         this.inventory = inventory;
     }
 
-    // View prescription orders (from completed appointments with pending prescriptions)
-    /* 
-    public void viewPrescriptionOrders() {
-        List<Appointment> appointments = AppointmentManager.getAppointments();
-        appointments.stream()
-            .filter(a -> a.getStatus().equals("Completed") && a.hasPendingPrescriptions())
-            .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() + 
-                                            ", Prescription: " + a.getPrescriptionDetails()));
-    } */
-
-     
+    
+    
+    // Test Case 16
     public void viewPrescriptionOrders(List<Prescription> prescriptions) {
-        //List<Prescription> prescriptions = PrescriptionManager.getPrescriptions();
         prescriptions.stream()
             //.filter(a -> a.getStatus().equals("Pending"))
             .forEach(a -> System.out.println("Appointment ID: " + a.getAppointmentID() + 
@@ -35,13 +26,14 @@ public class Pharmacist extends Staff {
     }
 
 
+    // Test Case 17
     // Update prescription status
     public void updatePrescriptionStatus(List<Prescription> prescriptions) {
         // Get input of appointment ID 
         // Dispense medicine and update inventory
         // Mark prescription as dispensed
 
-        // get list of all appointments/prescriptions
+        @SuppressWarnings("resource")
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Appointment ID for dispensing medicine : ");
         String appointment_ID = sc.nextLine();
@@ -56,7 +48,7 @@ public class Pharmacist extends Staff {
         if (tempP == null)
         {
             System.out.println("Prescription not found");
-            sc.close();
+            //sc.close();
             return;
         }
 
@@ -73,33 +65,33 @@ public class Pharmacist extends Staff {
                 }
         } else {
             System.out.println("Insufficient stock or medication not found.");
-            sc.close();
+            //sc.close();
             return;
         }
         PrescriptionManager.addOrUpdatePrescription(tempP);
-        sc.close();
+        //sc.close();
     }
 
-
+    // Test Case 18
     // View current inventory
     public void viewInventory() {
-        //System.out.println("Medication Inventory:");
-        //inventory.values().forEach(med -> System.out.println(med.getMedicationName() + 
-        //                                                     ", Stock Level: " + med.getStockLevel()));
+
         inventory.values().stream()
         .forEach(a -> System.out.println("Medication: " + a.getMedicationName() + 
         ", Stock: " + a.getStockLevel()));
     }
 
+    // Test Case 19
     // Submit replenishment request for low-stock medications
     public void submitReplenishmentRequests(List<ReplenishmentRequest> replenishmentRequests) {
-        //inventory.values().stream()
-        //    .filter(Medication::isBelowThreshold)
-        //   .forEach(med -> System.out.println("Replenishment request submitted for " + med.getMedicationName()));
+        
+        @SuppressWarnings("resource")
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Medication Name to submit Replenishment Request : ");
         String medication_name = sc.nextLine();
         String ID;
+        
+        // Check that duplicate ID is not sent
         Boolean exist = false;
         do{
             System.out.println("Enter Request ID: ");
@@ -111,31 +103,30 @@ public class Pharmacist extends Staff {
                     System.out.println("ID already exists");
                     exist = true;
                     break;
-                }
-                    
+                }      
             }
         }while (exist);
 
+        // Update Info to CSV
         ReplenishmentRequest repReq = new ReplenishmentRequest(ID, medication_name, "Pending");
-        
         ReplenishManager.addOrUpdateReplenishment(repReq);
         System.out.println("Replenishment Request submitted for "+ medication_name);
-        sc.close();
+        //sc.close();
     }
 
+    
+    // Test Case 19
     public void viewReplenishmentRequests(List<ReplenishmentRequest> replenishmentRequests) {
+        // Read information from ArrayList
         replenishmentRequests.stream()
-        
         .forEach(a -> System.out.println("Request ID: " + a.getID() + 
                                         ", Medication: " + a.getMedicationName() +
                                         ", Status: "+ a.getStatus()));
-
     }
 
-
-
-
+    
     public Map<String, Medication> getInventory() {
         return inventory;
     }
+    
 }

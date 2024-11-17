@@ -9,7 +9,7 @@ public class Prescription {
     public Prescription(String appointmentID, String medicationName, String status) {
         this.appointmentID = appointmentID;
         this.medicationName = medicationName;
-        this.status = "Pending"; // Default status
+        this.status = status; 
     }
 
     // Getters and setters
