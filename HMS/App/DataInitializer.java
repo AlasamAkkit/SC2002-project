@@ -1,13 +1,12 @@
 package HMS.App;
 
-import java.util.List;
-import java.util.Map;
-
 import HMS.Appointment.MedicalRecord;
 import HMS.Manager.*;
 import HMS.Patient.Patient;
 import HMS.Pharmacist.Medication;
 import HMS.User.User;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides methods to initialize data for the HMS system by loading data
@@ -29,9 +28,6 @@ public class DataInitializer {
 
         // Loading medication details into the system
         MedicineManager.loadMedicines();
-
-        // Loading prescription details
-        PrescriptionManager.loadPrescriptions();
 
         // Loading appointment details
         AppointmentManager.loadAppointments();

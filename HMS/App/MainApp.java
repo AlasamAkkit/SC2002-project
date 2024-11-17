@@ -30,7 +30,6 @@ public class MainApp {
 
         // Retrieve updated lists after initialization
         List<Appointment> appointments = AppointmentManager.getAppointments();
-        List<Prescription> prescriptions = PrescriptionManager.getPrescriptions();
         List<ReplenishmentRequest> replenishmentRequests = ReplenishManager.getReplenishmentRequests();
 
         // Display login and selection menu, and process user login
@@ -39,7 +38,7 @@ public class MainApp {
         // Determine if the login was successful and direct the user to the appropriate menu
         if (loggedInUser != null) {
             System.out.println("Login successful! User: " + loggedInUser.getClass().getSimpleName());
-            new UserMenuHandler().handleUserMenu(loggedInUser, patients, appointments, prescriptions, replenishmentRequests);
+            new UserMenuHandler().handleUserMenu(loggedInUser, patients, appointments, replenishmentRequests);
         } else {
             System.out.println("Login failed.");
         }
