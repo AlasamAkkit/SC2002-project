@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PharmacistMenu implements StaffMenu {
+    @SuppressWarnings("FieldMayBeFinal")
     private Pharmacist pharmacist;
     List<ReplenishmentRequest> replenishmentRequests;
+    @SuppressWarnings("FieldMayBeFinal")
     private Scanner scanner;
 
     public PharmacistMenu(Pharmacist pharmacist, List<ReplenishmentRequest> replenishmentRequests) {
