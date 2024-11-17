@@ -99,7 +99,6 @@ public class Doctor extends Staff {
         } else {
             System.out.println("No record found for this appointment ID or not authorized to modify it.");
         }
-        inputScanner.close();
     }
 
     // View personal schedule including available slots and scheduled appointments
@@ -129,7 +128,7 @@ public class Doctor extends Staff {
     }
     
 
-    // Method to set availability (Test Case 12)
+    // Method to set availability
     public void setAvailability(List<String> slots) {
         this.availabilitySlots.clear();
         for (String slot : slots) {
