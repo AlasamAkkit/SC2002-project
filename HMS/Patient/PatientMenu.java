@@ -1,7 +1,6 @@
 package HMS.Patient;
 
 import HMS.Appointment.*;
-import HMS.Manager.AppointmentManager;
 import HMS.Manager.MedicalRecordManager;
 import HMS.Manager.PatientManager;
 import HMS.Staff.StaffMenu;
@@ -24,6 +23,7 @@ public class PatientMenu implements StaffMenu {
     @Override
     public void displayMenu() {
         int choice;
+        Boolean successful;
         do {
             System.out.println("\n--- Patient Menu ---");
             System.out.println("1. View Medical Record");
@@ -47,22 +47,25 @@ public class PatientMenu implements StaffMenu {
                     updatePersonalInformation();
                     break;
                 case 3:
-                    viewAvailableAppointmentSlots(); // Assuming this method shows available slots
+                    PatientAppointmentController.viewAvailableAppointmentSlots();
                     break;
                 case 4:
-                    appointmentSchedule();
+                    PatientAppointmentController.appointmentSchedule(patient);
+
                     break;
                 case 5:
-                    appointmentReschedule();
+                    PatientAppointmentController.appointmentReschedule(patient);
+
                     break;
                 case 6:
-                    appointmentCancel();
+                    PatientAppointmentController.appointmentCancel(patient);
+
                     break;
                 case 7:
-                    appointmentView();
+                    PatientAppointmentController.appointmentView(patient);
                     break;
                 case 8:
-                    pastAppointments();
+                    PatientAppointmentController.pastAppointments(patient);
                     break;
                 case 9:
                     System.out.println("Logging out...");
@@ -98,161 +101,25 @@ public class PatientMenu implements StaffMenu {
 
         patient.setContactNumber(newContact);
         patient.setEmailAddress(newEmail);
-        System.out.println("Personal information updated.");
         List<User> all_users = new ArrayList<>();
         PatientManager.addOrUpdatePatient(patient, all_users);
-    }
-
-    private void viewAvailableAppointmentSlots(){
-
-        //Initialising some dummy variables. Remove after implementing doctor available slots
-        all_appointments = AppointmentManager.getAppointments();
-        for (Appointment appointment: all_appointments){
-            if (appointment.getPatientID().equals("NA")){
-                appointment.setStatus(Appointment.Status.EMPTY);
-                AppointmentManager.addOrUpdateAppointment(appointment);
-            }
-        }
-        // End of dummy variable code
-
-        System.out.println("Available Appointment Slots: ");
-        for (Appointment appointment: all_appointments){
-            if (appointment.getStatus().equals(Appointment.Status.EMPTY) && appointment.getPatientID().equals("NA")){
-                printAppointment(appointment);
-            }
-        }
-    }
-
-    private void appointmentSchedule(){
-        viewAvailableAppointmentSlots();
-        System.out.println("Select an appointmentID to schedule an appointment: ");
-        String appID = scanner.next();
-        for (Appointment appointment : all_appointments){
-            if (appointment.getAppointmentID().equals(appID)){
-                if (appointment.getPatientID().equals("NA") && appointment.getStatus().equals(Appointment.Status.EMPTY)){
-                    appointment.setPatientID(patient.getHospitalID());
-                    appointment.setStatus(Appointment.Status.SCHEDULED);
-                    AppointmentManager.addOrUpdateAppointment(appointment);
-                    System.out.println("Appointment slot successfully booked");
-                }
-                else{
-                    System.out.println("Inappropriate Appointment slot selected");
-
-                }
-                break;
-            }
-        }
-    }
-
-    private void appointmentCancel(){
-        
-        appointmentView();
-
-        System.out.println("Select an appointmentID to cancel");
-        String appCancel = scanner.next();
-        for (Appointment appointment : all_appointments)
-        {
-            if (appointment.getAppointmentID().equals(appCancel)){
-                if (appointment.getPatientID().equals(patient.getHospitalID())){
-                    appointment.setPatientID("NA");
-                    appointment.setStatus(Appointment.Status.CANCELLED);
-                    AppointmentManager.addOrUpdateAppointment(appointment);
-                }
-                else{
-                    System.out.println("Wrong Input");
-                    
-                }
-                break;
-            }
-        }
-    }
-
-    private void appointmentReschedule(){
-
-        appointmentView();
-
-        System.out.println("Enter an appointment ID to reschedule:");
-        String appIdReschedule = scanner.next();
-
-        for (Appointment appointment : all_appointments){
-            if (appointment.getAppointmentID().equals(appIdReschedule)){
-                if (appointment.getPatientID().equals(patient.getHospitalID())){
-                    appointment.setPatientID(patient.getHospitalID());
-                    appointment.setStatus(Appointment.Status.CANCELLED);
-                    AppointmentManager.addOrUpdateAppointment(appointment);
-                    break;
-                }
-                else{
-                    System.out.println("Error Occurred");
-                    return;
-                }
-            }
-        }
-
-        viewAvailableAppointmentSlots();
-
-        System.out.println("Enter new appointment ID to reschedule to:");
-        String newAppID = scanner.next();
-
-        for (Appointment appointment : all_appointments){
-            if (appointment.getAppointmentID().equals(newAppID)){
-                printAppointment(appointment);
-                if (appointment.getPatientID().equals("NA") && appointment.getStatus().equals(Appointment.Status.EMPTY)){
-                    appointment.setPatientID(patient.getHospitalID());
-                    appointment.setStatus(Appointment.Status.SCHEDULED);
-                    AppointmentManager.addOrUpdateAppointment(appointment);
-                    System.out.println("Appointment successfully rescheduled");
-                }
-                else{
-                    System.out.println("Appointment slot already booked or incorrect appointmentID");
-                    System.out.println("Please rebook a new appointment as the previous one has already been cancelled");
-                }
-                break;
-            }
-        }
-    }
-
-    private void appointmentView(){
-        System.out.println("All currently scheduled appointments:");
-        all_appointments = AppointmentManager.getAppointments();
-    
-        for (Appointment appointment : all_appointments){
-            if (appointment.getStatus().equals(Appointment.Status.SCHEDULED) && appointment.getPatientID().equals(patient.getHospitalID())){
-                printAppointment(appointment);
-            }
-        }
-    }
-
-    private void pastAppointments(){
-        patientRecords = MedicalRecordManager.findRecordsByPatientId(patient.getPatientID());
-        for (MedicalRecord records : patientRecords){
-            System.out.printf("Appointment ID: %s\nDate: %s\nDoctor: %s\nDiagnosis: %s\nServices Provided: %s\nPrescriptions: %s\nDoctor Notes: %s\n\n", 
-                                records.getAppointmentID(),records.getAppointmentTime(), records.getDoctorID(), records.getDiagnosis(), 
-                                records.getServicesProvided() ,records.getPrescription() ,records.getConsultationNotes());
-        }
-    }
-
-
-
-
-    public static void printAppointments(List<Appointment> appointments) {
-        if (appointments == null || appointments.isEmpty()) {
-            System.out.println("No appointments found.");
-            return;
-        }
-        
-        System.out.println("Appointments:");
-        for (Appointment appointment : appointments) {
-            System.out.println("Appointment ID: " + appointment.getAppointmentID() +
-                               ", Date: " + appointment.getAppointmentTime() +
-                               ", Status: " + appointment.getStatus());
-        }
+        System.out.println("Personal information updated.");
     }
 
     public static void printAppointment(Appointment appointment) {
 
         System.out.println("Appointment ID: " + appointment.getAppointmentID() +
+                            ", DoctorID: " + appointment.getDoctorID() +
+                           ", Date: " + appointment.getAppointmentTime());
+                        
+    } 
+
+    public static void printAppointmentWithStatus(Appointment appointment) {
+
+        System.out.println("Appointment ID: " + appointment.getAppointmentID() +
+                            ", DoctorID: " + appointment.getDoctorID() +
                            ", Date: " + appointment.getAppointmentTime() +
                            ", Status: " + appointment.getStatus());
+                        
     } 
 }
