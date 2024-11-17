@@ -258,7 +258,9 @@ public class Doctor extends Staff {
                                            treatment, medication, consultationNotes);
                 MedicalRecordManager.addOrUpdateRecord(record);
             }
-            
+
+            // Delete the appointment from the list
+            AppointmentManager.deleteAppointmentById(appointmentID);
 
             // Save changes
             AppointmentManager.saveAppointments();
