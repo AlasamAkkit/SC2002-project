@@ -19,10 +19,10 @@ public class LoginHandler {
         System.out.println("Welcome to the Hospital Management System");
         System.out.print("Enter your hospital ID: ");
         String hospitalID = scanner.nextLine();
-        System.out.print("Enter your role (Patient, Doctor, Pharmacist, Administrator): ");
-        String role = scanner.nextLine();
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
+
+        String role = determineRole(hospitalID);
 
         // Attempt login
         User user = authenticate(hospitalID, role, password);
@@ -59,6 +59,19 @@ public class LoginHandler {
             System.out.println("Invalid login. Please try again.\n");
         }
         return user;
+    }
+
+    private String determineRole(String hospitalID) {
+        if (hospitalID.startsWith("P") && hospitalID.length() == 5) {
+            return "Patient";
+        } else if (hospitalID.startsWith("P") && hospitalID.length() == 4) {
+            return "Pharmacist";
+        } else if (hospitalID.startsWith("D")) {
+            return "Doctor";
+        } else if (hospitalID.startsWith("A")) {
+            return "Administrator";
+        }
+        return null; // Invalid hospital ID
     }
 
     // Method to authenticate user based on ID, role, and password
