@@ -7,6 +7,7 @@ import HMS.Staff.*;
 import java.util.*;
 
 public class Pharmacist extends Staff {
+    @SuppressWarnings("FieldMayBeFinal")
     private Map<String, Medication> inventory; // Inventory of medications by name
 
     // Constructor

@@ -1,6 +1,7 @@
 package HMS.Pharmacist;
 
 public class Prescription {
+    @SuppressWarnings("FieldMayBeFinal")
     private String appointmentID;
     private String medicationName;
     private String status; // e.g., "Pending", "Dispensed"

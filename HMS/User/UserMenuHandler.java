@@ -17,14 +17,14 @@ public class UserMenuHandler {
             patientMenu.displayMenu();
         } else if (loggedInUser instanceof Staff) {
             Staff staffMember = (Staff) loggedInUser;
-            chooseStaffMenu(staffMember, patients, appointments, prescriptions, replenishmentRequests);
+            chooseStaffMenu(staffMember, patients, appointments, replenishmentRequests);
         } else {
             System.out.println("Role does not have a display menu.");
         }
     }
 
     private void chooseStaffMenu(Staff staff, List<Patient> patients, List<Appointment> appointments, 
-            List<Prescription> prescriptions, List<ReplenishmentRequest> replenishmentRequests) {
+        List<ReplenishmentRequest> replenishmentRequests) {
         String role = staff.getRole();
 
         switch (role.toLowerCase()) {
@@ -40,7 +40,7 @@ public class UserMenuHandler {
 
             case "pharmacist":
                 System.out.println("Launching Pharmacist Menu...");
-                PharmacistMenu pharmacistMenu = new PharmacistMenu((Pharmacist) staff, prescriptions, replenishmentRequests);
+                PharmacistMenu pharmacistMenu = new PharmacistMenu((Pharmacist) staff, replenishmentRequests);
                 pharmacistMenu.displayMenu();
                 break;
 
