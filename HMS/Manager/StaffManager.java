@@ -10,11 +10,19 @@ import HMS.Staff.*;
 import HMS.User.*;
 import HMS.Appointment.*;
 
+/**
+ * Manages staff operations such as loading, saving, and validating staff login credentials.
+ */
 public class StaffManager {
     private static final String CSV_FILE = "HMS/Data/Staff_List.csv"; // Path to the CSV file for staff data
     private static List<Staff> staffList = new ArrayList<>(); // List to store staff data
 
-    // Load staff data from CSV file
+    /**
+     * Loads staff data from a CSV file and populates the system's user and staff lists.
+     * @param users the system-wide list of users (both staff and patients)
+     * @param appointments the list of system-wide appointments
+     * @param inventory the medication inventory map
+     */
     public static void loadStaff(List<User> users, List<Appointment> appointments, Map<String, Medication> inventory) {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
@@ -64,7 +72,13 @@ public class StaffManager {
         }
     }
 
-    // Check if the staff login is valid by checking staffID, role, and password
+    /**
+     * Validates staff login credentials against stored data.
+     * @param staffID the ID of the staff member attempting to log in
+     * @param role the role of the staff member
+     * @param inputPassword the password provided during login
+     * @return true if credentials are valid, false otherwise
+     */
     public static boolean isValidLogin(String staffID, String role, String inputPassword) {
         for (Staff staff : staffList) {
             System.out.println("Checking staff ID: " + staff.getHospitalID() + ", Role in record: " + staff.getRole());  // Debugging line
@@ -86,7 +100,10 @@ public class StaffManager {
         return false; // Staff not found
     }
 
-    // Add or update a staff member
+    /**
+     * Adds or updates a staff member in the list and saves the list to the CSV file.
+     * @param staff the staff member to add or update
+     */
     public static void addOrUpdateStaff(Staff staff, List<Staff> users) {
         // Check if the staff exists
         for (int i = 0; i < staffList.size(); i++) {
@@ -103,7 +120,9 @@ public class StaffManager {
         saveStaff();  // Save new data to CSV
     }
 
-    // Save the staff data back to the CSV file
+    /**
+     * Saves all staff data back to the CSV file.
+     */
     public static void saveStaff() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
             bw.write("HospitalID,Name,Role,Gender,Age,Password,loginCount");
@@ -124,7 +143,9 @@ public class StaffManager {
         }
     }
 
-    // Check if the staff is logging in for the first time
+    /**
+     * Check if the staff is logging in for the first time
+     */
     public static boolean isFirstTimeLogin(String staffID) {
         // Check if the staff exists in the list
         for (Staff staff : staffList) {
@@ -135,6 +156,10 @@ public class StaffManager {
         return true; // Staff doesn't exist, first-time login
     }
 
+    /**
+     * Retrieves the list of all staff members.
+     * @return a list containing all registered staff members
+     */
     public static List<Staff> getStaffList() {
         return staffList;  // Return the list of staff
     }

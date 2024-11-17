@@ -1,18 +1,22 @@
 package HMS.Manager;
 
-import HMS.Pharmacist.ReplenishmentRequest;
 import java.io.*;
 import java.util.*;
 
 import HMS.Staff.Staff;
 import HMS.Pharmacist.*;
 
+/**
+ * Manages replenishment requests for medications, including loading, saving, and updating requests.
+ */
 public class ReplenishManager {
 
     private static final String CSV_FILE = "HMS/Data/Replenish_List.csv"; // Path to the CSV file
     private static List<ReplenishmentRequest> replenishmentRequests = new ArrayList<>();
 
-    // Load medicines from the CSV file
+    /**
+     * Loads replenishment requests from a CSV file.
+     */
     public static void loadReplenishments() {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
@@ -40,7 +44,9 @@ public class ReplenishManager {
         }
     }
 
-    // Save the prescriptions' data back to the CSV file
+    /**
+     * Saves all replenishment requests back to the CSV file.
+     */
     public static void saveReplenishmentRequest() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
             bw.write("ID,MedicationName,Status");
@@ -57,8 +63,10 @@ public class ReplenishManager {
         }
     }
 
-    
-    
+    /**
+     * Adds or updates a replenishment request in the list and saves it.
+     * @param replenishmentRequest the replenishment request to add or update
+     */
     public static void addOrUpdateReplenishment(ReplenishmentRequest replenishmentRequest) {
         for (int i = 0; i < replenishmentRequests.size(); i++) {
             if (replenishmentRequests.get(i).getID().equals(replenishmentRequest.getID())) {
@@ -75,9 +83,11 @@ public class ReplenishManager {
         
     }
 
-
-    
-    // Find replenishmentRequest by ID
+    /**
+     * Finds a replenishment request by ID.
+     * @param requestID the ID of the replenishment request to find
+     * @return the found ReplenishmentRequest object, or null if no request is found
+     */
     public static ReplenishmentRequest findRequestById(String requestID) {
         for (ReplenishmentRequest replenishmentRequest : replenishmentRequests) {
             if (replenishmentRequest.getID().equals(requestID)) {
@@ -87,7 +97,12 @@ public class ReplenishManager {
         return null; // Return null if no req found
     }
 
-    // Update replenishmentRequest status
+    /**
+     * Updates the status of a replenishment request.
+     * @param requestID the ID of the request to update
+     * @param medicationName the name of the medication for logging purposes
+     * @param status the new status to set for the request
+     */
     public static void updateReplenishmentStatus(String requestID,String medicationName, String status) {
         ReplenishmentRequest replenishmentRequest = findRequestById(requestID);
         if (replenishmentRequest != null) {
@@ -99,10 +114,21 @@ public class ReplenishManager {
         }
     }
 
+    /**
+     * Retrieves all current replenishment requests.
+     * @return a list of all replenishment requests
+     */
     public static List<ReplenishmentRequest> getReplenishmentRequests() {
         return replenishmentRequests;
     }
 
+    /**
+     * Replenishes the stock level of a specified medication, if possible.
+     * @param medicationName the name of the medication to replenish
+     * @param quantity the quantity to add to the medication's stock
+     * @param staffList the list of staff members, used to locate pharmacists
+     * @return true if the stock was successfully replenished, false otherwise
+     */
     public static boolean replenishMedicationStock(String medicationName, int quantity, List<Staff> staffList) {
         for (Staff staff : staffList) {
             if (staff instanceof Pharmacist) {
