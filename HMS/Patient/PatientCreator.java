@@ -5,7 +5,18 @@ import HMS.User.User;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class provides functionalities to create new patient accounts in the hospital management system.
+ */
 public class PatientCreator {
+
+       /**
+        * Prompts the user to input details and creates a new patient account.
+        * Adds the new patient to the list of users and patients and updates the patient database.
+        *
+        * @param users A list of all users in the system, including patients.
+        * @param patients A list of all patients.
+        */
         public static void createPatientAccount(List<User> users, List<Patient> patients) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Create a new patient account.");
@@ -43,6 +54,12 @@ public class PatientCreator {
         System.out.println("Account created successfully!");
     }
 
+    /**
+     * Generates a unique patient ID by checking existing IDs.
+     *
+     * @param patients The list of existing patients.
+     * @return A unique Patient ID.
+     */
     private static String generateUniquePatientID(List<Patient> patients) {
         int patientCount = patients.size();
         String patientID;
@@ -56,7 +73,13 @@ public class PatientCreator {
         return patientID;
     }
 
-    // Method to check if the Patient ID already exists in the list
+    /**
+     * Checks if a patient ID already exists in the list of patients.
+     *
+     * @param patientID The patient ID to check.
+     * @param patients The list of existing patients.
+     * @return true if the ID exists, false otherwise.
+     */
     private static boolean isPatientIDExists(String patientID, List<Patient> patients) {
         for (Patient patient : patients) {
             if (patient.getPatientID().equals(patientID)) {

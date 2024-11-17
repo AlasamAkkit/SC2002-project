@@ -9,17 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Represents a menu interface for patients to interact with various functionalities related
+ * to their medical records, appointments, and personal information.
+ */
 public class PatientMenu implements StaffMenu {
     private Patient patient;
     private Scanner scanner;
     private List<Appointment> all_appointments;
     private List<MedicalRecord> patientRecords;
 
+    /**
+     * Constructs a PatientMenu for the specified patient.
+     *
+     * @param patient The patient who will be using this menu.
+     */
     public PatientMenu(Patient patient) {
         this.patient = patient;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the menu and handles user input for different functionalities.
+     */
     @Override
     public void displayMenu() {
         int choice;
@@ -76,6 +88,9 @@ public class PatientMenu implements StaffMenu {
         } while (choice != 9);
     }
 
+    /**
+     * Displays the medical record of the patient using this menu.
+     */
     private void viewMedicalRecord(){
         patient.viewMedicalRecord();
         patientRecords = MedicalRecordManager.findRecordsByPatientId(patient.getPatientID());
@@ -92,6 +107,9 @@ public class PatientMenu implements StaffMenu {
         }
     }
 
+    /**
+     * Allows the patient to update their contact number and email address.
+     */
     private void updatePersonalInformation() {
         System.out.println("Enter new contact number:");
         String newContact = scanner.next();
@@ -105,6 +123,11 @@ public class PatientMenu implements StaffMenu {
         System.out.println("Personal information updated.");
     }
 
+    /**
+     * Utility method to print the details of an appointment.
+     *
+     * @param appointment The appointment to print.
+     */
     public static void printAppointment(Appointment appointment) {
 
         System.out.println("Appointment ID: " + appointment.getAppointmentID() +
@@ -113,6 +136,11 @@ public class PatientMenu implements StaffMenu {
                         
     } 
 
+    /**
+     * Utility method to print the details of an appointment along with its status.
+     *
+     * @param appointment The appointment to print with status.
+     */
     public static void printAppointmentWithStatus(Appointment appointment) {
 
         System.out.println("Appointment ID: " + appointment.getAppointmentID() +

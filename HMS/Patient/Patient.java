@@ -2,6 +2,10 @@ package HMS.Patient;
 
 import HMS.User.*;
 
+/**
+ * Represents a patient in the hospital management system, extending the User class with specific attributes
+ * for a patient's medical and personal information.
+ */
 public class Patient extends User {
     private String patientID;
     private String name;
@@ -11,7 +15,18 @@ public class Patient extends User {
     private String emailAddress;
     private String bloodType;
 
-    // Constructor
+    /**
+     * Constructs a Patient instance with detailed personal and contact information.
+     * @param hospitalID The unique identifier for the patient.
+     * @param name The full name of the patient.
+     * @param dateOfBirth The patient's date of birth in YYYY-MM-DD format.
+     * @param gender The patient's gender.
+     * @param contactNumber The patient's contact phone number.
+     * @param emailAddress The patient's email address.
+     * @param bloodType The blood type of the patient.
+     * @param password The patient's account password.
+     * @param loginCount The number of times the patient has logged into the system.
+     */
     public Patient(String hospitalID, String name, String dateOfBirth, String gender,
                    String contactNumber, String emailAddress, String bloodType, String password, int loginCount) {
         super(hospitalID, "Patient", name, password, loginCount);
@@ -33,15 +48,25 @@ public class Patient extends User {
     public String getEmailAddress() { return emailAddress; }
     public String getBloodType() { return bloodType; }
 
-    // Setters for updating personal information
+    /**
+     * Sets the patient's contact number.
+     * @param contactNumber The new contact number.
+     */
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 
+    /**
+     * Sets the patient's email address.
+     * @param emailAddress The new email address.
+     */
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
     }
 
+    /**
+     * Displays the medical record for the patient, listing all personal details managed within the system.
+     */
     public void viewMedicalRecord() {
         System.out.println("Medical Record:");
         System.out.println("Patient ID: " + getHospitalID());
@@ -55,6 +80,7 @@ public class Patient extends User {
         // System.out.println("Treatments: " + String.join(", ", treatments));
     }
 
+    @Override
     public String toString() {
         return "Staff [ID=" + getPatientID() + ", Name=" + getName() + ", Role=" + getRole() + ", Gender=" + gender + "]";
     }

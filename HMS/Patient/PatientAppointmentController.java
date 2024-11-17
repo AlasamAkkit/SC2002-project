@@ -7,8 +7,17 @@ import HMS.Manager.MedicalRecordManager;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class provides functionalities for patients to manage their appointments,
+ * including viewing available slots, scheduling new appointments, cancelling or rescheduling existing ones,
+ * and viewing past medical records.
+ */
 public class PatientAppointmentController{
 
+    /**
+     * Displays available appointment slots that have not yet been booked.
+     * @return A list of available appointments.
+     */
     public static List<Appointment> viewAvailableAppointmentSlots(){
         List<Appointment> all_appointments;
         all_appointments = AppointmentManager.findAppointmentsByPatientId("NA");
@@ -19,6 +28,11 @@ public class PatientAppointmentController{
         return all_appointments;
     }
 
+    /**
+     * Schedules an appointment for the patient if a valid appointment ID is selected.
+     * @param patient The patient who is scheduling the appointment.
+     * @return true if the appointment is successfully booked, false otherwise.
+     */
     public static boolean appointmentSchedule(Patient patient){
         List<Appointment> all_appointments = viewAvailableAppointmentSlots();
         System.out.println("Select an appointmentID to schedule an appointment: ");
@@ -37,6 +51,11 @@ public class PatientAppointmentController{
         return false;
     }
 
+    /**
+     * Cancels an existing appointment if the specified appointment ID belongs to the patient.
+     * @param patient The patient who is cancelling the appointment.
+     * @return true if the appointment is successfully cancelled, false otherwise.
+     */
     public static boolean appointmentCancel(Patient patient){
         
         List<Appointment> all_appointments = appointmentView(patient);
@@ -63,6 +82,11 @@ public class PatientAppointmentController{
         return false;
     }
 
+    /**
+     * Reschedules an existing appointment to a new slot selected by the patient.
+     * @param patient The patient who is rescheduling the appointment.
+     * @return true if the appointment is successfully rescheduled, false otherwise.
+     */
     public static boolean appointmentReschedule(Patient patient){
 
         appointmentView(patient);
@@ -85,6 +109,11 @@ public class PatientAppointmentController{
         return false;
     }
 
+    /**
+     * Displays all pending or scheduled appointments for the patient.
+     * @param patient The patient whose appointments are being viewed.
+     * @return A list of all appointments associated with the patient.
+     */
     public static List<Appointment> appointmentView(Patient patient){
         List<Appointment> all_appointments;
         all_appointments = AppointmentManager.findAppointmentsByPatientId(patient.getPatientID());
@@ -95,6 +124,10 @@ public class PatientAppointmentController{
         return all_appointments;
     }
 
+    /**
+     * Displays past medical appointments and records for the patient.
+     * @param patient The patient whose past appointments are being displayed.
+     */
     public static void pastAppointments(Patient patient){
         List<MedicalRecord> patientRecords;
         patientRecords = MedicalRecordManager.findRecordsByPatientId(patient.getPatientID());
