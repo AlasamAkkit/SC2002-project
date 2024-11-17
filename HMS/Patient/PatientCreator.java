@@ -10,6 +10,7 @@ public class PatientCreator {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Create a new patient account.");
 
+        // Generate a unique Patient ID
         String patientID = generateUniquePatientID(patients);
 
         System.out.print("Enter Name: ");
@@ -37,6 +38,8 @@ public class PatientCreator {
 
         PatientManager.addOrUpdatePatient(newPatient, users);
 
+        // Let the patient know their generated Patient ID
+        System.out.println("Your Patient ID is: " + patientID);
         System.out.println("Account created successfully!");
     }
 
