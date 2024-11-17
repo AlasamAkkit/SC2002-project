@@ -10,8 +10,7 @@ public class PatientCreator {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Create a new patient account.");
 
-        System.out.print("Enter Patient ID: ");
-        String patientID = scanner.nextLine();
+        String patientID = generateUniquePatientID(patients);
 
         System.out.print("Enter Name: ");
         String name = scanner.nextLine();
@@ -39,5 +38,28 @@ public class PatientCreator {
         PatientManager.addOrUpdatePatient(newPatient, users);
 
         System.out.println("Account created successfully!");
+    }
+
+    private static String generateUniquePatientID(List<Patient> patients) {
+        int patientCount = patients.size();
+        String patientID;
+
+        // Generate a new Patient ID (e.g., P0001, P0002, P0003...)
+        do {
+            patientCount++;
+            patientID = "P" + String.format("%04d", patientCount); // PXXXX format
+        } while (isPatientIDExists(patientID, patients)); // Check if the ID already exists
+
+        return patientID;
+    }
+
+    // Method to check if the Patient ID already exists in the list
+    private static boolean isPatientIDExists(String patientID, List<Patient> patients) {
+        for (Patient patient : patients) {
+            if (patient.getPatientID().equals(patientID)) {
+                return true; // ID exists
+            }
+        }
+        return false; // ID is unique
     }
 }
