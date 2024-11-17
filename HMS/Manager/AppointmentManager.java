@@ -179,4 +179,9 @@ public class AppointmentManager {
     public static List<Appointment> getAppointments() {
         return appointments;
     }
+
+    public static void deleteAppointmentById(String appointmentID) {
+        appointments.removeIf(appointment -> appointment.getAppointmentID().equals(appointmentID));
+    }
+    
 }
