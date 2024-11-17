@@ -4,6 +4,9 @@ import HMS.Pharmacist.ReplenishmentRequest;
 import java.io.*;
 import java.util.*;
 
+import HMS.Staff.Staff;
+import HMS.Pharmacist.*;
+
 public class ReplenishManager {
 
     private static final String CSV_FILE = "HMS/Data/Replenish_List.csv"; // Path to the CSV file
