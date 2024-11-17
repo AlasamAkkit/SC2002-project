@@ -6,11 +6,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Manages the loading, saving, and manipulation of medical records within the hospital management system.
+ */
 public class MedicalRecordManager {
     private static final String CSV_FILE = "HMS/Data/Medical_Records.csv"; // Path to the CSV file
     private static List<MedicalRecord> medicalRecords = new ArrayList<>(); // List to store medical records
 
-    // Load medical records from the CSV file
+    /**
+     * Loads medical records from a CSV file.
+     */
     public static void loadMedicalRecords() {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
@@ -49,7 +54,9 @@ public class MedicalRecordManager {
         }
     }
 
-    // Save the medical records back to the CSV file
+    /**
+     * Saves all medical records back to the CSV file.
+     */
     public static void saveMedicalRecords() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
             bw.write("Appointment ID,Patient ID,Doctor ID,appointmentTime,status,Diagnosis,ServicesProvided,Treatment,Prescription,ConsultationNotes");
@@ -73,7 +80,11 @@ public class MedicalRecordManager {
         }
     }
 
-    // Find medical record by appointment ID
+    /**
+     * Finds a medical record by appointment ID.
+     * @param appointmentID The ID of the appointment to find the record for.
+     * @return The medical record if found, null otherwise.
+     */
     public static MedicalRecord findRecordByAppointmentId(String appointmentID) {
         for (MedicalRecord record : medicalRecords) {
             if (record.getAppointmentID().equals(appointmentID)) {
@@ -83,7 +94,11 @@ public class MedicalRecordManager {
         return null; // Return null if no record found
     }
 
-    // List medical records by patient ID
+    /**
+     * Retrieves all medical records for a specific patient by their ID.
+     * @param patientID The ID of the patient.
+     * @return A list of medical records for the specified patient.
+     */
     public static List<MedicalRecord> findRecordsByPatientId(String patientID) {
         List<MedicalRecord> patientRecords = new ArrayList<>();
         for (MedicalRecord record : medicalRecords) {
@@ -94,7 +109,10 @@ public class MedicalRecordManager {
         return patientRecords;
     }
 
-    // Add or update a medical record
+    /**
+     * Adds a new medical record or updates an existing one in the list.
+     * @param record The medical record to add or update.
+     */
     public static void addOrUpdateRecord(MedicalRecord record) {
         for (int i = 0; i < medicalRecords.size(); i++) {
             if (medicalRecords.get(i).getAppointmentID().equals(record.getAppointmentID())) {
@@ -109,7 +127,10 @@ public class MedicalRecordManager {
         saveMedicalRecords();  // Save new data to CSV
     }
 
-    // List all completed records
+    /**
+     * Retrieves a list of all completed medical records.
+     * @return A list of completed medical records.
+     */
     public static List<MedicalRecord> getAllCompletedRecords() {
         List<MedicalRecord> completedRecords = new ArrayList<>();
         for (MedicalRecord record : medicalRecords) {

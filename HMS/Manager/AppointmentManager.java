@@ -6,11 +6,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Manages the loading, saving, and manipulation of appointments within the hospital management system.
+ */
 public class AppointmentManager {
     private static final String CSV_FILE = "HMS/Data/Appointment_List.csv"; // Path to the CSV file
     private static List<Appointment> appointments = new ArrayList<>(); // List to store appointment data
 
-    // Load appointment data from CSV file
+    /**
+     * Loads appointment data from a CSV file.
+     */
     public static void loadAppointments() {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
@@ -45,7 +50,9 @@ public class AppointmentManager {
         }
     }
 
-    // Save the appointments' data back to the CSV file
+    /**
+     * Saves all appointments back to the CSV file.
+     */
     public static void saveAppointments() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
             bw.write("Appointment ID,Patient ID,Doctor ID,appointmentTime,status");
@@ -64,7 +71,10 @@ public class AppointmentManager {
         }
     }
 
-    // Add or update an appointment
+    /**
+     * Adds a new appointment or updates an existing one in the list.
+     * @param appointment The appointment to add or update.
+     */
     public static void addOrUpdateAppointment(Appointment appointment) {
         boolean found = false;
         for (int i = 0; i < appointments.size(); i++) {
@@ -80,7 +90,10 @@ public class AppointmentManager {
         saveAppointments(); // Save changes to the CSV file
     }
 
-    // Generate a new appointment ID
+    /**
+     * Generates a new, unique appointment ID.
+     * @return A string representing the new appointment ID.
+     */
     public static String generateNextAppointmentId() {
         int maxId = 0;
         for (Appointment appointment : appointments) {
@@ -97,7 +110,11 @@ public class AppointmentManager {
         return "A" + String.format("%04d", maxId + 1);
     }
 
-    // Find appointment by ID
+    /**
+     * Finds an appointment by its ID.
+     * @param appointmentID The ID of the appointment to find.
+     * @return The appointment if found, null otherwise.
+     */
     public static Appointment findAppointmentById(String appointmentID) {
         for (Appointment appointment : appointments) {
             if (appointment.getAppointmentID().equals(appointmentID)) {
@@ -107,7 +124,11 @@ public class AppointmentManager {
         return null; // Return null if no appointment found
     }
 
-    // List appointments by patient ID
+    /**
+     * Retrieves all appointments for a specific patient by their ID.
+     * @param patientID The ID of the patient.
+     * @return A list of appointments for the specified patient.
+     */
     public static List<Appointment> findAppointmentsByPatientId(String patientID) {
         List<Appointment> patientAppointments = new ArrayList<>();
         for (Appointment appointment : appointments) {
@@ -118,7 +139,11 @@ public class AppointmentManager {
         return patientAppointments;
     }
 
-    // Update appointment status
+    /**
+     * Updates the status of a specific appointment.
+     * @param appointmentID The ID of the appointment to update.
+     * @param status The new status to set.
+     */
     public static void updateAppointmentStatus(String appointmentID, Appointment.Status status) {
         Appointment appointment = findAppointmentById(appointmentID);
         if (appointment != null) {
@@ -130,7 +155,12 @@ public class AppointmentManager {
         }
     }
 
-    // Check if a specific time slot is available for a doctor
+    /**
+     * Checks if a specific time slot is available for a doctor.
+     * @param doctorID The ID of the doctor.
+     * @param dateTime The date and time of the appointment to check.
+     * @return true if the slot is available, false otherwise.
+     */
     public static boolean isTimeSlotAvailable(String doctorID, LocalDateTime dateTime) {
         for (Appointment appointment : appointments) {
             if (appointment.getDoctorID().equals(doctorID) &&
@@ -142,6 +172,10 @@ public class AppointmentManager {
         return true; // Time slot is available
     }
 
+    /**
+     * Retrieves a list of all appointments.
+     * @return A list of all appointments.
+     */
     public static List<Appointment> getAppointments() {
         return appointments;
     }

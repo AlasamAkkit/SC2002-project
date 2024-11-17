@@ -5,11 +5,16 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Handles the management of medications, including loading from, saving to, and updating the medication inventory in a CSV file.
+ */
 public class MedicineManager {
     private static final String CSV_FILE = "HMS/Data/Medicine_List.csv"; // Path to the CSV file
     private static Map<String, Medication> inventory = new HashMap<>();
 
-    // Load medicines from the CSV file
+    /**
+     * Loads medications from a CSV file into the inventory.
+     */
     public static void loadMedicines() {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
@@ -37,12 +42,20 @@ public class MedicineManager {
         }
     }
 
-    // Add or update a medicine
+    /**
+     * Adds a new medicine to the inventory or updates an existing one.
+     * @param newMedicine The new medication to be added or updated.
+     */
     public static void addOrUpdateMedicine(Medication newMedicine) {
         inventory.put(newMedicine.getMedicationName(), newMedicine); // Update or add the medicine
         saveMedicines();
     }
 
+    /**
+     * Updates the stock level of a specific medication.
+     * @param medicationName The name of the medication to update.
+     * @param newStockLevel The new stock level to set.
+     */
     public static void updateMedicationStock(String medicationName, int newStockLevel) {
         Medication medicine = inventory.get(medicationName);
         if (medicine != null) {
@@ -54,6 +67,11 @@ public class MedicineManager {
         }
     }
 
+    /**
+     * Updates the low stock threshold for a specific medication.
+     * @param medicationName The name of the medication to update.
+     * @param newThreshold The new low stock threshold to set.
+     */
     public static void updateLowStockThreshold(String medicationName, int newThreshold) {
         Medication medicine = inventory.get(medicationName);
         if (medicine != null) {
@@ -65,7 +83,9 @@ public class MedicineManager {
         }
     }
 
-    // Save the medicines data back to the CSV file
+    /**
+     * Saves all medication data back to the CSV file.
+     */
     public static void saveMedicines() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
             // Write header
@@ -84,7 +104,9 @@ public class MedicineManager {
         }
     }
 
-    // Check if a medicine is low in stock based on its lowStockLevelAlert
+    /**
+     * Displays all medications in the inventory to check for low stock alerts.
+     */
     public static void checkLowStock() {
         for (Medication medicine : inventory.values()) {
             if (medicine.getStockLevel() <= medicine.getLowStockThreshold()) {
@@ -93,13 +115,19 @@ public class MedicineManager {
         }
     }
 
-    // Display all medicines
+    /**
+     * Displays all medications currently in the inventory.
+     */
     public static void displayAllMedicines() {
         for (Medication medicine : inventory.values()) {
             System.out.println(medicine);
         }
     }
 
+    /**
+     * Retrieves the current inventory of medications.
+     * @return A map of medication names to {@link Medication} objects.
+     */
     public static Map<String, Medication> getInventory() {
         return inventory;
     }
