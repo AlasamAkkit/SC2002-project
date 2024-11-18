@@ -8,7 +8,19 @@ import HMS.Pharmacist.*;
 import HMS.Staff.Staff;
 import java.util.List;
 
+/**
+ * Handles the user menu based on the type of user logged in.
+ */
 public class UserMenuHandler {
+
+    /**
+     * Displays the appropriate menu for the logged-in user based on their role.
+     *
+     * @param loggedInUser           The user who is logged in.
+     * @param patients               List of all patients in the system.
+     * @param appointments           List of all appointments.
+     * @param replenishmentRequests  List of all medication replenishment requests.
+     */
     public void handleUserMenu(User loggedInUser, List<Patient> patients, List<Appointment> appointments,
         List<ReplenishmentRequest> replenishmentRequests) {
         if (loggedInUser instanceof Patient) {
@@ -23,6 +35,14 @@ public class UserMenuHandler {
         }
     }
 
+    /**
+     * Chooses and displays the specific menu based on the staff member's role.
+     *
+     * @param staff                   The staff member whose menu to display.
+     * @param patients                List of patients to be managed by the staff.
+     * @param appointments            List of appointments relevant to the staff.
+     * @param replenishmentRequests   List of replenishment requests relevant to the staff.
+     */
     private void chooseStaffMenu(Staff staff, List<Patient> patients, List<Appointment> appointments, 
         List<ReplenishmentRequest> replenishmentRequests) {
         String role = staff.getRole();

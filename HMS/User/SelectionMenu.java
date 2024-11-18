@@ -4,8 +4,20 @@ import HMS.Patient.*;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Provides a user interface for logging in or creating a new patient account.
+ */
 public class SelectionMenu {
-        public static User display(List<User> users, List<Patient> patients) {
+
+    /**
+     * Displays a menu for the user to either log in or create a new patient account.
+     * 
+     * @param users    A list of all users in the system, both staff and patients.
+     * @param patients A list of all patients in the system.
+     * @return The User object corresponding to the logged-in user, or null if the
+     *         login was not successful or if the user creates a new patient account.
+     */    
+    public static User display(List<User> users, List<Patient> patients) {
         Scanner scanner = new Scanner(System.in);
         User loggedInUser = null; // To store the logged-in user
 

@@ -43,17 +43,60 @@ public class Appointment {
         this.prescriptions = new ArrayList<>();
     }
 
-    // Getters and Setters with JavaDoc
+    // Getters and Setters
 
+    /**
+     * Returns the appointment ID.
+     * @return the appointment ID.
+     */
     public String getAppointmentID() { return appointmentID; }
+
+    /**
+     * Returns the patient ID.
+     * @return the patient ID.
+     */
     public String getPatientID() { return patientID; }
+
+    /**
+     * Returns the doctor ID.
+     * @return the doctor ID.
+     */
     public String getDoctorID() { return doctorID; }
+
+    /**
+     * Returns the appointment time.
+     * @return the appointment time as LocalDateTime.
+     */
     public LocalDateTime getAppointmentTime() { return appointmentTime; }
+
+    /**
+     * Returns the status of the appointment.
+     * @return the appointment status.
+     */
     public Status getStatus() { return status; }
 
+    /**
+     * Sets the patient ID for this appointment.
+     * @param patientID the patient ID to be set.
+     */
     public void setPatientID(String patientID) { this.patientID = patientID; }
+
+    /**
+     * Sets the doctor ID for this appointment.
+     * @param doctorID the doctor ID to be set.
+     */
     public void setDoctorID(String doctorID) { this.doctorID = doctorID; }
+
+    /**
+     * Sets the appointment time.
+     * @param appointmentTime the time to set the appointment to.
+     */
     public void setAppointmentTime(LocalDateTime appointmentTime) { this.appointmentTime = appointmentTime; }
+
+    /**
+     * Sets the status of the appointment.
+     * @param status the status to set for this appointment.
+     */
     public void setStatus(Status status) { this.status = status; }
 
     /**

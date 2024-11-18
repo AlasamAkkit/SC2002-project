@@ -6,15 +6,25 @@ import HMS.Staff.Staff;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Handles login procedures for all types of users in the Hospital Management System.
+ */
 public class LoginHandler {
     private List<User> users; // List of all users in the system
 
-    // Constructor to initialize with the list of users
+    /**
+     * Constructs a LoginHandler with a specified list of users.
+     * @param users The list of users to manage.
+     */
     public LoginHandler(List<User> users) {
         this.users = users;
     }
 
-    // Method to perform login process
+    /**
+     * Performs the login process using a provided Scanner.
+     * @param scanner A scanner to read user input.
+     * @return The logged-in User object if authentication is successful, otherwise null.
+     */
     public User login(Scanner scanner) {
         System.out.println("Welcome to the Hospital Management System");
         System.out.print("Enter your hospital ID: ");
@@ -61,6 +71,11 @@ public class LoginHandler {
         return user;
     }
 
+    /**
+     * Determines the role of the user based on their hospital ID.
+     * @param hospitalID The hospital ID provided by the user.
+     * @return The determined role of the user.
+     */
     private String determineRole(String hospitalID) {
         if (hospitalID.startsWith("P") && hospitalID.length() == 5) {
             return "Patient";
@@ -74,7 +89,13 @@ public class LoginHandler {
         return null; // Invalid hospital ID
     }
 
-    // Method to authenticate user based on ID, role, and password
+    /**
+     * Authenticates a user based on hospital ID, role, and password.
+     * @param hospitalID The hospital ID of the user.
+     * @param role The role of the user.
+     * @param password The password provided by the user.
+     * @return The authenticated User object, or null if authentication fails.
+     */
     private User authenticate(String hospitalID, String role, String password) {
         for (User user : users) {
             if (user.getHospitalID().equalsIgnoreCase(hospitalID) && user.getRole().equalsIgnoreCase(role)) {
@@ -90,7 +111,11 @@ public class LoginHandler {
         return null;
     }
 
-    // Handle first-time login for patients
+    /**
+     * Handles additional steps after a successful login, such as password changes and login count handling.
+     * @param user The user who has successfully logged in.
+     * @param scanner The scanner to read user input for further actions.
+     */
     private void handleFirstTimeLogin(String hospitalID, Scanner scanner) {
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
@@ -113,6 +138,11 @@ public class LoginHandler {
         System.out.println("Patient information saved.");
     }
 
+    /**
+     * Prompts the user to change their password upon first login.
+     * @param hospitalID The hospital ID of the user needing a password change.
+     * @param scanner A scanner to input the new password.
+     */
     private void handleChangePassword(String hospitalID, Scanner scanner) {
         System.out.println("It is your first time logging in. Please change your password.");
         System.out.print("Enter a new password: ");

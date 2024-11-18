@@ -6,19 +6,33 @@ import HMS.Manager.ReplenishManager;
 import HMS.Staff.*;
 import java.util.*;
 
+/**
+ * Represents a pharmacist, a staff member responsible for managing medications and prescriptions.
+ */
 public class Pharmacist extends Staff {
     @SuppressWarnings("FieldMayBeFinal")
     private Map<String, Medication> inventory; // Inventory of medications by name
 
-    // Constructor
+    /**
+     * Constructs a new Pharmacist object.
+     *
+     * @param hospitalID Unique identifier for the hospital staff.
+     * @param role The role of the staff member, should be "Pharmacist".
+     * @param name The name of the pharmacist.
+     * @param gender The gender of the pharmacist.
+     * @param age The age of the pharmacist.
+     * @param inventory A map of medications available to the pharmacist.
+     * @param password The login password for the pharmacist.
+     * @param loginCount The count of how many times the pharmacist has logged in.
+     */
     public Pharmacist(String hospitalID, String role, String name, String gender, String age, Map<String, Medication> inventory, String password, int loginCount) {
         super(hospitalID, role, name, gender, age, password, loginCount);
         this.inventory = inventory;
     }
 
-    
-    
-    // Test Case 16
+    /**
+     * Views the list of pending prescription orders.
+     */
     public void viewPrescriptionOrders() {
         //Retrieve the medical records
         List<MedicalRecord> pendingPrescription = MedicalRecordManager.getAllCompletedRecords();
@@ -35,9 +49,9 @@ public class Pharmacist extends Staff {
             p.getTreatment());});
     }
 
-
-    // Test Case 17
-    // Update prescription status
+    /**
+     * Updates the status of a prescription to "DISPENSED" if the medication is available.
+     */
     public void updatePrescriptionStatus() {
         // Get input of appointment ID 
         // Dispense medicine and update inventory
@@ -70,8 +84,9 @@ public class Pharmacist extends Staff {
         MedicalRecordManager.saveMedicalRecords();
     }
 
-    // Test Case 18
-    // View current inventory
+    /**
+     * Displays the current inventory of medications.
+     */
     public void viewInventory() {
 
         inventory.values().stream()
@@ -79,8 +94,11 @@ public class Pharmacist extends Staff {
         ", Stock: " + a.getStockLevel()));
     }
 
-    // Test Case 19
-    // Submit replenishment request for low-stock medications
+    /**
+     * Submits a replenishment request for medications that are low in stock.
+     *
+     * @param replenishmentRequests A list of current replenishment requests.
+     */
     public void submitReplenishmentRequests(List<ReplenishmentRequest> replenishmentRequests) {
         
         @SuppressWarnings("resource")
@@ -112,8 +130,11 @@ public class Pharmacist extends Staff {
         //sc.close();
     }
 
-    
-    // Test Case 19
+    /**
+     * Displays all current replenishment requests.
+     *
+     * @param replenishmentRequests A list of replenishment requests to display.
+     */
     public void viewReplenishmentRequests(List<ReplenishmentRequest> replenishmentRequests) {
         // Read information from ArrayList
         replenishmentRequests.stream()
@@ -122,7 +143,11 @@ public class Pharmacist extends Staff {
                                         ", Status: "+ a.getStatus()));
     }
 
-    
+    /**
+     * Returns the inventory of medications.
+     *
+     * @return A map of medication names to Medication objects.
+     */
     public Map<String, Medication> getInventory() {
         return inventory;
     }

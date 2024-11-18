@@ -4,6 +4,9 @@ import HMS.Staff.StaffMenu;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A menu for pharmacists to interact with and perform various tasks related to pharmacy management.
+ */
 public class PharmacistMenu implements StaffMenu {
     @SuppressWarnings("FieldMayBeFinal")
     private Pharmacist pharmacist;
@@ -11,12 +14,21 @@ public class PharmacistMenu implements StaffMenu {
     @SuppressWarnings("FieldMayBeFinal")
     private Scanner scanner;
 
+    /**
+     * Constructs a new PharmacistMenu.
+     *
+     * @param pharmacist The pharmacist who is using this menu.
+     * @param replenishmentRequests A list of pending replenishment requests that can be managed through this menu.
+     */
     public PharmacistMenu(Pharmacist pharmacist, List<ReplenishmentRequest> replenishmentRequests) {
         this.pharmacist = pharmacist;
         this.replenishmentRequests = replenishmentRequests;
         this.scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the interactive menu for the pharmacist, handling user input to navigate different functionalities.
+     */
     @Override
     public void displayMenu() {
         int choice;
@@ -56,14 +68,5 @@ public class PharmacistMenu implements StaffMenu {
             }
         } while (choice != 6);
     }
-
-    /* 
-    private void updatePrescriptionStatus() {
-        System.out.println("Enter medication name to update prescription status:");
-        String medicationName = scanner.nextLine();
-        pharmacist.updatePrescriptionStatus(medicationName);
-    }
-    */
-
 }
 
