@@ -65,6 +65,15 @@ public class Pharmacist extends Staff {
         //List<MedicalRecord> pendingPrescription = MedicalRecordManager.getAllCompletedRecords();
 
         MedicalRecord record = MedicalRecordManager.findRecordByAppointmentId(appointment_ID);
+        while (record == null)
+        {
+            System.out.println("Appointment ID does not exist!");
+            System.out.println("Enter Appointment ID for dispensing medicine : ");
+            appointment_ID = sc.nextLine();
+            record = MedicalRecordManager.findRecordByAppointmentId(appointment_ID);
+        }
+
+
         if (record.getStatus().equalsIgnoreCase("DISPENSED")){
             System.out.println("Prescription already dispensed!");
             return;
