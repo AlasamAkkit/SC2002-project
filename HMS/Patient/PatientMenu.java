@@ -108,36 +108,23 @@ public class PatientMenu implements StaffMenu {
     }
 
     private void updateContactNumber(){
-        System.out.print("Enter old contact number: ");
-        String oldContact = scanner.next();
         System.out.print("Enter new contact number: ");
         String newContact = scanner.next();
-        if (oldContact.equals(patient.getContactNumber())){
-            patient.setContactNumber(newContact);
-            System.out.println("Contact number successfully changed");
-            List<User> all_users = new ArrayList<>();
-            PatientManager.addOrUpdatePatient(patient, all_users);
-        }
-        else{
-            System.out.println("Previous contact number added incorrectly");
-        }
+        patient.setContactNumber(newContact);
+        System.out.println("Contact number successfully changed");
+        List<User> all_users = new ArrayList<>();
+        PatientManager.addOrUpdatePatient(patient, all_users);
 
     }
 
     private void updateEmailAddress(){
-        System.out.print("Enter old email address: ");
-        String oldEmail = scanner.next();
         System.out.print("Enter new email address: ");
         String newEmail = scanner.next();
-        if (oldEmail.equals(patient.getEmailAddress())){
-            patient.setEmailAddress(newEmail);
-            System.out.println("Email Address successfully changed");
-            List<User> all_users = new ArrayList<>();
-            PatientManager.addOrUpdatePatient(patient, all_users);
-        }
-        else{
-            System.out.println("Previous Email Address added incorrectly added incorrectly");
-        }
+        patient.setEmailAddress(newEmail);
+        System.out.println("Email Address successfully changed");
+        List<User> all_users = new ArrayList<>();
+        PatientManager.addOrUpdatePatient(patient, all_users);
+
     }
 
     /**
