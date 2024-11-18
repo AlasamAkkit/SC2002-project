@@ -107,21 +107,60 @@ public class PatientMenu implements StaffMenu {
         }
     }
 
+    private void updateContactNumber(){
+        System.out.print("Enter old contact number: ");
+        String oldContact = scanner.next();
+        System.out.print("Enter new contact number: ");
+        String newContact = scanner.next();
+        if (oldContact.equals(patient.getContactNumber())){
+            patient.setContactNumber(newContact);
+            System.out.println("Contact number successfully changed");
+            List<User> all_users = new ArrayList<>();
+            PatientManager.addOrUpdatePatient(patient, all_users);
+        }
+        else{
+            System.out.println("Previous contact number added incorrectly");
+        }
+
+    }
+
+    private void updateEmailAddress(){
+        System.out.print("Enter old email address: ");
+        String oldEmail = scanner.next();
+        System.out.print("Enter new email address: ");
+        String newEmail = scanner.next();
+        if (oldEmail.equals(patient.getEmailAddress())){
+            patient.setEmailAddress(newEmail);
+            System.out.println("Email Address successfully changed");
+            List<User> all_users = new ArrayList<>();
+            PatientManager.addOrUpdatePatient(patient, all_users);
+        }
+        else{
+            System.out.println("Previous Email Address added incorrectly added incorrectly");
+        }
+    }
+
     /**
      * Allows the patient to update their contact number and email address.
      */
     private void updatePersonalInformation() {
-        System.out.println("Enter new contact number:");
-        String newContact = scanner.next();
-        System.out.println("Enter new email address:");
-        String newEmail = scanner.next();
-
-        patient.setContactNumber(newContact);
-        patient.setEmailAddress(newEmail);
-        List<User> all_users = new ArrayList<>();
-        PatientManager.addOrUpdatePatient(patient, all_users);
-        System.out.println("Personal information updated.");
+        System.out.printf("Current Contact Number: %s\n", patient.getContactNumber());
+        System.out.printf("Current Email Address: %s\n", patient.getEmailAddress());
+        System.out.println("1. Update Contact Number");
+        System.out.println("2. Update Email Address");
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 1:
+                updateContactNumber();
+                break;
+            case 2:
+                updateEmailAddress();
+                break;
+            default:
+                System.out.println("Number entered is not any of the options");;
+        }
     }
+
 
     /**
      * Utility method to print the details of an appointment.
