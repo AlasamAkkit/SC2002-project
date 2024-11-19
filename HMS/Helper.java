@@ -1,12 +1,11 @@
 package helper;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /**
  * This Helper class provides various helper methods for input reading, validation,
@@ -26,27 +25,6 @@ public class Helper {
         // Private constructor to prevent instantiation
     }
 
-    /**
-     * Reads an integer from the user with a given prompt.
-     * Continues to prompt until a valid integer is entered.
-     *
-     * @param prompt The prompt message to display to the user.
-     * @return The integer entered by the user.
-     */
-    public static int readInt(String prompt) {
-        while (true) {
-            try {
-                if (prompt != "")
-                    System.out.print(prompt);
-                int userInput = sc.nextInt();
-                sc.nextLine(); // Consume newline left-over
-                return userInput;
-            } catch (InputMismatchException e) {
-                sc.nextLine();
-                System.out.println("Invalid input. Please enter an integer.");
-            }
-        }
-    }
 
     /**
      * Reads a LocalDateTime input from the user in the format "yyyy-MM-dd HH:mm".
@@ -69,35 +47,6 @@ public class Helper {
             }
         }
         return date;
-    }
-
-    /**
-     * Reads an integer from the user within a specified range, with a prompt
-     * message.
-     * Continues to prompt until a valid integer within the range is entered.
-     *
-     * @param prompt The prompt message to display to the user.
-     * @param min    The minimum allowed value (inclusive).
-     * @param max    The maximum allowed value (inclusive).
-     * @return The integer entered by the user within the specified range.
-     */
-    public static int readInt(String prompt, int min, int max) {
-        while (true) {
-            if (prompt != "")
-                System.out.print(prompt);
-            try {
-                int userInput = sc.nextInt();
-                sc.nextLine(); // Consume newline left-over
-                if (userInput >= min && userInput <= max) {
-                    return userInput;
-                } else {
-                    System.out.println("Input out of allowed range (" + min + " to " + max + "). Try again.");
-                }
-            } catch (InputMismatchException e) {
-                sc.nextLine(); // Clear the invalid input
-                System.out.println("Invalid input. Please enter a valid integer.");
-            }
-        }
     }
 
     /**
