@@ -9,10 +9,14 @@ public class PersonalInformation {
      * Enum for BloodType to ensure valid blood type entries.
      */
     public enum BloodType{
-        A_POSITIVE, A_NEGATIVE,
-        B_POSITIVE, B_NEGATIVE,
-        AB_POSITIVE, AB_NEGATIVE,
-        O_POSITIVE, O_NEGATIVE
+        A_POSITIVE ("A+"), 
+        A_NEGATIVE("A+"),
+        B_POSITIVE("A+"),
+         B_NEGATIVE("A+"),
+        AB_POSITIVE("A+"),
+         AB_NEGATIVE("A+"),
+        O_POSITIVE("A+"),
+         O_NEGATIVE("A+")  
     }
     private String name;
     private int age;
