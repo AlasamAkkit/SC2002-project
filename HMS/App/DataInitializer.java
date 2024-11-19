@@ -24,7 +24,7 @@ public class DataInitializer {
      */
     public static void initialize(List<User> users, List<Patient> patients, Map<String, Medication> inventory,  List<MedicalRecord> medicalRecords) {
         // Loading patients and linking them to their user profiles
-        PatientManager.loadPatients(users);
+        PatientManager.loadPatients(users, patients);
 
         // Loading medication details into the system
         MedicineManager.loadMedicines();

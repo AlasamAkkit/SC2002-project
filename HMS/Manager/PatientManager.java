@@ -16,7 +16,7 @@ public class PatientManager {
      * Loads patient data from a CSV file into the provided user list.
      * @param users the list of users where loaded patients will be added
      */
-    public static void loadPatients(List<User> users) {
+    public static void loadPatients(List<User> users, List<Patient> patientList) {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
             System.err.println("CSV file does not exist at path: " + file.getAbsolutePath());
@@ -44,6 +44,7 @@ public class PatientManager {
                     Patient patient = new Patient(patientID, name, dob, gender, contact, email, bloodType, password, loginCount);
                     users.add(patient);
                     patients.add(patient);
+                    patientList.add(patient);
                     System.out.println("Loaded Patient: " + patientID + ", " + name); // Debugging line
                 }
             }
