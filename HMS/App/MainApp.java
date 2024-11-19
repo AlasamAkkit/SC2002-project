@@ -6,6 +6,7 @@ import HMS.Patient.*;
 import HMS.Pharmacist.*;
 import HMS.User.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The entry point for the Healthcare Management System (HMS).
@@ -32,8 +33,10 @@ public class MainApp {
         List<Appointment> appointments = AppointmentManager.getAppointments();
         List<ReplenishmentRequest> replenishmentRequests = ReplenishManager.getReplenishmentRequests();
 
-        // Display login and selection menu, and process user login
-        User loggedInUser = SelectionMenu.display(users, patients);
+        // Create an instance of SelectionMenu and call the display method
+        SelectionMenu selectionMenu = new SelectionMenu(users, patients, new InputHandler(new Scanner(System.in)), new IDGenerator(patients.stream().map(Patient::getPatientID).collect(Collectors.toSet())));
+        User loggedInUser = selectionMenu.display(users, patients);  // Call the non-static display method
+
 
         // Determine if the login was successful and direct the user to the appropriate menu
         if (loggedInUser != null) {
