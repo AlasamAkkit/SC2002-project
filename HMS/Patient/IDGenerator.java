@@ -12,7 +12,6 @@ public class IDGenerator implements IDGeneratorInterface {
 
     public String generateUniqueID() {
         //int patientCount = existingIDs.size();
-        System.out.println(existingIDs);
         String patientID;
         do {
             patientCount++;
