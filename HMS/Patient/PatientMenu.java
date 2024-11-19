@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class PatientMenu implements StaffMenu {
     private Patient patient;
     private Scanner scanner;
+    private InputHandler inputHandler = new InputHandler();
 
     /**
      * Constructs a PatientMenu for the specified patient.
@@ -47,6 +48,7 @@ public class PatientMenu implements StaffMenu {
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline left-over
+            System.out.println();
 
             switch (choice) {
                 case 1:
@@ -95,8 +97,7 @@ public class PatientMenu implements StaffMenu {
      * Updates the contact number for the patient associated with this menu.
      */
     private void updateContactNumber(){
-        System.out.print("Enter new contact number: ");
-        String newContact = scanner.next();
+        String newContact = inputHandler.getValidPhoneNumber("Enter new contact number: ");
         patient.setContactNumber(newContact);
         System.out.println("Contact number successfully changed");
         List<User> all_users = new ArrayList<>();
@@ -108,8 +109,7 @@ public class PatientMenu implements StaffMenu {
      * Updates the email address for the patient associated with this menu.
      */
     private void updateEmailAddress(){
-        System.out.print("Enter new email address: ");
-        String newEmail = scanner.next();
+        String newEmail = inputHandler.getValidatedInput("Enter new email address: ", new EmailValidator());
         patient.setEmailAddress(newEmail);
         System.out.println("Email Address successfully changed");
         List<User> all_users = new ArrayList<>();
@@ -125,16 +125,21 @@ public class PatientMenu implements StaffMenu {
         System.out.printf("Current Email Address: %s\n", patient.getEmailAddress());
         System.out.println("1. Update Contact Number");
         System.out.println("2. Update Email Address");
-        int choice = scanner.nextInt();
-        switch (choice) {
-            case 1:
-                updateContactNumber();
-                break;
-            case 2:
-                updateEmailAddress();
-                break;
-            default:
-                System.out.println("Number entered is not any of the options");;
+        try {
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    updateContactNumber();
+                    break;
+                case 2:
+                    updateEmailAddress();
+                    break;
+                default:
+                    System.out.println("Number entered is not any of the options");;
+            }
+        }catch (InputMismatchException ime) {
+            System.out.println("Invalid input. Please enter a number.");
+            scanner.next(); // Consume the invalid input
         }
     }
 
