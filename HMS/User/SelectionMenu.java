@@ -1,9 +1,10 @@
 package HMS.User;
 
+import HMS.Patient.IDGenerator;
+import HMS.Patient.InputHandler;
 import HMS.Patient.Patient;
 import HMS.Patient.PatientCreator;
-import HMS.Patient.InputHandler;
-import HMS.Patient.IDGenerator;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,6 +30,7 @@ public class SelectionMenu {
         User loggedInUser = null; // To store the logged-in user
 
         while (loggedInUser == null) {
+            try {
             System.out.println("Welcome to the HMS System!");
             System.out.println("1. Login");
             System.out.println("2. Create New Patient Account");
@@ -48,8 +50,12 @@ public class SelectionMenu {
                     System.out.println("Invalid choice. Please restart the application.");
                     break;
             }
+            }catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Consume the invalid input
+            }
         }
-
+        
         return loggedInUser;
     }
 }
