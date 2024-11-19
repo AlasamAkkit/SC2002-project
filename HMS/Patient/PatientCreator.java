@@ -21,15 +21,14 @@ public class PatientCreator {
 
         // Collect user inputs
         String name = inputHandler.getInput("Enter Name: ");
-        String dob = inputHandler.getInput("Enter Date of Birth (e.g., YYYY-MM-DD): ");
-        String gender = inputHandler.getInput("Enter Gender (Male/Female/Other): ");
-        String contactNumber = inputHandler.getValidatedInput("Enter Contact Number: ", new NumericValidator());
-        String email = inputHandler.getValidatedInput("Enter Email: ", new EmailValidator());
-        String bloodType = inputHandler.getInput("Enter Blood Type (e.g., A+, O-): ");
-        String password = inputHandler.getInput("Enter Password: ");
+        String dob = inputHandler.getDate("Enter Date of Birth (e.g., YYYY-MM-DD): ");
+        String gender = inputHandler.getGender("Enter Gender (M/F): ");
+        String contactNumber = inputHandler.getValidPhoneNumber("Enter Contact Number: ");
+        String email = inputHandler.getValidatedInput("Enter Email (123@123.com): ", new EmailValidator());
+        String bloodType = inputHandler.getValidBloodType("Enter Blood Type (e.g., A+, O-): ");
 
         // Create Patient
-        Patient newPatient = new Patient(patientID, name, dob, gender, contactNumber, email, bloodType, password, 0);
+        Patient newPatient = new Patient(patientID, name, dob, gender, contactNumber, email, bloodType, "password", 0);
         patients.add(newPatient);
         users.add(newPatient);
 
@@ -38,5 +37,6 @@ public class PatientCreator {
 
         System.out.println("Account created successfully!");
         System.out.println("Your Patient ID is: " + patientID);
+        System.out.println("Your Default password is: password");
     }
 }

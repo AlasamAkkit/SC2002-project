@@ -34,7 +34,7 @@ public class MainApp {
         List<ReplenishmentRequest> replenishmentRequests = ReplenishManager.getReplenishmentRequests();
 
         // Create an instance of SelectionMenu and call the display method
-        SelectionMenu selectionMenu = new SelectionMenu(users, patients, new InputHandler(new Scanner(System.in)), new IDGenerator(patients.stream().map(Patient::getPatientID).collect(Collectors.toSet())));
+        SelectionMenu selectionMenu = new SelectionMenu(users, patients, new InputHandler(), new IDGenerator(patients.stream().map(Patient::getPatientID).collect(Collectors.toSet())));
         User loggedInUser = selectionMenu.display(users, patients);  // Call the non-static display method
 
 

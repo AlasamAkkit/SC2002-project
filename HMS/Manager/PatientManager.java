@@ -31,13 +31,14 @@ public class PatientManager {
                 if (patientData.length == 9) {
                     String patientID = patientData[0];
                     String name = patientData[1];
-                    String dob = patientData[2];    
+                    String dob = patientData[2];
                     String gender = patientData[3];
                     String contact = patientData[4];
                     String email = patientData[5];
                     String bloodType = patientData[6];
                     String password = patientData[7];
                     int loginCount = Integer.parseInt(patientData[8]);  // Assuming loginCount is the last field
+
 
                     // Print out the loaded patient for debugging
                     Patient patient = new Patient(patientID, name, dob, gender, contact, email, bloodType, password, loginCount);

@@ -7,7 +7,8 @@ public interface Validator {
 class EmailValidator implements Validator {
     @Override
     public boolean isValid(String input) {
-        return input.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        return input.matches(emailRegex);
     }
 }
 
@@ -17,3 +18,4 @@ class NumericValidator implements Validator {
         return input.matches("\\d+");
     }
 }
+
