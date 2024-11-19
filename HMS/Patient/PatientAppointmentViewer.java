@@ -23,7 +23,7 @@ public class PatientAppointmentViewer{
         return all_appointments;
     }
 
-        /**
+    /**
      * Displays all pending or scheduled appointments for the patient.
      * @param patient The patient whose appointments are being viewed.
      * @return A list of all appointments associated with the patient.
@@ -38,7 +38,7 @@ public class PatientAppointmentViewer{
         return all_appointments;
     }
 
-        /**
+    /**
      * Displays past medical appointments and records for the patient.
      * @param patient The patient whose past appointments are being displayed.
      */
@@ -55,8 +55,10 @@ public class PatientAppointmentViewer{
         }
     }
 
-    
-
+    /**
+     * Displays medical records for the patient.
+     * @param patient The patient whose medical records are being displayed.
+     */
     public static void viewMedicalRecord(Patient patient) {
         patient.viewMedicalRecord();
         // System.out.println("Past Diagnoses: " + String.join(", ", pastDiagnoses));
@@ -75,7 +77,7 @@ public class PatientAppointmentViewer{
         }
     }
 
-        /**
+    /**
      * Utility method to print the details of an appointment.
      *
      * @param appointment The appointment to print.
