@@ -3,7 +3,7 @@ package HMS.Patient;
 import java.util.Set;
 
 public class IDGenerator implements IDGeneratorInterface {
-    private final Set<String> existingIDs;
+    private static Set<String> existingIDs;
 
     public IDGenerator(Set<String> existingIDs) {
         this.existingIDs = existingIDs;

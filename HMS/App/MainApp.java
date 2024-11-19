@@ -33,10 +33,31 @@ public class MainApp {
         List<Appointment> appointments = AppointmentManager.getAppointments();
         List<ReplenishmentRequest> replenishmentRequests = ReplenishManager.getReplenishmentRequests();
 
-        // Create an instance of SelectionMenu and call the display method
-        SelectionMenu selectionMenu = new SelectionMenu(users, patients, new InputHandler(), new IDGenerator(patients.stream().map(Patient::getPatientID).collect(Collectors.toSet())));
-        User loggedInUser = selectionMenu.display(users, patients);  // Call the non-static display method
+        // Create an empty set to store existing patient IDs
+        Set<String> existingPatientIDs = new HashSet<>();
+        
+        // Populate existing patient IDs from the existing patients list
+        if (patients.isEmpty()) {
+            System.out.println("No patients available.");
+        } else {
+            // Populate existing patient IDs from the existing patients list
+            for (Patient patient : patients) {
+                String patientID = patient.getPatientID();
+                if (patientID != null && !patientID.isEmpty()) {
+                    existingPatientIDs.add(patientID);
+                }
+            }
+            // Debugging: Verify the existing IDs
+            System.out.println("Existing Patient IDs: " + existingPatientIDs);
+        }
 
+        System.out.println("Existing Patient IDs: " + medicalRecords);
+        // Initialize the IDGenerator with the existing patient IDs
+        IDGenerator idGenerator = new IDGenerator(existingPatientIDs);
+
+        // Create an instance of SelectionMenu and call the display method
+        SelectionMenu selectionMenu = new SelectionMenu(users, patients, new InputHandler(), idGenerator);
+        User loggedInUser = selectionMenu.display(users, patients);  // Call the non-static display method
 
         // Determine if the login was successful and direct the user to the appropriate menu
         if (loggedInUser != null) {
