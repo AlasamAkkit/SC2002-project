@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * Handles login procedures for all types of users in the Hospital Management System.
  */
-public class LoginHandler {
+public class LoginHandler implements AuthenticatorInterface {
     private List<User> users; // List of all users in the system
 
     /**
@@ -96,7 +96,7 @@ public class LoginHandler {
      * @param password The password provided by the user.
      * @return The authenticated User object, or null if authentication fails.
      */
-    private User authenticate(String hospitalID, String role, String password) {
+    public User authenticate(String hospitalID, String role, String password) {
         for (User user : users) {
             if (user.getHospitalID().equalsIgnoreCase(hospitalID) && user.getRole().equalsIgnoreCase(role)) {
                 if (user.login(password)) {

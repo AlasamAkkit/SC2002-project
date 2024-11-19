@@ -1,7 +1,6 @@
 package HMS.Pharmacist;
 
 import HMS.Staff.StaffMenu;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,9 +31,8 @@ public class PharmacistMenu implements StaffMenu {
      */
     @Override
     public void displayMenu() {
-        int choice = 0;
+        int choice;
         do {
-            try{
             System.out.println("\n--- Pharmacist Menu ---");
             System.out.println("1. View Prescription Orders");
             System.out.println("2. Update Prescription Status");
@@ -68,10 +66,6 @@ public class PharmacistMenu implements StaffMenu {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
-        } catch (InputMismatchException ime) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.next(); // Consume the invalid input
-        }
         } while (choice != 6);
     }
 }
