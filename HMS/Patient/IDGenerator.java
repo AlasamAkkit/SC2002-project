@@ -3,18 +3,14 @@ package HMS.Patient;
 import java.util.Set;
 
 public class IDGenerator implements IDGeneratorInterface {
-    private final Set<String> existingIDs;
-    private int patientCount;
-
+    private static Set<String> existingIDs;
 
     public IDGenerator(Set<String> existingIDs) {
         this.existingIDs = existingIDs;
-        this.patientCount = existingIDs.size() + 1000;
-
     }
 
     public String generateUniqueID() {
-        //int patientCount = existingIDs.size();
+        int patientCount = existingIDs.size();
         String patientID;
         do {
             patientCount++;
