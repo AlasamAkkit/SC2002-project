@@ -52,20 +52,7 @@ public class InputHandler implements InputInterface {
         return gender;
     }
 
-    public boolean isValidGender(String gender) {
-        String genderRegex = "^[MF]$";
-        return gender.toUpperCase().matches(genderRegex);
-    }
-
-
-        /**
-     * Reads a date input from the user in the specified format and returns a
-     * LocalDateTime object.
-     * Continues to prompt until a valid date is entered.
-     * 
-     * @param prompt The prompt message to display to the user.
-     * @return LocalDateTime object representing the entered date and time.
-     */
+    
     public String getDate(String prompt) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         while (true) {
@@ -80,11 +67,8 @@ public class InputHandler implements InputInterface {
         }
     }
 
-    
-    /**
-     * @param prompt The prompt message to display to the user.
-     * @return The valid blood type entered by the user.
-     */
+
+
     public String getValidBloodType(String prompt) {
         String[] validBloodTypes = {"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"};
         while (true) {
@@ -97,6 +81,11 @@ public class InputHandler implements InputInterface {
             }
             System.out.println("Invalid blood type. Please enter a valid blood type (e.g., A+, O-, etc.).");
         }
+    }
+
+    public boolean isValidGender(String gender) {
+        String genderRegex = "^[MF]$";
+        return gender.toUpperCase().matches(genderRegex);
     }
 
     public static String getString(String prompt) {
