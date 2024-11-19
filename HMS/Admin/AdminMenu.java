@@ -1,15 +1,15 @@
 package HMS.Admin;
 
+import HMS.Appointment.*;
+import HMS.Doctor.*;
+import HMS.Manager.*;
+import HMS.Pharmacist.*;
+import HMS.Staff.*;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
-import HMS.Manager.*;
-import HMS.Appointment.*;
-import HMS.Doctor.*;
-import HMS.Pharmacist.*;
-import HMS.Staff.*;
 
 /**
  * AdminMenu provides an interactive menu for administrators to manage staff, appointments, and inventory.
@@ -36,8 +36,9 @@ public class AdminMenu implements StaffMenu {
      * Displays the administrative menu and handles user input to perform various administrative tasks.
      */
     public void displayMenu() {
-        int choice;
+        int choice = 0;
         do {
+            try{
             System.out.println("\n--- Admin Menu ---");
             System.out.println("1. Add Staff Member");
             System.out.println("2. Remove Staff Member");
@@ -87,6 +88,12 @@ public class AdminMenu implements StaffMenu {
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
+        }
+        catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Consume the invalid input
+            }
+
         } while (choice != 10);
     }
 

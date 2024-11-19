@@ -6,6 +6,7 @@ import HMS.Manager.PatientManager;
 import HMS.Staff.StaffMenu;
 import HMS.User.User;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,9 +35,10 @@ public class PatientMenu implements StaffMenu {
      */
     @Override
     public void displayMenu() {
-        int choice;
+        int choice = 0;
         Boolean successful;
         do {
+            try{
             System.out.println("\n--- Patient Menu ---");
             System.out.println("1. View Medical Record");
             System.out.println("2. Update Personal Information");
@@ -84,6 +86,10 @@ public class PatientMenu implements StaffMenu {
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");
+            }
+        } catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Consume the invalid input
             }
         } while (choice != 9);
     }
