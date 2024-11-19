@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import HMS.Patient.*;
 import HMS.Staff.StaffMenu;
+import java.util.InputMismatchException;
 
 /**
  * Provides an interactive menu interface for doctors.
@@ -30,48 +31,53 @@ public class DoctorMenu implements StaffMenu{
      */
     @Override
     public void displayMenu() {
-        int choice;
+        int choice = 0;
         do {
-            System.out.println("\n--- Doctor Menu ---");
-            System.out.println("1. View Patient Medical Records");
-            System.out.println("2. Update Patient Medical Records");
-            System.out.println("3. View Personal Schedule");
-            System.out.println("4. Set Availability for Appointments");
-            System.out.println("5. Accept or Decline Appointment Requests");
-            System.out.println("6. View Upcoming Appointments");
-            System.out.println("7. Record Appointment Outcome");
-            System.out.println("8. Logout");
-            System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline left-over
-
-            switch (choice) {
-                case 1:
-                    viewPatientMedicalRecords();
-                    break;
-                case 2:
-                    updatePatientMedicalRecords();
-                    break;
-                case 3:
-                    doctor.viewPersonalSchedule();
-                    break;
-                case 4:
-                    setAvailability();
-                    break;
-                case 5:
-                    acceptOrDeclineAppointments();
-                    break;
-                case 6:
-                    doctor.viewConfirmedAppointments(); 
-                    break;
-                case 7:
-                    recordAppointmentOutcome();
-                    break;
-                case 8:
-                    System.out.println("Logging out...");
-                    break;
-                default:
-                    System.out.println("Invalid option. Please try again.");
+            try {
+                System.out.println("\n--- Doctor Menu ---");
+                System.out.println("1. View Patient Medical Records");
+                System.out.println("2. Update Patient Medical Records");
+                System.out.println("3. View Personal Schedule");
+                System.out.println("4. Set Availability for Appointments");
+                System.out.println("5. Accept or Decline Appointment Requests");
+                System.out.println("6. View Upcoming Appointments");
+                System.out.println("7. Record Appointment Outcome");
+                System.out.println("8. Logout");
+                System.out.print("Enter your choice: ");
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline left-over
+    
+                switch (choice) {
+                    case 1:
+                        viewPatientMedicalRecords();
+                        break;
+                    case 2:
+                        updatePatientMedicalRecords();
+                        break;
+                    case 3:
+                        doctor.viewPersonalSchedule();
+                        break;
+                    case 4:
+                        setAvailability();
+                        break;
+                    case 5:
+                        acceptOrDeclineAppointments();
+                        break;
+                    case 6:
+                        doctor.viewConfirmedAppointments();
+                        break;
+                    case 7:
+                        recordAppointmentOutcome();
+                        break;
+                    case 8:
+                        System.out.println("Logging out...");
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                }
+            } catch (InputMismatchException ime) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // Consume the invalid input
             }
         } while (choice != 8);
     }

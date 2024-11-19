@@ -107,6 +107,9 @@ public class PatientMenu implements StaffMenu {
         }
     }
 
+    /**
+     * Updates the contact number for the patient associated with this menu.
+     */
     private void updateContactNumber(){
         System.out.print("Enter new contact number: ");
         String newContact = scanner.next();
@@ -117,6 +120,9 @@ public class PatientMenu implements StaffMenu {
 
     }
 
+    /**
+     * Updates the email address for the patient associated with this menu.
+     */
     private void updateEmailAddress(){
         System.out.print("Enter new email address: ");
         String newEmail = scanner.next();

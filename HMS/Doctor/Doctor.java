@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.time.format.DateTimeParseException;
 
 /**
  * Represents a Doctor within the hospital management system, extending the Staff class.
@@ -185,14 +186,17 @@ public class Doctor extends Staff {
     public void setAvailability(List<String> slots) {
         this.availabilitySlots.clear();
         for (String slot : slots) {
-            LocalDateTime dateTime = LocalDateTime.parse(slot, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-            String appointmentId = AppointmentManager.generateNextAppointmentId(); // Ensure this method exists to generate unique IDs
-            Appointment newAppointment = new Appointment(appointmentId, "NA", getHospitalID(), dateTime, Appointment.Status.EMPTY);
-            
-            appointments.add(newAppointment);
-            this.availabilitySlots.add(dateTime.toString());
-            
-            AppointmentManager.addOrUpdateAppointment(newAppointment);
+            try {
+                LocalDateTime dateTime = LocalDateTime.parse(slot, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                String appointmentId = AppointmentManager.generateNextAppointmentId(); // Ensure this method exists to generate unique IDs
+                Appointment newAppointment = new Appointment(appointmentId, "NA", getHospitalID(), dateTime, Appointment.Status.EMPTY);
+                appointments.add(newAppointment);
+                this.availabilitySlots.add(dateTime.toString());
+                AppointmentManager.addOrUpdateAppointment(newAppointment);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format for slot " + slot + ". Please use 'yyyy-MM-dd HH:mm' format.");
+                continue; // Skip this iteration and proceed with the next slot
+            }
         }
         AppointmentManager.saveAppointments(); // Save all changes after processing all slots
         System.out.println("Availability updated for Doctor ID: " + getHospitalID());
