@@ -16,7 +16,7 @@ public class PatientManager {
      * Loads patient data from a CSV file into the provided user list.
      * @param users the list of users where loaded patients will be added
      */
-    public static void loadPatients(List<User> users, List<Patient> patients) {
+    public static void loadPatients(List<User> users, List<Patient> patientList) {
         File file = new File(CSV_FILE);
         if (!file.exists()) {
             System.err.println("CSV file does not exist at path: " + file.getAbsolutePath());
@@ -44,6 +44,7 @@ public class PatientManager {
                     Patient patient = new Patient(patientID, name, dob, gender, contact, email, bloodType, password, loginCount);
                     users.add(patient);
                     patients.add(patient);
+                    patientList.add(patient);
                     System.out.println("Loaded Patient: " + patientID + ", " + name); // Debugging line
                 }
             }
@@ -106,15 +107,9 @@ public class PatientManager {
      * Saves all patient data back to the CSV file.
      */
     public static void savePatients() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE, true))) {  // 'true' for append mode
-            // If the file is empty, write the header; otherwise, append data without the header
-            File file = new File(CSV_FILE);
-            if (file.length() == 0) {  // If file is empty, write the header
-                bw.write("Patient ID,Name,Date of Birth,Gender,Contact Information,Email,Blood Type,Password,loginCount");
-                bw.newLine();
-            }
-    
-            // Write patient data
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE))) {
+            bw.write("Patient ID,Name,Date of Birth,Gender,Contact Information,Email,Blood Type,Password,loginCount");
+            bw.newLine();
             for (Patient patient : patients) {
                 String patientData = patient.getPatientID() + "," +
                         patient.getName() + "," +
@@ -123,7 +118,7 @@ public class PatientManager {
                         patient.getContactNumber() + "," +
                         patient.getEmailAddress() + "," +
                         patient.getBloodType() + "," +
-                        patient.getPassword() + "," +
+                        patient.getPassword() + "," +  // Make sure to include password
                         patient.getLoginCount(); // Assuming loginCount is a field
                 bw.write(patientData);
                 bw.newLine();
@@ -132,7 +127,6 @@ public class PatientManager {
             System.err.println("Error writing to the CSV file: " + e.getMessage());
         }
     }
-    
 
     /**
      * Determines if a patient is logging in for the first time.
