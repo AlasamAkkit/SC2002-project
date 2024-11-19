@@ -1,7 +1,5 @@
 package HMS.Patient;
 
-import HMS.Appointment.*;
-import HMS.Manager.MedicalRecordManager;
 import HMS.Manager.PatientManager;
 import HMS.Staff.StaffMenu;
 import HMS.User.User;
@@ -17,8 +15,6 @@ import java.util.Scanner;
 public class PatientMenu implements StaffMenu {
     private Patient patient;
     private Scanner scanner;
-    private List<Appointment> all_appointments;
-    private List<MedicalRecord> patientRecords;
 
     /**
      * Constructs a PatientMenu for the specified patient.
@@ -36,7 +32,6 @@ public class PatientMenu implements StaffMenu {
     @Override
     public void displayMenu() {
         int choice = 0;
-        Boolean successful;
         do {
             try {
             System.out.println("\n--- Patient Menu ---");
@@ -55,31 +50,31 @@ public class PatientMenu implements StaffMenu {
 
             switch (choice) {
                 case 1:
-                    viewMedicalRecord();
+                    PatientAppointmentViewer.viewMedicalRecord(patient);
                     break;
                 case 2:
                     updatePersonalInformation();
                     break;
                 case 3:
-                    PatientAppointmentController.viewAvailableAppointmentSlots();
+                    PatientAppointmentViewer.viewAvailableAppointmentSlots();
                     break;
                 case 4:
-                    PatientAppointmentController.appointmentSchedule(patient);
+                    PatientAppointmentScheduler.appointmentSchedule(patient);
 
                     break;
                 case 5:
-                    PatientAppointmentController.appointmentReschedule(patient);
+                    PatientAppointmentScheduler.appointmentReschedule(patient);
 
                     break;
                 case 6:
-                    PatientAppointmentController.appointmentCancel(patient);
+                    PatientAppointmentScheduler.appointmentCancel(patient);
 
                     break;
                 case 7:
-                    PatientAppointmentController.appointmentView(patient);
+                    PatientAppointmentViewer.appointmentView(patient);
                     break;
                 case 8:
-                    PatientAppointmentController.pastAppointments(patient);
+                    PatientAppointmentViewer.pastAppointments(patient);
                     break;
                 case 9:
                     System.out.println("Logging out...");
@@ -95,24 +90,6 @@ public class PatientMenu implements StaffMenu {
         } while (choice != 9);
     }
 
-    /**
-     * Displays the medical record of the patient using this menu.
-     */
-    private void viewMedicalRecord(){
-        patient.viewMedicalRecord();
-        patientRecords = MedicalRecordManager.findRecordsByPatientId(patient.getPatientID());
-        if (patientRecords.isEmpty())
-        {
-            System.out.println("No previous visits found");
-        }
-        else{
-            System.out.printf("\nPrevious Visits\n");
-            for (MedicalRecord records : patientRecords){
-                System.out.printf("%s, Diagnosis: %s, Treatment: %s\n", 
-                records.getAppointmentTime(), records.getDiagnosis(), records.getTreatment());
-            }
-        }
-    }
 
     /**
      * Updates the contact number for the patient associated with this menu.
@@ -162,30 +139,5 @@ public class PatientMenu implements StaffMenu {
     }
 
 
-    /**
-     * Utility method to print the details of an appointment.
-     *
-     * @param appointment The appointment to print.
-     */
-    public static void printAppointment(Appointment appointment) {
 
-        System.out.println("Appointment ID: " + appointment.getAppointmentID() +
-                            ", DoctorID: " + appointment.getDoctorID() +
-                           ", Date: " + appointment.getAppointmentTime());
-                        
-    } 
-
-    /**
-     * Utility method to print the details of an appointment along with its status.
-     *
-     * @param appointment The appointment to print with status.
-     */
-    public static void printAppointmentWithStatus(Appointment appointment) {
-
-        System.out.println("Appointment ID: " + appointment.getAppointmentID() +
-                            ", DoctorID: " + appointment.getDoctorID() +
-                           ", Date: " + appointment.getAppointmentTime() +
-                           ", Status: " + appointment.getStatus());
-                        
-    } 
 }

@@ -1,9 +1,7 @@
 package HMS.Patient;
 
 import HMS.Appointment.Appointment;
-import HMS.Appointment.MedicalRecord;
 import HMS.Manager.AppointmentManager;
-import HMS.Manager.MedicalRecordManager;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,21 +10,8 @@ import java.util.Scanner;
  * including viewing available slots, scheduling new appointments, cancelling or rescheduling existing ones,
  * and viewing past medical records.
  */
-public class PatientAppointmentController{
+public class PatientAppointmentScheduler{
 
-    /**
-     * Displays available appointment slots that have not yet been booked.
-     * @return A list of available appointments.
-     */
-    public static List<Appointment> viewAvailableAppointmentSlots(){
-        List<Appointment> all_appointments;
-        all_appointments = AppointmentManager.findAppointmentsByPatientId("NA");
-        System.out.println("Available Appointment Slots: ");
-        for (Appointment appointment: all_appointments){
-            PatientMenu.printAppointment(appointment);
-        }  
-        return all_appointments;
-    }
 
     /**
      * Schedules an appointment for the patient if a valid appointment ID is selected.
@@ -34,7 +19,7 @@ public class PatientAppointmentController{
      * @return true if the appointment is successfully booked, false otherwise.
      */
     public static boolean appointmentSchedule(Patient patient){
-        List<Appointment> all_appointments = viewAvailableAppointmentSlots();
+        List<Appointment> all_appointments = PatientAppointmentViewer.viewAvailableAppointmentSlots();
         System.out.println("Select an appointmentID to schedule an appointment: ");
         Scanner scanner = new Scanner(System.in);
         String appID = scanner.next();
@@ -58,7 +43,7 @@ public class PatientAppointmentController{
      */
     public static boolean appointmentCancel(Patient patient){
         
-        List<Appointment> all_appointments = appointmentView(patient);
+        List<Appointment> all_appointments = PatientAppointmentViewer.appointmentView(patient);
 
         System.out.println("Select an appointmentID to cancel");
         Scanner scanner = new Scanner(System.in);
@@ -89,7 +74,7 @@ public class PatientAppointmentController{
      */
     public static boolean appointmentReschedule(Patient patient){
 
-        appointmentView(patient);
+        PatientAppointmentViewer.appointmentView(patient);
         System.out.println("Enter an appointment ID to reschedule:");
         Scanner scanner = new Scanner(System.in);
         String appIdReschedule = scanner.next();
@@ -109,35 +94,4 @@ public class PatientAppointmentController{
         return false;
     }
 
-    /**
-     * Displays all pending or scheduled appointments for the patient.
-     * @param patient The patient whose appointments are being viewed.
-     * @return A list of all appointments associated with the patient.
-     */
-    public static List<Appointment> appointmentView(Patient patient){
-        List<Appointment> all_appointments;
-        all_appointments = AppointmentManager.findAppointmentsByPatientId(patient.getPatientID());
-        System.out.println("All currently pending or scheduled appointments:");
-        for (Appointment appointment : all_appointments){
-            PatientMenu.printAppointmentWithStatus(appointment);
-        }
-        return all_appointments;
-    }
-
-    /**
-     * Displays past medical appointments and records for the patient.
-     * @param patient The patient whose past appointments are being displayed.
-     */
-    public static void pastAppointments(Patient patient){
-        List<MedicalRecord> patientRecords;
-        patientRecords = MedicalRecordManager.findRecordsByPatientId(patient.getPatientID());
-        for (MedicalRecord records : patientRecords){
-            System.out.printf("Appointment ID: %s\nDate: %s\nDoctor: %s\nDiagnosis: %s\nServices Provided: %s\nPrescriptions: %s\nDoctor Notes: %s\n\n", 
-                                records.getAppointmentID(),records.getAppointmentTime(), records.getDoctorID(), records.getDiagnosis(), 
-                                records.getServicesProvided() ,records.getPrescription() ,records.getConsultationNotes());
-        }
-        if (patientRecords.isEmpty()){
-            System.out.println("No Past Appointments Found.");
-        }
-    }
 }

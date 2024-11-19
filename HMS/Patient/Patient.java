@@ -41,7 +41,10 @@ public class Patient extends User {
 
     // Getters
     public String getPatientID() { return patientID; }
+    
+    @Override
     public String getName() { return name; }
+
     public String getDateOfBirth() { return dateOfBirth; }
     public String getGender() { return gender; }
     public String getContactNumber() { return contactNumber; }
