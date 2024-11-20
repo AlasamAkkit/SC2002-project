@@ -27,7 +27,7 @@ public class PharmacistMenu implements StaffMenu {
         this.pharmacist = pharmacist;
         this.replenishmentRequests = replenishmentRequests;
         this.scanner = new Scanner(System.in);
-        this.PharmacistControl = new PharmacistController(pharmacist.getInventory());
+        this.PharmacistControl = new PharmacistController();
     }
 
     /**

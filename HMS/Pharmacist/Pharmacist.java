@@ -7,8 +7,6 @@ import java.util.*;
  * Represents a pharmacist, a staff member responsible for managing medications and prescriptions.
  */
 public class Pharmacist extends Staff {
-    @SuppressWarnings("FieldMayBeFinal")
-    private Map<String, Medication> inventory; // Inventory of medications by name
 
     /**
      * Constructs a new Pharmacist object.
@@ -24,16 +22,6 @@ public class Pharmacist extends Staff {
      */
     public Pharmacist(String hospitalID, String role, String name, String gender, String age, Map<String, Medication> inventory, String password, int loginCount) {
         super(hospitalID, role, name, gender, age, password, loginCount);
-        this.inventory = inventory;
-    }
-
-    /**
-     * Returns the inventory of medications.
-     *
-     * @return A map of medication names to Medication objects.
-     */
-    public Map<String, Medication> getInventory() {
-        return inventory;
-    }
-    
+    }  
+     
 }

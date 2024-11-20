@@ -1,22 +1,14 @@
 package HMS.Pharmacist;
 
+import HMS.Appointment.MedicalRecord;
+import HMS.Manager.MedicalRecordManager;
+import HMS.Manager.MedicineManager;
+import HMS.Manager.ReplenishManager;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import HMS.Appointment.MedicalRecord;
-import HMS.Manager.MedicalRecordManager;
-import HMS.Manager.ReplenishManager;
-
 public class PharmacistController {
-
-    @SuppressWarnings("FieldMayBeFinal")
-    private Map<String, Medication> inventory; // Inventory of medications by name
-
-    public PharmacistController(Map<String, Medication> inventory)
-    {
-        this.inventory = inventory;
-    }
 
     /**
      * Views the list of pending prescription orders.
@@ -50,8 +42,7 @@ public class PharmacistController {
         System.out.println("Enter Appointment ID for dispensing medicine : ");
         String appointment_ID = sc.nextLine();
         
-        //List<MedicalRecord> pendingPrescription = MedicalRecordManager.getAllCompletedRecords();
-
+        Map<String, Medication> inventory = MedicineManager.getInventory();
         MedicalRecord record = MedicalRecordManager.findRecordByAppointmentId(appointment_ID);
         while (record == null)
         {
@@ -79,6 +70,7 @@ public class PharmacistController {
         }
 
         MedicalRecordManager.saveMedicalRecords();
+        MedicineManager.saveMedicines();
     }
 
     /**
@@ -86,6 +78,7 @@ public class PharmacistController {
      */
     public void viewInventory() {
 
+        Map<String, Medication> inventory = MedicineManager.getInventory();
         inventory.values().stream()
         .forEach(a -> System.out.println("Medication: " + a.getMedicationName() + 
         ", Stock: " + a.getStockLevel()));
@@ -139,15 +132,4 @@ public class PharmacistController {
                                         ", Medication: " + a.getMedicationName() +
                                         ", Status: "+ a.getStatus()));
     }
-
-    /**
-     * Returns the inventory of medications.
-     *
-     * @return A map of medication names to Medication objects.
-     */
-    public Map<String, Medication> getInventory() {
-        return inventory;
-    }
-
-
 }
