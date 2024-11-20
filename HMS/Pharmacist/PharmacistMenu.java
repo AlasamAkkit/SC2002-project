@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * 
  * A menu for pharmacists to interact with and perform various tasks related to pharmacy management.
  */
 public class PharmacistMenu implements StaffMenu {
@@ -14,6 +15,7 @@ public class PharmacistMenu implements StaffMenu {
     List<ReplenishmentRequest> replenishmentRequests;
     @SuppressWarnings("FieldMayBeFinal")
     private Scanner scanner;
+    private PharmacistController PharmacistControl;
 
     /**
      * Constructs a new PharmacistMenu.
@@ -25,6 +27,7 @@ public class PharmacistMenu implements StaffMenu {
         this.pharmacist = pharmacist;
         this.replenishmentRequests = replenishmentRequests;
         this.scanner = new Scanner(System.in);
+        this.PharmacistControl = new PharmacistController(pharmacist.getInventory());
     }
 
     /**
@@ -48,19 +51,19 @@ public class PharmacistMenu implements StaffMenu {
 
             switch (choice) {
                 case 1:
-                    pharmacist.viewPrescriptionOrders();
+                    PharmacistControl.viewPrescriptionOrders();
                     break;
                 case 2:
-                    pharmacist.updatePrescriptionStatus();
+                    PharmacistControl.updatePrescriptionStatus();
                     break;
                 case 3:
-                    pharmacist.viewInventory();
+                    PharmacistControl.viewInventory();
                     break;
                 case 4:
-                    pharmacist.viewReplenishmentRequests(replenishmentRequests);
+                    PharmacistControl.viewReplenishmentRequests(replenishmentRequests);
                     break;
                 case 5:
-                    pharmacist.submitReplenishmentRequests(replenishmentRequests);
+                    PharmacistControl.submitReplenishmentRequests(replenishmentRequests);
                     break;
                 case 6:
                     System.out.println("Logging out...");
