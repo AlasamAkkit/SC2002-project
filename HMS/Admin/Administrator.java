@@ -1,19 +1,22 @@
 package HMS.Admin;
 
-import java.util.List;
-import java.util.Map;
-import HMS.Manager.*;
 import HMS.Appointment.*;
+import HMS.Manager.*;
 import HMS.Pharmacist.*;
 import HMS.Staff.*;
 import HMS.User.User;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an administrator with management capabilities over staff, appointments, and inventory.
  */
 public class Administrator extends Staff {
+    @SuppressWarnings("FieldMayBeFinal")
     private List<Staff> staff;
+    @SuppressWarnings("FieldMayBeFinal")
     private List<Appointment> appointments;
+    @SuppressWarnings("FieldMayBeFinal")
     private Map<String, Medication> inventory;
 
     /**

@@ -21,6 +21,7 @@ public class PatientAppointmentScheduler{
     public static boolean appointmentSchedule(Patient patient){
         List<Appointment> all_appointments = PatientAppointmentViewer.viewAvailableAppointmentSlots();
         System.out.println("Select an appointmentID to schedule an appointment: ");
+        @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
         String appID = scanner.next();
         for (Appointment appointment : all_appointments){
@@ -46,6 +47,7 @@ public class PatientAppointmentScheduler{
         List<Appointment> all_appointments = PatientAppointmentViewer.appointmentView(patient);
 
         System.out.println("Select an appointmentID to cancel");
+        @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
         String appCancel = scanner.next();
         for (Appointment appointment : all_appointments)
@@ -76,6 +78,7 @@ public class PatientAppointmentScheduler{
 
         PatientAppointmentViewer.appointmentView(patient);
         System.out.println("Enter an appointment ID to reschedule:");
+        @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
         String appIdReschedule = scanner.next();
         Appointment appointment = AppointmentManager.findAppointmentById(appIdReschedule);

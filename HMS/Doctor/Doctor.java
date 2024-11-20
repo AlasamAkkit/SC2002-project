@@ -6,11 +6,11 @@ import HMS.Patient.*;
 import HMS.Staff.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.time.format.DateTimeParseException;
 
 /**
  * Represents a Doctor within the hospital management system, extending the Staff class.
@@ -19,7 +19,9 @@ import java.time.format.DateTimeParseException;
  */
 public class Doctor extends Staff {
     private List<Appointment> appointments;
+    @SuppressWarnings("FieldMayBeFinal")
     private List<String> availabilitySlots;
+    @SuppressWarnings("FieldMayBeFinal")
     private List<Patient> patients;
 
     /**
@@ -128,6 +130,7 @@ public class Doctor extends Staff {
      * @param patientId The ID of the patient whose record is to be updated.
      */
     public void updatePatientMedicalRecord(String patientId) {
+        @SuppressWarnings("resource")
         Scanner inputScanner = new Scanner(System.in);
 
         System.out.println("Enter the Appointment ID to update:");

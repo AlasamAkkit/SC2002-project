@@ -16,8 +16,11 @@ import java.util.Scanner;
  * It handles user input through a console interface, offering a variety of administrative functions.
  */
 public class AdminMenu implements StaffMenu {
+    @SuppressWarnings("FieldMayBeFinal")
     private Administrator admin;
+    @SuppressWarnings("FieldMayBeFinal")
     private List<Appointment> appointments;
+    @SuppressWarnings("FieldMayBeFinal")
     private Scanner scanner;
 
     /**
@@ -35,6 +38,7 @@ public class AdminMenu implements StaffMenu {
     /**
      * Displays the administrative menu and handles user input to perform various administrative tasks.
      */
+    @Override
     public void displayMenu() {
         int choice = 0;
         do {

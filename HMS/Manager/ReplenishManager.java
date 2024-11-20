@@ -11,6 +11,7 @@ import java.util.*;
 public class ReplenishManager {
 
     private static final String CSV_FILE = "HMS/Data/Replenish_List.csv"; // Path to the CSV file
+    @SuppressWarnings("FieldMayBeFinal")
     private static List<ReplenishmentRequest> replenishmentRequests = new ArrayList<>();
 
     /**

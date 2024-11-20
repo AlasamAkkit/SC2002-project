@@ -15,6 +15,7 @@ public class PharmacistMenu implements StaffMenu {
     List<ReplenishmentRequest> replenishmentRequests;
     @SuppressWarnings("FieldMayBeFinal")
     private Scanner scanner;
+    @SuppressWarnings("FieldMayBeFinal")
     private PharmacistController PharmacistControl;
 
     /**

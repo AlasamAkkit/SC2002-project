@@ -4,6 +4,7 @@ package HMS.User;
  * Represents a user in the Hospital Management System.
  */
 public class User {
+    @SuppressWarnings("FieldMayBeFinal")
     private String hospitalID;
     private String password;
     private String role; // Roles can be Patient, Doctor, Pharmacist, Administrator
