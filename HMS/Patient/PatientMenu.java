@@ -3,6 +3,9 @@ package HMS.Patient;
 import HMS.Manager.PatientManager;
 import HMS.Staff.StaffMenu;
 import HMS.User.User;
+import HMS.Utility.EmailValidator;
+import HMS.Utility.InputHandler;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;

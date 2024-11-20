@@ -5,6 +5,8 @@ import HMS.Manager.*;
 import HMS.Patient.*;
 import HMS.Pharmacist.*;
 import HMS.User.*;
+import HMS.Utility.IDGenerator;
+import HMS.Utility.InputHandler;
 import java.util.*;
 import java.util.stream.Collectors;
 

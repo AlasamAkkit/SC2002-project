@@ -1,9 +1,9 @@
 package HMS.User;
 
-import HMS.Patient.IDGenerator;
-import HMS.Patient.InputHandler;
 import HMS.Patient.Patient;
 import HMS.Patient.PatientCreator;
+import HMS.Utility.IDGenerator;
+import HMS.Utility.InputHandler;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;

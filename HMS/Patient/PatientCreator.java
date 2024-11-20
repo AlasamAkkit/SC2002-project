@@ -2,6 +2,9 @@ package HMS.Patient;
 
 import HMS.Manager.PatientManager;
 import HMS.User.User;
+import HMS.Utility.EmailValidator;
+import HMS.Utility.IDGenerator;
+import HMS.Utility.InputHandler;
 import java.util.*;
 
 public class PatientCreator {
