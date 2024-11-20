@@ -145,7 +145,4 @@ public class PatientMenu implements StaffMenu {
             scanner.next(); // Consume the invalid input
         }
     }
-
-
-
 }

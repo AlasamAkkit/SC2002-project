@@ -8,11 +8,23 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Provides a user interface for selecting between login and patient account creation options.
+ * This class manages the flow of user interaction within the Hospital Management System's initial menu.
+ */
 public class SelectionMenu {
 
     private final LoginHandler loginHandler;
     private final PatientCreator patientCreator;
 
+    /**
+     * Constructs a SelectionMenu with the necessary handlers and generators for login and patient creation.
+     *
+     * @param users        List of all users in the system, both staff and patients.
+     * @param patients     List of all patients in the system.
+     * @param inputHandler Handler for managing user inputs.
+     * @param idGenerator  Generator for creating unique patient IDs.
+     */
     public SelectionMenu(List<User> users, List<Patient> patients, InputHandler inputHandler, IDGenerator idGenerator) {
         this.loginHandler = new LoginHandler(users);
         this.patientCreator = new PatientCreator(inputHandler, idGenerator);

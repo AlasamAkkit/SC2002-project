@@ -7,15 +7,32 @@ import HMS.Utility.IDGenerator;
 import HMS.Utility.InputHandler;
 import java.util.*;
 
+/**
+ * Facilitates the creation of new patient accounts within the hospital management system.
+ * This class uses input handling and ID generation components to ensure accurate and valid patient data entry.
+ */
 public class PatientCreator {
     private final InputHandler inputHandler;
     private final IDGenerator idGenerator;
 
+    /**
+     * Constructs a PatientCreator with specified input handling and ID generation capabilities.
+     *
+     * @param inputHandler An instance of InputHandler for handling user inputs.
+     * @param idGenerator An instance of IDGenerator for generating unique patient IDs.
+     */
     public PatientCreator(InputHandler inputHandler, IDGenerator idGenerator) {
         this.inputHandler = inputHandler;
         this.idGenerator = idGenerator;
     }
 
+    /**
+     * Creates a new patient account by collecting necessary details from the user,
+     * generating a unique ID, and adding the new patient to the system databases.
+     *
+     * @param users A list of users in the system where the new patient will be added.
+     * @param patients A list of patients in the system where the new patient will be added.
+     */
     public void createPatientAccount(List<User> users, List<Patient> patients) {
         System.out.println("Create a new patient account.");
 
