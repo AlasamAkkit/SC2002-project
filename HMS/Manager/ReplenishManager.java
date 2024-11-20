@@ -1,10 +1,9 @@
 package HMS.Manager;
 
+import HMS.Pharmacist.*;
+import HMS.Staff.Staff;
 import java.io.*;
 import java.util.*;
-
-import HMS.Staff.Staff;
-import HMS.Pharmacist.*;
 
 /**
  * Manages replenishment requests for medications, including loading, saving, and updating requests.
@@ -130,10 +129,12 @@ public class ReplenishManager {
      * @return true if the stock was successfully replenished, false otherwise
      */
     public static boolean replenishMedicationStock(String medicationName, int quantity, List<Staff> staffList) {
+        Map<String, Medication> inventory = MedicineManager.getInventory();
+
         for (Staff staff : staffList) {
             if (staff instanceof Pharmacist) {
                 Pharmacist pharmacist = (Pharmacist) staff;
-                Medication medication = pharmacist.getInventory().get(medicationName);
+                Medication medication = inventory.get(medicationName);
                 if (medication != null) {
                     int newStockLevel = medication.getStockLevel() + quantity;
                     medication.replenish(newStockLevel);
