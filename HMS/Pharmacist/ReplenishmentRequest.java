@@ -19,7 +19,7 @@ public class ReplenishmentRequest {
         public ReplenishmentRequest(String ID,String medicationName, String status) {
             this.ID = ID;
             this.medicationName = medicationName;
-            this.status = "Pending"; // Default status
+            this.status = status; // Default status
         }
     
         /**
