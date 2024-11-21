@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"HMS.Admin"},{"l":"HMS.App"},{"l":"HMS.Appointment"},{"l":"HMS.Doctor"},{"l":"HMS.Manager"},{"l":"HMS.Patient"},{"l":"HMS.Pharmacist"},{"l":"HMS.Staff"},{"l":"HMS.User"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"HMS.Admin"},{"l":"HMS.App"},{"l":"HMS.Appointment"},{"l":"HMS.Doctor"},{"l":"HMS.Manager"},{"l":"HMS.Patient"},{"l":"HMS.Pharmacist"},{"l":"HMS.Staff"},{"l":"HMS.User"},{"l":"HMS.Utility"}];updateSearchResults();
