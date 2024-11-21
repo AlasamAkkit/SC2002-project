@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * A controller class for the pharmacist to do things such as 
+ * view prescription orders, send replenishment requests, view the status of prescription and the inventory.
+ */
 public class PharmacistController {
 
     /**
