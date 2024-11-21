@@ -43,12 +43,40 @@ public class Patient extends User {
     public String getPatientID() { return patientID; }
     
     @Override
+    /**
+     * gets the patient's name.
+     * @return the patient's name.
+     */
     public String getName() { return name; }
 
+    /**
+     * gets the patient's date of birth.
+     * @return the patient's date of birth.
+     */
     public String getDateOfBirth() { return dateOfBirth; }
+
+    /**
+     * gets the patient's gender.
+     * @return the patient's gender.
+     */
     public String getGender() { return gender; }
+
+    /**
+     * gets the patient's contact number.
+     * @return the patient's number.
+     */
     public String getContactNumber() { return contactNumber; }
+
+    /**
+     * gets the patient's email address.
+     * @return the patient's email.
+     */
     public String getEmailAddress() { return emailAddress; }
+
+    /**
+     * gets the patient's blood type.
+     * @return the patient's blood type.
+     */
     public String getBloodType() { return bloodType; }
 
     /**

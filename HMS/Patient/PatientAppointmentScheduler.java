@@ -12,7 +12,6 @@ import java.util.Scanner;
  */
 public class PatientAppointmentScheduler{
 
-
     /**
      * Schedules an appointment for the patient if a valid appointment ID is selected.
      * @param patient The patient who is scheduling the appointment.

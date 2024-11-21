@@ -205,6 +205,11 @@ public class Doctor extends Staff {
         System.out.println("Availability updated for Doctor ID: " + getHospitalID());
     }
 
+    /**
+     * Sets availability for the doctor by creating open appointment slots.
+     *
+     * @return a list of available time slots in "yyyy-MM-dd HH:mm" format.
+     */
     public List<String> getAvailability() {
         // Retrieve only those appointments that are EMPTY and belong to this doctor
         return AppointmentManager.getAppointments().stream()

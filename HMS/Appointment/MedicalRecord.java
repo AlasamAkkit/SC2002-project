@@ -56,6 +56,10 @@ public class MedicalRecord {
         return appointmentID;
     }
 
+    /**
+     * Sets the appointment ID for this appointment.
+     * @param appointmentID the patient ID to be set.
+     */
     public void setAppointmentID(String appointmentID) {
         this.appointmentID = appointmentID;
     }

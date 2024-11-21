@@ -7,6 +7,11 @@ import HMS.Appointment.MedicalRecord;
 import HMS.Manager.AppointmentManager;
 import HMS.Manager.MedicalRecordManager;
 
+/**
+ * This class provides functionalities for patients to view their appointments,
+ * including viewing available slots, past appointments 
+ * and viewing past medical records.
+ */
 public class PatientAppointmentViewer{
     
     /**

@@ -109,7 +109,17 @@ public class Appointment {
         return appointmentTime.format(formatter);
     }
 
+    /**
+     * Returns the consultation notes.
+     *
+     * @return consultation notes
+     */
     public String getConsultationNotes() { return consultationNotes; }
+
+    /**
+     * Sets the consultation notes.
+     * @param consultationNotes the notes to set for the appointment.
+     */
     public void setConsultationNotes(String consultationNotes) { this.consultationNotes = consultationNotes; }
 
     /**
