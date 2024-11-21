@@ -118,7 +118,7 @@ public class Doctor extends Staff {
                     System.out.println("Appointment ID: " + record.getAppointmentID());
                     System.out.println("Appointment Time: " + record.getAppointmentTime());
                     System.out.println("Diagnosis: " + record.getDiagnosis());
-                    System.out.println("Treatment: " + record.getTreatment());
+                    System.out.println("Treatment: " + record.getTreatment() + "\n");
                 }
             }
         }
